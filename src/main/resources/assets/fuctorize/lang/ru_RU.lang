@@ -1,0 +1,672 @@
+# === AdvancedTooltip Module ===
+module.advancedtooltip.name=Расширенные подсказки
+module.advancedtooltip.desc=Показывает расширенную информацию о предметах при наведении: ID, прочность, имена классов и NBT-данные.
+module.advancedtooltip.setting.show_id=Показывать ID:Meta
+module.advancedtooltip.setting.show_durability=Показывать прочность
+module.advancedtooltip.setting.show_classes=Показывать имена классов
+module.advancedtooltip.setting.show_full_class_name=Показывать полное имя класса
+module.advancedtooltip.setting.show_nbt=Показывать NBT-данные
+module.advancedtooltip.setting.compact_mode=Компактный режим
+module.advancedtooltip.setting.bind=Бинд
+tooltip.advancedtooltip.label.id=ID: 
+tooltip.advancedtooltip.label.durability=Прочность: 
+tooltip.advancedtooltip.label.item_class=Класс предмета: 
+tooltip.advancedtooltip.label.block_class=Класс блока: 
+tooltip.advancedtooltip.label.nbt=NBT: 
+
+# === AnomalyESP Module ===
+module.anomalyesp.name=ESP на аномалии
+module.anomalyesp.desc=Отображает рамку и информацию вокруг аномалий из мода Stalker. Позволяет видеть их сквозь стены.
+module.anomalyesp.setting.show_anomalies=Показывать аномалии
+module.anomalyesp.setting.show_tags=Показывать теги
+module.anomalyesp.setting.tag_state=Показывать состояние в теге
+module.anomalyesp.setting.tag_distance=Показывать дистанцию в теге
+module.anomalyesp.setting.distance=Дистанция
+module.anomalyesp.setting.bind=Бинд
+tag.anomalyesp.unknown_state=Неизвестно
+
+# === AntiAFK Module ===
+module.antiafk.name=Анти-АФК
+module.antiafk.desc=Предотвращает кик за бездействие. Периодически совершает небольшие движения и может автоматически возрождать вас после смерти.
+module.antiafk.setting.delay=Задержка (секунды)
+module.antiafk.setting.auto_respawn=Авто-возрождение
+module.antiafk.setting.bind=Бинд
+
+# === AntiKnockback Module ===
+module.antiknockback.name=Анти-отбрасывание
+module.antiknockback.desc=Полностью убирает отбрасывание от атак (S12) и взрывов (S27), отменяя соответствующие пакеты сервера.
+module.antiknockback.setting.bind=Бинд
+
+# === ArtifactESP Module ===
+module.artifactesp.name=ESP на артефакты
+module.artifactesp.desc=Отображает рамку и информацию вокруг артефактов и их точек спавна из мода Stalker.
+module.artifactesp.setting.show_artifacts=Показывать артефакты
+module.artifactesp.setting.show_spawns=Показывать спавны
+module.artifactesp.setting.show_tags=Показывать теги
+module.artifactesp.setting.tag_distance=Показывать дистанцию в теге
+module.artifactesp.setting.distance=Дистанция
+module.artifactesp.setting.bind=Бинд
+tag.artifactesp.empty_spawn=Пустой спавн
+tag.artifactesp.artifact=Артефакт
+
+# === ArtifactStealer Module ===
+module.artifactstealer.name=Кража артефактов
+module.artifactstealer.desc=Телепортируется к артефакту, подбирает его и возвращается, симулируя сетевую задержку (Blink).
+module.artifactstealer.setting.range=Радиус
+module.artifactstealer.setting.bind=Клавиша кражи
+notification.artifactstealer.title.error=Ошибка кражи
+notification.artifactstealer.title.info=Кража
+notification.artifactstealer.title.warning=Кража
+notification.artifactstealer.message.process_already_running=Процесс уже запущен.
+notification.artifactstealer.message.stalker_mod_not_found=Мод Stalker Core не найден.
+notification.artifactstealer.message.no_artifacts_in_range=Артефакты в радиусе не найдены.
+notification.artifactstealer.message.detector_required=Для кражи требуется детектор в хотбаре.
+notification.artifactstealer.message.starting_steal=Начинаю кражу артефакта...
+notification.artifactstealer.message.interrupted_by_death=Процесс прерван из-за смерти.
+notification.artifactstealer.message.interrupted_by_user=Процесс прерван пользователем.
+notification.artifactstealer.message.attempt_successful=Попытка украсть артефакт!
+notification.artifactstealer.message.process_error=Во время процесса произошла ошибка.
+notification.artifactstealer.message.not_confirmed=Кража артефакта не подтверждена.
+notification.artifactstealer.message.confirmation_unavailable=Не удалось подтвердить кражу (неизвестный класс артефакта).
+
+# === BarrierESP Module ===
+module.barrieresp.name=ESP на барьеры
+module.barrieresp.desc=Делает невидимые барьеры (из мода CustomModelApi) видимыми, заменяя их на стеклянные блоки на стороне клиента. Требует перезагрузки чанков.
+module.barrieresp.setting.bind=Бинд
+notification.barrieresp.title.error=Ошибка BarrierESP
+notification.barrieresp.message.mod_not_found=Мод custom_model_api не найден.
+notification.barrieresp.message.reflection_failed=Ошибка рефлексии при запуске.
+notification.barrieresp.message.block_not_found=Блок барьера не найден!
+notification.barrieresp.message.invalid_block_id=Неверный ID блока барьера!
+
+# === BHop Module ===
+module.bhop.name=BHop
+module.bhop.desc='Speed' - для серверов с анти-читом типа NCP, требует практики.\n'Simple' - базовый BHop для большинства серверов.
+module.bhop.setting.mode=Режим
+module.bhop.setting.mode.speed=Скорость
+module.bhop.setting.mode.simple=Простой
+module.bhop.setting.speed_multiplier=Множитель скорости
+module.bhop.setting.bind=Бинд
+
+# === Blink Module ===
+module.blink.name=Blink
+module.blink.desc=Задерживает отправку пакетов движения. При выключении модуля все пакеты отправляются одновременно, создавая эффект телепортации.
+module.blink.setting.bind=Бинд
+
+# === CheckVanish Module ===
+module.checkvanish.name=Проверка невидимости
+module.checkvanish.desc=Пингует сервер в фоновом режиме для обнаружения игроков в режиме невидимости. Может использовать внешний API для большей точности.
+module.checkvanish.setting.play_sound=Проигрывать звук при обнаружении
+module.checkvanish.setting.show_on_hud=Отображать на HUD
+module.checkvanish.setting.use_mcsrv_api=Использовать mcsrvstat.us API
+module.checkvanish.setting.check_interval=Интервал проверки (сек)
+module.checkvanish.setting.bind=Бинд
+hud.checkvanish.status.starting=Vanish: Запуск...
+hud.checkvanish.status.waiting=Vanish: Ожидание...
+hud.checkvanish.status.singleplayer=Vanish: Одиночная игра
+hud.checkvanish.status.off=Vanish: Выкл
+hud.checkvanish.status.in_vanish=В невидимости: 
+hud.checkvanish.status.unknown_names=(Имена неизвестны)
+
+# === Colors Module ===
+module.colors.name=Настройки цветов
+
+# === NameTags Module ===
+module.nametags.name=Неймтеги
+module.nametags.desc=Отрисовывает кастомные неймтеги в два этапа: сбор данных в 3D-мире и отрисовка на 2D HUD с полосой здоровья. Отменяет ванильные неймтеги для отрисованных игроков.
+module.nametags.setting.self_thirdperson=Показывать себя от 3-го лица
+module.nametags.setting.health=Показывать здоровье
+module.nametags.setting.hide_vanilla=Скрывать ванильные неймтеги
+module.nametags.setting.bind=Бинд
+module.colors.desc=Централизованное управление цветами для всех модулей рендеринга (ESP, Tracers и т.д.).
+module.colors.setting.players=Игроки
+module.colors.setting.hostile_mobs=Враждебные мобы
+module.colors.setting.friendly_mobs=Дружелюбные мобы
+module.colors.setting.items=Предметы
+module.colors.setting.chests=Сундуки
+module.colors.setting.ender_chests=Эндер-сундуки
+module.colors.setting.barriers_esp=Барьеры (ESP)
+module.colors.setting.anomalies_stalker=Аномалии (Stalker)
+module.colors.setting.artifacts_stalker=Артефакты (Stalker)
+module.colors.setting.artifact_spawns=Спавны артефактов
+
+# === CoordTP Module ===
+module.coordtp.name=Телепорт по координатам
+module.coordtp.desc=Телепортирует вас в указанные координаты, отправляя пакеты. Может не работать на серверах с хорошим анти-читом.
+module.coordtp.setting.coord_x=Координата X
+module.coordtp.setting.coord_y=Координата Y
+module.coordtp.setting.coord_z=Координата Z
+module.coordtp.setting.bind=Бинд
+chat.coordtp.invalid_coords=Неверные координаты в настройках.
+
+# === DamagePopups Module ===
+module.damagepopups.name=Индикатор урона
+module.damagepopups.desc=Показывает красивый индикатор в центре экрана, когда вы или другая сущность получаете урон.
+module.damagepopups.setting.bind=Бинд
+
+# === ESP Module ===
+module.esp.name=ESP
+module.esp.desc=Универсальный WallHack. Отображает рамки и информацию вокруг игроков, мобов, предметов и сундуков, позволяя видеть их сквозь стены.
+module.esp.setting.players=Игроки
+module.esp.setting.hostile_mobs=Враждебные мобы
+module.esp.setting.friendly_mobs=Дружелюбные мобы
+module.esp.setting.items=Предметы
+module.esp.setting.chests=Сундуки
+module.esp.setting.ender_chests=Эндер-сундуки
+module.esp.setting.nametags=Неймтеги
+module.esp.setting.tag_health=Здоровье в теге
+module.esp.setting.tag_distance=Дистанция в теге
+module.esp.setting.tag_item_count=Количество предметов в теге
+module.esp.setting.bind=Бинд
+
+# === ExcaliburBypass Module ===
+module.excaliburbypass.name=Обход Excalibur
+module.excaliburbypass.desc=Обход анти-чита ExcaliburCraft. Блокирует пакеты-нарушения и корректирует 'рукопожатие' для обхода проверок модуля Timer.
+module.excaliburbypass.setting.notify=Уведомлять о блокировке
+module.excaliburbypass.setting.fix_timer=Исправлять Timer
+module.excaliburbypass.setting.bind=Бинд
+notification.excaliburbypass.title.timer_fix=Исправление Timer
+notification.excaliburbypass.message.delay=Ответ задержан на 
+notification.excaliburbypass.title.ac_bypass=Обход АЧ
+notification.excaliburbypass.message.packet_blocked=Заблокирован исходящий 
+notification.excaliburbypass.type.violation_packet=пакет-нарушение
+notification.excaliburbypass.type.out_of_bounds_packet=пакет за пределами границ
+
+# === FakeCreative Module ===
+module.fakecreative.name=Фейковый креатив
+module.fakecreative.desc=Переключает ваш игровой режим на стороне клиента. Позволяет летать и мгновенно ломать блоки, если на сервере нет проверок.
+module.fakecreative.setting.bind=Бинд
+
+# === FavoriteScreen Module ===
+module.favoritescreen.name=Избранные экраны
+module.favoritescreen.desc=Открывает GUI со списком избранных экранов для быстрого доступа.
+module.favoritescreen.setting.open_favorites=Открыть избранное
+
+# === FreeCam Module ===
+module.freecam.name=Свободная камера
+module.freecam.desc=Отсоединяет вашу камеру от тела, позволяя свободно летать и исследовать мир сквозь стены, пока ваш персонаж стоит на месте.
+module.freecam.setting.speed=Скорость
+module.freecam.setting.bind=Бинд
+
+# === Fullbright Module ===
+module.fullbright.name=Полная яркость
+module.fullbright.desc=Увеличивает яркость игры до максимума, позволяя видеть в полной темноте без факелов.
+module.fullbright.setting.bind=Бинд
+
+# === GuiInspector Module ===
+module.guiinspector.name=Инспектор GUI
+module.guiinspector.desc=Открывает инспектор для анализа полей и данных текущего открытого экрана GUI. Инструмент для разработчиков.
+module.guiinspector.setting.activate=Активировать
+notification.guiinspector.title=Инспектор GUI
+notification.guiinspector.message=Сначала вам нужно открыть какой-либо экран.
+
+# === Jesus Module ===
+module.jesus.name=Хождение по воде
+module.jesus.desc='Walk' - стандартный режим.\n'Solid Water' - визуально заменяет воду под вами на твердые блоки.
+module.jesus.setting.mode=Режим
+module.jesus.setting.mode.walk=Ходьба
+module.jesus.setting.mode.solid=Твердая вода
+module.jesus.setting.bind=Бинд
+
+# === KillAura Module ===
+module.killaura.name=KillAura
+module.killaura.desc=Автоматически атакует ближайших врагов. Работает даже в GUI.
+module.killaura.setting.attack_range=Дальность атаки
+module.killaura.setting.cps=КПС
+module.killaura.setting.auto_block=Авто-блок
+module.killaura.setting.raytrace=Проверка трассировки
+module.killaura.setting.swing_animation=Анимация удара
+module.killaura.setting.aimbot=Аимбот (смотреть на цель)
+module.killaura.setting.players=Игроки
+module.killaura.setting.hostile_mobs=Враждебные мобы
+module.killaura.setting.friendly_mobs=Дружелюбные мобы
+module.killaura.setting.customnpc=CustomNPC
+module.killaura.setting.bind=Бинд
+
+# === LookTP Module ===
+module.looktp.name=Телепорт по взгляду
+module.looktp.desc=Телепортирует вас к блоку, на который вы смотрите. Использует отправку нескольких пакетов для обхода некоторых анти-читов.
+module.looktp.setting.max_distance=Макс. дистанция
+module.looktp.setting.key=Клавиша
+notification.looktp.title.fail=Телепорт не удался
+notification.looktp.message.no_block=Нет блока в радиусе 
+notification.looktp.title.success=Телепорт
+notification.looktp.message.moved_to=Перемещение в 
+
+# === MassTrade Module ===
+module.masstrade.name=Массовый трейд
+module.masstrade.desc=Автоматически отправляет запросы на обмен всем игрокам на сервере. Требует наличия на сервере определенного мода на торговлю.
+module.masstrade.setting.packet_delay=Задержка пакетов (мс)
+module.masstrade.setting.cycle_pause=Пауза между циклами (с)
+module.masstrade.setting.bind=Бинд
+notification.masstrade.title.error=Ошибка MassTrade
+notification.masstrade.message.mod_not_found=Мод на торговлю не найден.
+notification.masstrade.title.info=MassTrade
+notification.masstrade.message.starting=Начинаю спам запросами...
+notification.masstrade.message.stopped=Остановлено.
+
+# === NBTEditor Module ===
+module.nbteditor.name=Редактор NBT
+module.nbteditor.desc=Открывает мощный редактор для изменения NBT-данных предмета в вашей руке. Используйте с осторожностью!
+module.nbteditor.setting.bind=Бинд
+chat.nbteditor.hold_item=Вы должны держать предмет в руке, чтобы редактировать его.
+
+# === NoFall Module ===
+module.nofall.name=Нет урона от падения
+module.nofall.desc=Предотвращает урон от падения, отправляя на сервер пакет, указывающий, что вы находитесь на земле.
+module.nofall.setting.bind=Бинд
+
+# === NoWeb Module ===
+module.noweb.name=Анти-паутина
+module.noweb.desc=Позволяет вам двигаться сквозь паутину без замедления.
+module.noweb.setting.bind=Бинд
+
+# === PacketSniffer Module ===
+module.packetsniffer.name=Сниффер пакетов
+module.packetsniffer.desc=Открывает GUI для анализа сетевых пакетов. Позволяет просматривать, фильтровать, редактировать и повторно отправлять пакеты.
+module.packetsniffer.setting.open_gui=Открыть GUI
+
+# === Panic Module ===
+module.panic.name=Паника
+module.panic.desc=Аварийное отключение. Немедленно отключает все модули и выгружает клиент из игры. Настройки сохраняются.
+module.panic.setting.bind=Бинд
+
+# === Phase Module ===
+module.phase.name=Проход сквозь стены
+module.phase.desc=Позволяет проходить сквозь стены (NoClip). Может быть нестабильным и вызывать отбрасывания на серверах.
+module.phase.setting.bind=Бинд
+
+# === ScreenBypass Module ===
+module.screenbypass.name=Обход скриншотов
+module.screenbypass.desc=Автоматически обнаруживает запросы на скриншот от анти-читов и временно отключает все визуальные эффекты клиента, чтобы избежать обнаружения.
+module.screenbypass.setting.delay=Задержка (сек)
+module.screenbypass.setting.copy_response=Копировать ответ
+module.screenbypass.setting.check_channels=Проверять каналы
+module.screenbypass.setting.session_channels=Каналы сессии (UUID)
+module.screenbypass.setting.bind=Бинд
+notification.screenbypass.title.response_copied=Ответ скопирован
+notification.screenbypass.message.response_copied=Запрос сервера скопирован в буфер обмена.
+notification.screenbypass.title.visuals_restored=Визуалы восстановлены
+notification.screenbypass.message.visuals_restored=Проверка обхода завершена.
+
+# === ScreenHistory Module ===
+module.screenhistory.name=История экранов
+module.screenhistory.desc=Открывает GUI со списком недавно открытых экранов для быстрого возврата.
+module.screenhistory.setting.history_limit=Лимит истории
+module.screenhistory.setting.open_history=Открыть историю
+
+# === ScriptManager Module ===
+module.scriptmanager.name=Менеджер скриптов
+module.scriptmanager.desc=Позволяет просматривать и редактировать скрипты NPC.
+module.scriptmanager.setting.open_editor=Открыть редактор
+notification.scriptmanager.title=Менеджер скриптов
+notification.scriptmanager.message.requesting_scripts=Запрашиваю скрипты для 
+notification.scriptmanager.message.npc_not_found=NPC не найден.
+notification.scriptmanager.message.mod_not_found=Мод CustomNPCs не найден.
+
+# === SmartMovingConfigModule Module ===
+module.smartmovingconfig.name=Конфиг SmartMoving
+module.smartmovingconfig.desc=Открывает GUI для редактирования настроек мода SmartMoving прямо в игре.
+module.smartmovingconfig.setting.bind=Бинд
+chat.smartmovingconfig.mod_not_found=Мод SmartMoving не найден. Редактирование недоступно.
+chat.smartmovingconfig.reflection_error=Не удалось получить доступ к объекту конфигурации SmartMoving.
+
+# === SmartSpammer Module ===
+module.smartspammer.name=Умный спамер
+module.smartspammer.desc=Открывает GUI для настройки и запуска автоматического спама сообщениями или командами.
+module.smartspammer.setting.message=Сообщение
+module.smartspammer.setting.interval=Интервал (мс)
+module.smartspammer.setting.duration=Длительность (с)
+module.smartspammer.setting.rand_charset=Символы для {rand}
+module.smartspammer.setting.sequence_list=Список для {seq}
+module.smartspammer.setting.open_gui=Открыть GUI
+notification.smartspammer.title.started=Спамер запущен
+notification.smartspammer.message.started=Работает в фоновом режиме.
+notification.smartspammer.title.stopped=Спамер остановлен
+notification.smartspammer.message.stopped=Остановлено пользователем.
+notification.smartspammer.title.error=Ошибка файла
+notification.smartspammer.message.file_empty=Файл пуст: 
+notification.smartspammer.message.invalid_path=Неверный путь к файлу: 
+notification.smartspammer.message.read_error=Файл не найден или недоступен: 
+notification.smartspammer.title.finished=Спамер завершил работу
+notification.smartspammer.message.finished=Задача выполнена.
+notification.smartspammer.title.file_check=Проверка файла
+notification.smartspammer.message.no_files=Плейсхолдеры {file} не найдены.
+notification.smartspammer.message.files_ok=Все файлы в порядке.
+notification.smartspammer.message.check_error=Найдена ошибка: 
+
+# === Spinner Module ===
+module.spinner.name=Вертушка
+module.spinner.desc=Вращает игрока (видно всем). Скорости по горизонтали и вертикали связаны и управляются одним ползунком. Безопасно: не изменяет пакеты C03.
+module.spinner.setting.yaw_speed=Скорость по горизонтали (град/с)
+module.spinner.setting.packet_rate=Частота пакетов (Гц)
+module.spinner.setting.smooth_sending=Плавная отправка
+module.spinner.setting.vertical_spin=Вертикальное вращение (pitch)
+module.spinner.setting.pitch_amplitude=Амплитуда по вертикали (град)
+module.spinner.setting.bind=Бинд
+notification.spinner.title=Вертушка
+notification.spinner.message.enabled=Включено
+notification.spinner.message.disabled=Выключено
+
+# === Sprint Module ===
+module.sprint.name=Спринт
+module.sprint.desc=Автоматически включает бег при движении.
+module.sprint.setting.bind=Бинд
+
+# === Stalker Module ===
+module.stalker.name=Сталкер
+module.stalker.desc=Плавно следует за игроком, имитируя прыжки и плавание. Останавливается на минимальной дистанции и отключается на максимальной.
+module.stalker.setting.follow_closest=Следовать за ближайшим
+module.stalker.setting.target_nickname=Ник цели
+module.stalker.setting.min_distance=Мин. дистанция
+module.stalker.setting.max_distance=Макс. дистанция
+module.stalker.setting.move_speed=Скорость движения
+module.stalker.setting.render_path=Отрисовывать путь
+module.stalker.setting.mimic_actions=Имитировать прыжки/плавание
+module.stalker.setting.bind=Бинд
+
+# === Suicide Module ===
+module.suicide.name=Суицид
+module.suicide.desc=Мгновенно убивает вашего персонажа, симулируя падение с большой высоты. Полезно для быстрого выхода из ловушек.
+module.suicide.setting.bind=Бинд
+
+# === TeleportSpeed Module ===
+module.teleportspeed.name=Скоростной телепорт
+module.teleportspeed.desc=Симулирует короткие телепорты, шагая вперед по направлению взгляда на выбранное количество блоков.
+module.teleportspeed.setting.steps=Шаги
+module.teleportspeed.setting.climb_height=Высота подъема
+module.teleportspeed.setting.bind=Бинд
+
+# === Fly Module ===
+module.fly.name=Полет
+module.fly.desc=Полет с несколькими режимами (Vanilla, Motion, Packet, Glide, Jetpack) и настраиваемой скоростью.
+module.fly.setting.speed=Скорость полета
+module.fly.setting.bind=Бинд
+module.fly.setting.mode=Режим
+module.fly.mode.vanilla=Ванильный
+module.fly.mode.motion=Движение
+module.fly.mode.packet=Пакетный
+module.fly.mode.glide=Скольжение
+module.fly.mode.jetpack=Джетпак
+
+# (FlyBurst removed; merged into Fly as Jetpack/Packet modes)
+
+# === PathNavigator Module ===
+module.pathnavigator.name=Навигатор пути
+module.pathnavigator.desc=Строит маршрут A* до выбранных координат и ведёт игрока, отображая линию маршрута.
+module.pathnavigator.setting.target=Целевые координаты (x y z или ~ относительные)
+module.pathnavigator.setting.speed=Скорость движения
+module.pathnavigator.setting.trail=Прозрачность трейла
+module.pathnavigator.setting.replan=Пауза перед перепрокладкой (сек)
+module.pathnavigator.setting.bind=Бинд
+module.pathnavigator.notify.title.error=Путь
+module.pathnavigator.notify.title.success=Путь
+module.pathnavigator.notify.title.info=Путь
+module.pathnavigator.notify.world=Мир ещё не загружен.
+module.pathnavigator.notify.bad_target=Некорректные координаты. Используйте формат «x y z» или «~ ~ ~».
+module.pathnavigator.notify.searching=Поиск маршрута...
+module.pathnavigator.notify.no_path=Не удалось найти подходящий путь.
+module.pathnavigator.notify.error=Ошибка маршрута: 
+module.pathnavigator.notify.path_ready=Маршрут готов (%d узлов).
+module.pathnavigator.notify.done=Цель достигнута.
+module.pathnavigator.notify.replan=Перестраиваем маршрут...
+
+# === TimerModule Module ===
+module.timer.name=Таймер
+module.timer.desc=Ускоряет или замедляет течение времени на стороне клиента. Высокие значения могут вызвать проблемы на серверах.
+module.timer.setting.speed=Скорость
+module.timer.setting.bind=Бинд
+
+# === Tracers Module ===
+module.tracers.name=Трейсеры
+module.tracers.desc=Рисует линии к различным сущностям и объектам. Исправлена проблема с "дрожанием" при движении.
+module.tracers.setting.players=Игроки
+module.tracers.setting.hostile_mobs=Враждебные мобы
+module.tracers.setting.friendly_mobs=Дружелюбные мобы
+module.tracers.setting.items=Предметы
+module.tracers.setting.chests=Сундуки
+module.tracers.setting.ender_chests=Эндер-сундуки
+module.tracers.setting.line_width=Толщина линии
+module.tracers.setting.line_origin=Начало линии
+module.tracers.setting.origin.center=Из центра
+module.tracers.setting.origin.feet=Из ног
+module.tracers.setting.bind=Бинд
+
+# === WorldSelector Module ===
+module.worldselector.name=Выбор мира
+module.worldselector.desc=Мгновенно открывает меню выбора одиночного мира из любого места в игре.
+module.worldselector.setting.bind=Бинд
+# === Categories ===
+category.combat=Бой
+category.movement=Движение
+category.render=Визуалы
+category.player=Игрок
+category.exploit=Эксплойты
+category.world=Мир
+category.misc=Разное
+category.fun=Веселье
+category.settings=Настройки
+
+# === NBT Viewer Module ===
+module.nbtviewer.name=Просмотрщик NBT
+module.nbtviewer.desc=Просмотр и попытка редактирования NBT-данных целевой сущности или блока.
+module.nbtviewer.setting.bind=Активировать
+
+# === NBT Editor GUI ===
+nbtedit.title.editor=Редактор NBT
+nbtedit.title.editor_full=Редактор NBTTagCompound
+nbtedit.title.tile=NBT: %s @ %s,%s,%s
+nbtedit.title.entity=NBT: %s (ID: %s)
+nbtedit.button.save=Сохранить
+nbtedit.button.cancel=Отмена
+nbtedit.button.from_json=Из JSON
+nbtedit.button.to_json=В JSON
+nbtedit.button.info=Инфо
+nbtedit.button.send_to_server=Отправить на сервер
+nbtedit.button.cancel_edit=Отменить редактирование
+nbtedit.error.instance_not_bytearray=Неверный NBT: тег 'Instance' должен быть ByteArray. Прерывание загрузки из JSON.
+nbtedit.error.invalid_format=Неверный формат NBT: %s
+
+# === NBT Viewer Notifications ===
+notification.nbtviewer.title=Просмотрщик NBT
+notification.nbtviewer.no_target=Нет цели с NBT-данными.
+notification.nbtviewer.read_error=Ошибка при чтении данных.
+notification.nbtviewer.copied=Полные NBT-данные скопированы.
+
+# === NBT Sender Notifications ===
+notification.nbtsender.title=Отправщик NBT
+notification.nbtsender.tile_try=Попытка обновить TileEntity...
+notification.nbtsender.entity_try=[Экспериментально] Попытка обновить Entity...
+notification.nbtsender.no_target=Нет цели для отправки.
+
+# === Smart Spammer ===
+smartspammer.title=Умный спамер
+smartspammer.placeholder.message=Введите сообщение или /команду...
+smartspammer.field.message=Сообщение или команда:
+smartspammer.field.interval=Интервал (мс):
+smartspammer.field.duration=Длительность (сек):
+smartspammer.button.placeholder_settings=Настройки плейсхолдеров
+smartspammer.button.info=Инфо
+smartspammer.button.start=Начать спам
+smartspammer.button.stop=Остановить спам
+smartspammer.button.close=Закрыть
+smartspammer.status.active=Статус: Активен
+smartspammer.status.idle=Статус: Ожидание
+notification.smartspammer.active=Спамер активен
+notification.smartspammer.background=Работает в фоновом режиме.
+
+# === Packet Sniffer ===
+sniffer.title=Сниффер пакетов
+sniffer.title.select=Выберите пакет для черного списка...
+sniffer.header.folder=Папка
+sniffer.header.clear=Очистить
+sniffer.header.pause=Пауза
+sniffer.header.resume=Продолжить
+sniffer.header.blacklist=Черный список
+sniffer.header.blacklist_on=Вкл
+sniffer.header.blacklist_off=Выкл
+sniffer.tooltip.folder=Открыть папку с логами
+sniffer.tooltip.clear=Очистить лог и перезаписать файл
+sniffer.tooltip.pause=Пауза/Продолжить
+sniffer.tooltip.blacklist_toggle=ЛКМ: Изменить | ПКМ: Переключить
+sniffer.message.resend=[Сниффер] Повторно отправлен %s
+sniffer.message.copied=[Сниффер] %s скопирован в буфер обмена.
+
+# === Blacklist Editor ===
+blacklist.button.back=Назад к снифферу
+blacklist.title=Редактор черного списка пакетов
+blacklist.header.classes=--- Классы в черном списке ---
+blacklist.header.channels=--- Каналы FML в черном списке ---
+blacklist.add_button=[+] Добавить пакет в черный список...
+
+# === Packet Details ===
+details.button.edit_payload_nbt=Редактировать NBT из полезной нагрузки
+details.button.edit_fields=Повторить / Редактировать поля...
+details.button.back=Назад к снифферу
+details.button.blacklist_add=Добавить в черный список
+details.button.blacklist_remove=Удалить из черного списка
+details.payload_hex_heading=--- СЫРАЯ ПОЛЕЗНАЯ НАГРУЗКА (HEX) ---
+details.error.nbt_edit_title=Ошибка редактирования NBT
+details.error.nbt_edit_only_c17=Поддерживается только для C17CustomPayload.
+details.notify.sent.title=Пакет отправлен
+details.notify.sent.message=Отправлен C17 с измененными NBT.
+details.notify.error.title=Ошибка отправки
+details.notify.error.message=Не удалось отправить измененный пакет.
+
+# === NoRender Module ===
+module.norender.name=NoRender
+module.norender.desc=Отключает отрисовку и обработку определенных объектов для повышения FPS.
+module.norender.setting.items=Предметы
+module.norender.setting.particles=Частицы
+module.norender.setting.explosions=Взрывы (TNT)
+module.norender.setting.falling_blocks=Падающие блоки
+module.norender.setting.bind=Бинд
+
+module.packetspammer.name=Спамер пакетами
+module.packetspammer.desc=Непрерывно отправляет выбранный пакет. Можно выбрать из Избранного или ввести HEX для кастомного пейлоада.
+module.packetspammer.setting.mode=Источник
+module.packetspammer.setting.delay=Задержка (мс)
+module.packetspammer.setting.open_gui=Открыть GUI
+
+# === EntityCounter Module ===
+module.entitycounter.name=Счетчик сущностей
+module.entitycounter.desc=Показывает количество сущностей (вещей, игроков, мобов) вокруг. Полезно для поиска лаг-машин или засад.
+module.entitycounter.setting.range=Радиус сканирования
+module.entitycounter.setting.players=Игроки
+module.entitycounter.setting.items=Лежащие предметы
+module.entitycounter.setting.mobs=Мобы и Животные
+module.entitycounter.setting.npcs=NPC
+module.entitycounter.setting.tiles=Тайлы (Сундуки/Механизмы)
+module.entitycounter.setting.bind=Бинд
+
+
+module.autospace.name=Авто-Прыжок
+module.autospace.desc=Постоянно держит пробел зажатым, даже в открытых меню.
+
+# === Dropper Module ===
+module.dropper.name=Выбрасыватель
+module.dropper.desc=Автоматически выбрасывает предметы определенного типа. Ожидает появления предмета, затем выбрасывает все такие предметы.
+module.dropper.setting.delay=Задержка (мс)
+module.dropper.setting.bind=Бинд
+notification.dropper.target_set=Цель задана:
+
+# === Packet Editor ===
+editor.button.send_packet=Отправить пакет
+editor.button.back=Назад к деталям
+editor.loading_fonts=Загрузка шрифтов, пожалуйста, подождите...
+editor.tab.view_raw=Просмотр (Raw)
+editor.tab.edit_fields=Редактировать поля
+editor.button.view_as_text=Показать как текст
+editor.button.view_as_hex=Показать как HEX
+editor.error.decode_bytes=Не удалось декодировать байты.
+
+# === Main Menu ===
+mainmenu.button.multiplayer=Сетевая игра
+mainmenu.button.singleplayer=Одиночная игра
+mainmenu.button.accounts=Аккаунты
+mainmenu.button.options=Настройки
+mainmenu.button.quit=Выход
+
+# === Generic Buttons ===
+generic.button.save=Сохранить
+generic.button.cancel=Отмена
+
+# === Account Manager ===
+account.button.save=Сохранить
+account.button.back=Назад
+account.button.add=Добавить
+account.button.edit=Изменить
+account.button.delete=§cУдалить
+account.button.cancel=Отмена
+notification.account.error.critical_title=Критическая ошибка
+notification.account.error.username_field_missing=Поле имени пользователя не найдено.
+notification.account.error.title=Ошибка
+notification.account.error.username_empty=Имя аккаунта не может быть пустым.
+notification.account.error.account_not_found=Не удалось найти аккаунт для сохранения.
+notification.account.login_error.title=Ошибка входа
+notification.account.login_error.apply_failed=Не удалось применить сессию.
+notification.account.saved_new.title=Аккаунт создан
+notification.account.saved_new.message=Аккаунт '%s' сохранен.
+notification.account.saved.title=Аккаунт сохранен
+notification.account.saved.message=Аккаунт '%s' обновлен.
+notification.account.tokens_updated.title=Токены обновлены
+notification.account.tokens_updated.message=Токены для текущего аккаунта успешно обновлены.
+
+# === NBT Editor (more buttons) ===
+nbtedit.button.copy_full=Копировать все NBT
+nbtedit.button.attempt_edit_send=§eПопытаться изменить и отправить
+nbtedit.button.close=Закрыть
+nbtedit.button.back=Назад к редактору NBT
+
+# === GUI Object Inspector ===
+inspector.button.copy_all=Копировать все
+inspector.button.back=Назад
+inspector.title.gui=Инспектор GUI
+inspector.title.short=Инспектор
+inspector.message.report_copied=Полный отчет скопирован!
+inspector.message.line_copied=Строка скопирована!
+inspector.message.value_set=Установлено: %s
+inspector.message.value_changed=Значение успешно изменено.
+inspector.error.title=Ошибка
+inspector.error.null_for_primitive=Нельзя установить null для примитивного типа
+inspector.error.boolean_expected=Boolean должен быть 'true' или 'false'
+inspector.error.unsupported_type=Неподдерживаемый тип: %s
+inspector.error.invalid_syntax=Неверный синтаксис: 'количествоxID[/урон]'
+inspector.error.unknown_item_id=Неизвестный ID предмета: %s
+inspector.error.nbt_must_be_compound=NBT должен быть тегом Compound.
+inspector.error.nbt_parse_failed=Не удалось разобрать NBT: %s
+inspector.input.title=Новое значение для %s
+
+# === Account Manager Buttons (GUI wires)
+account.button.edit_inline=Изм.
+account.placeholder.username=Новое имя пользователя
+nbtedit.label.name=Имя
+nbtedit.label.value=Значение
+nbtedit.error.duplicate_tag_name=Дублирующееся имя тега
+
+# Details screen extra errors
+details.error.reflection_title=Ошибка рефлексии
+details.error.reflection_payload_access=Не удалось получить доступ к полезной нагрузке пакета.
+details.error.payload_null=Полезная нагрузка пакета равна null.
+details.error.nbt_edit_no_valid=В полезной нагрузке не найдено валидных NBT-данных.
+
+# Editor notifications/messages
+editor.notify.send_error.title=Ошибка отправки
+editor.notify.send_error.invalid_fields=Исправьте неверные поля перед отправкой.
+editor.notify.sent.title=Пакет отправлен
+editor.notify.sent.to_server=%s отправлен на сервер.
+editor.notify.processed.title=Пакет обработан
+editor.notify.processed.locally=%s обработан локально.
+editor.message.no_fields=Для этого пакета не найдено редактируемых полей.
+editor.message.fml_edit_hint=Данные FMLProxyPacket должны редактироваться через 'Редактировать NBT из полезной нагрузки'.
+editor.field.not_editable=Не редактируется
+
+# === Fly Modes (added) ===
+module.fly.setting.mode=Режим
+module.fly.mode.vanilla=Ванильный
+module.fly.mode.motion=Движение
+module.fly.mode.packet=Пакетный
+module.fly.mode.glide=Скольжение
+module.fly.mode.jetpack=Джетпак
+
+module.esp.setting.nametags_scale=Размер неймтегов

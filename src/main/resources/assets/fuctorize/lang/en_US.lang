@@ -1,0 +1,676 @@
+# === AdvancedTooltip Module ===
+module.advancedtooltip.name=Advanced Tooltip
+module.advancedtooltip.desc=Shows extended information about items on hover: ID, durability, class names, and NBT data.
+module.advancedtooltip.setting.show_id=Show ID:Meta
+module.advancedtooltip.setting.show_durability=Show Durability
+module.advancedtooltip.setting.show_classes=Show Class Names
+module.advancedtooltip.setting.show_full_class_name=Show Full Class Name
+module.advancedtooltip.setting.show_nbt=Show NBT Data
+module.advancedtooltip.setting.compact_mode=Compact Mode
+module.advancedtooltip.setting.bind=Bind
+tooltip.advancedtooltip.label.id=ID: 
+tooltip.advancedtooltip.label.durability=Durability: 
+tooltip.advancedtooltip.label.item_class=Item Class: 
+tooltip.advancedtooltip.label.block_class=Block Class: 
+tooltip.advancedtooltip.label.nbt=NBT: 
+
+# === AnomalyESP Module ===
+module.anomalyesp.name=Anomaly ESP
+module.anomalyesp.desc=Displays a box and information around Stalker mod anomalies. Allows seeing them through walls.
+module.anomalyesp.setting.show_anomalies=Show Anomalies
+module.anomalyesp.setting.show_tags=Show Tags
+module.anomalyesp.setting.tag_state=Show State in Tag
+module.anomalyesp.setting.tag_distance=Show Distance in Tag
+module.anomalyesp.setting.distance=Distance
+module.anomalyesp.setting.bind=Bind
+tag.anomalyesp.unknown_state=Unknown
+
+# === AntiAFK Module ===
+module.antiafk.name=Anti-AFK
+module.antiafk.desc=Prevents being kicked for being idle. Periodically makes small movements and can automatically respawn you after death.
+module.antiafk.setting.delay=Delay (seconds)
+module.antiafk.setting.auto_respawn=Auto Respawn
+module.antiafk.setting.bind=Bind
+
+# === AntiKnockback Module ===
+module.antiknockback.name=Anti-Knockback
+module.antiknockback.desc=Completely removes knockback from attacks (S12) and explosions (S27) by cancelling the corresponding server packets.
+module.antiknockback.setting.bind=Bind
+
+
+# === ArtifactESP Module ===
+module.artifactesp.name=Artifact ESP
+module.artifactesp.desc=Displays a box and information around Stalker mod artifacts and their spawn points.
+module.artifactesp.setting.show_artifacts=Show Artifacts
+module.artifactesp.setting.show_spawns=Show Spawns
+module.artifactesp.setting.show_tags=Show Tags
+module.artifactesp.setting.tag_distance=Show Distance in Tag
+module.artifactesp.setting.distance=Distance
+module.artifactesp.setting.bind=Bind
+tag.artifactesp.empty_spawn=Empty Spawn
+tag.artifactesp.artifact=Artifact
+
+# === ArtifactStealer Module ===
+module.artifactstealer.name=Artifact Stealer
+module.artifactstealer.desc=Teleports to an artifact, picks it up, and returns, simulating network lag (Blink).
+module.artifactstealer.setting.range=Range
+module.artifactstealer.setting.bind=Steal Key
+notification.artifactstealer.title.error=Stealer Error
+notification.artifactstealer.title.info=Stealer
+notification.artifactstealer.title.warning=Stealer
+notification.artifactstealer.message.process_already_running=Process is already running.
+notification.artifactstealer.message.stalker_mod_not_found=Stalker Core mod not found.
+notification.artifactstealer.message.no_artifacts_in_range=No artifacts found in range.
+notification.artifactstealer.message.detector_required=A detector is required in the hotbar to steal.
+notification.artifactstealer.message.starting_steal=Starting artifact steal...
+notification.artifactstealer.message.interrupted_by_death=Process interrupted due to death.
+notification.artifactstealer.message.interrupted_by_user=Process interrupted by user.
+notification.artifactstealer.message.attempt_successful=Attempt to steal artifact!
+notification.artifactstealer.message.process_error=An error occurred during the process.
+notification.artifactstealer.message.not_confirmed=Artifact steal not confirmed.
+notification.artifactstealer.message.confirmation_unavailable=Cannot confirm artifact steal (unknown artifact class).
+
+# === BarrierESP Module ===
+module.barrieresp.name=Barrier ESP
+module.barrieresp.desc=Makes invisible barriers (from the CustomModelApi mod) visible by replacing them with glass blocks on the client side. Requires a chunk reload.
+module.barrieresp.setting.bind=Bind
+notification.barrieresp.title.error=BarrierESP Error
+notification.barrieresp.message.mod_not_found=Mod custom_model_api not found.
+notification.barrieresp.message.reflection_failed=Reflection failed on startup.
+notification.barrieresp.message.block_not_found=Barrier block not found!
+notification.barrieresp.message.invalid_block_id=Invalid barrier block ID!
+
+# === BHop Module ===
+module.bhop.name=BHop
+module.bhop.desc='Speed' - for NCP-like servers, requires practice.\n'Simple' - basic BHop for most servers.
+module.bhop.setting.mode=Mode
+module.bhop.setting.mode.speed=Speed
+module.bhop.setting.mode.simple=Simple
+module.bhop.setting.speed_multiplier=Speed Multiplier
+module.bhop.setting.bind=Bind
+
+# === Blink Module ===
+module.blink.name=Blink
+module.blink.desc=Delays sending movement packets. When the module is turned off, all packets are sent at once, creating a teleportation effect.
+module.blink.setting.bind=Bind
+
+# === CheckVanish Module ===
+module.checkvanish.name=Vanish Check
+module.checkvanish.desc=Pings the server in the background to detect players in vanish mode. Can use an external API for greater accuracy.
+module.checkvanish.setting.play_sound=Play sound on detection
+module.checkvanish.setting.show_on_hud=Display on HUD
+module.checkvanish.setting.use_mcsrv_api=Use mcsrvstat.us API
+module.checkvanish.setting.check_interval=Check interval (sec)
+module.checkvanish.setting.bind=Bind
+hud.checkvanish.status.starting=Vanish: Starting...
+hud.checkvanish.status.waiting=Vanish: Waiting...
+hud.checkvanish.status.singleplayer=Vanish: Singleplayer
+hud.checkvanish.status.off=Vanish: Off
+hud.checkvanish.status.in_vanish=Vanished: 
+hud.checkvanish.status.unknown_names=(Names unknown)
+
+# === Colors Module ===
+module.colors.name=Color Settings
+
+# === NameTags Module ===
+module.nametags.name=Name Tags
+module.nametags.desc=Renders custom nameplates in two phases: 3D world collection and 2D HUD drawing with a health rail. Cancels vanilla nameplates for rendered players.
+module.nametags.setting.self_thirdperson=Show self in 3rd person
+module.nametags.setting.health=Show health
+module.nametags.setting.hide_vanilla=Hide vanilla nameplate
+module.nametags.setting.bind=Bind
+module.colors.desc=Centralized color management for all rendering modules (ESP, Tracers, etc.).
+module.colors.setting.players=Players
+module.colors.setting.hostile_mobs=Hostile Mobs
+module.colors.setting.friendly_mobs=Friendly Mobs
+module.colors.setting.items=Items
+module.colors.setting.chests=Chests
+module.colors.setting.ender_chests=Ender Chests
+module.colors.setting.barriers_esp=Barriers (ESP)
+module.colors.setting.anomalies_stalker=Anomalies (Stalker)
+module.colors.setting.artifacts_stalker=Artifacts (Stalker)
+module.colors.setting.artifact_spawns=Artifact Spawns
+
+# === CoordTP Module ===
+module.coordtp.name=Teleport by Coordinates
+module.coordtp.desc=Teleports you to the specified coordinates by sending packets. May not work on servers with good anti-cheat.
+module.coordtp.setting.coord_x=Coordinate X
+module.coordtp.setting.coord_y=Coordinate Y
+module.coordtp.setting.coord_z=Coordinate Z
+module.coordtp.setting.bind=Bind
+chat.coordtp.invalid_coords=Invalid coordinates in settings.
+
+# === DamagePopups Module ===
+module.damagepopups.name=Damage Indicator
+module.damagepopups.desc=Shows a nice indicator in the center of the screen when you or another entity takes damage.
+module.damagepopups.setting.bind=Bind
+
+# === ESP Module ===
+module.esp.name=ESP
+module.esp.desc=A universal WallHack. Displays boxes and information around players, mobs, items, and chests, allowing you to see them through walls.
+module.esp.setting.players=Players
+module.esp.setting.hostile_mobs=Hostile Mobs
+module.esp.setting.friendly_mobs=Friendly Mobs
+module.esp.setting.items=Items
+module.esp.setting.chests=Chests
+module.esp.setting.ender_chests=Ender Chests
+module.esp.setting.nametags=Nametags
+module.esp.setting.tag_health=Health in Tag
+module.esp.setting.tag_distance=Distance in Tag
+module.esp.setting.tag_item_count=Item Count in Tag
+module.esp.setting.bind=Bind
+
+# === ExcaliburBypass Module ===
+module.excaliburbypass.name=Excalibur Bypass
+module.excaliburbypass.desc=Bypass for the ExcaliburCraft anti-cheat. Blocks violation packets and adjusts the 'handshake' to bypass checks for the Timer module.
+module.excaliburbypass.setting.notify=Notify on block
+module.excaliburbypass.setting.fix_timer=Fix Timer
+module.excaliburbypass.setting.bind=Bind
+notification.excaliburbypass.title.timer_fix=Timer Fix
+notification.excaliburbypass.message.delay=Response delayed by 
+notification.excaliburbypass.title.ac_bypass=AC Bypass
+notification.excaliburbypass.message.packet_blocked=Blocked outgoing 
+notification.excaliburbypass.type.violation_packet=violation packet
+notification.excaliburbypass.type.out_of_bounds_packet=out-of-bounds packet
+
+# === FakeCreative Module ===
+module.fakecreative.name=Fake Creative
+module.fakecreative.desc=Switches your game mode on the client side. Allows flying and breaking blocks instantly if the server has no checks.
+module.fakecreative.setting.bind=Bind
+
+# === FavoriteScreen Module ===
+module.favoritescreen.name=Favorite Screens
+module.favoritescreen.desc=Opens a GUI with a list of favorite screens for quick access.
+module.favoritescreen.setting.open_favorites=Open Favorites
+
+# === FreeCam Module ===
+module.freecam.name=FreeCam
+module.freecam.desc=Detaches your camera from your body, allowing you to fly freely and explore the world through walls while your character stands still.
+module.freecam.setting.speed=Speed
+module.freecam.setting.bind=Bind
+
+# === Fullbright Module ===
+module.fullbright.name=Fullbright
+module.fullbright.desc=Increases the game's brightness to the maximum, allowing you to see in complete darkness without torches.
+module.fullbright.setting.bind=Bind
+
+# === GuiInspector Module ===
+module.guiinspector.name=GUI Inspector
+module.guiinspector.desc=Opens an inspector to analyze the fields and data of the currently open GUI screen. A developer tool.
+module.guiinspector.setting.activate=Activate
+notification.guiinspector.title=GUI Inspector
+notification.guiinspector.message=You need to open a screen first.
+
+# === Jesus Module ===
+module.jesus.name=Jesus
+module.jesus.desc='Walk' - standard mode.\n'Solid Water' - visually replaces water under you with solid blocks.
+module.jesus.setting.mode=Mode
+module.jesus.setting.mode.walk=Walk
+module.jesus.setting.mode.solid=Solid Water
+module.jesus.setting.bind=Bind
+
+# === KillAura Module ===
+module.killaura.name=KillAura
+module.killaura.desc=Automatically attacks the nearest enemies. Works even in a GUI.
+module.killaura.setting.attack_range=Attack Range
+module.killaura.setting.cps=CPS
+module.killaura.setting.auto_block=Auto-Block
+module.killaura.setting.raytrace=Ray-Trace Check
+module.killaura.setting.swing_animation=Swing Animation
+module.killaura.setting.aimbot=Aimbot (face target)
+module.killaura.setting.players=Players
+module.killaura.setting.hostile_mobs=Hostile Mobs
+module.killaura.setting.friendly_mobs=Friendly Mobs
+module.killaura.setting.customnpc=CustomNPC
+module.killaura.setting.bind=Bind
+
+# === LookTP Module ===
+module.looktp.name=Look Teleport
+module.looktp.desc=Teleports you to the block you are looking at. Uses multi-packet sending to bypass some anti-cheats.
+module.looktp.setting.max_distance=Max Distance
+module.looktp.setting.key=Key
+notification.looktp.title.fail=Teleport Failed
+notification.looktp.message.no_block=No block within 
+notification.looktp.title.success=Teleport
+notification.looktp.message.moved_to=Moved to 
+
+# === MassTrade Module ===
+module.masstrade.name=Mass Trade
+module.masstrade.desc=Automatically sends trade requests to all players on the server. Requires the server to have a specific trade mod.
+module.masstrade.setting.packet_delay=Packet Delay (ms)
+module.masstrade.setting.cycle_pause=Pause Between Cycles (s)
+module.masstrade.setting.bind=Bind
+notification.masstrade.title.error=MassTrade Error
+notification.masstrade.message.mod_not_found=Trade mod not found.
+notification.masstrade.title.info=MassTrade
+notification.masstrade.message.starting=Starting request spam...
+notification.masstrade.message.stopped=Stopped.
+
+# === NBTEditor Module ===
+module.nbteditor.name=NBT Editor
+module.nbteditor.desc=Opens a powerful editor to modify the NBT data of the item in your hand. Use with caution!
+module.nbteditor.setting.bind=Bind
+chat.nbteditor.hold_item=You must hold an item in your hand to edit it.
+
+# === NoFall Module ===
+module.nofall.name=NoFall
+module.nofall.desc=Prevents fall damage by sending a packet to the server indicating that you are on the ground.
+module.nofall.setting.bind=Bind
+
+# === NoWeb Module ===
+module.noweb.name=NoWeb
+module.noweb.desc=Allows you to move through cobwebs without being slowed down.
+module.noweb.setting.bind=Bind
+
+# === PacketSniffer Module ===
+module.packetsniffer.name=Packet Sniffer
+module.packetsniffer.desc=Opens a GUI to analyze network packets. Allows you to view, filter, edit, and resend packets.
+module.packetsniffer.setting.open_gui=Open GUI
+
+# === Panic Module ===
+module.panic.name=Panic
+module.panic.desc=Emergency shutdown. Immediately disables all modules and unloads the client from the game. Settings are saved.
+module.panic.setting.bind=Bind
+
+# === Phase Module ===
+module.phase.name=Phase
+module.phase.desc=Allows you to pass through walls (NoClip). May be unstable and cause setbacks on servers.
+module.phase.setting.bind=Bind
+
+# === ScreenBypass Module ===
+module.screenbypass.name=Screenshot Bypass
+module.screenbypass.desc=Automatically detects screenshot requests from anti-cheats and temporarily disables all client visuals to avoid detection.
+module.screenbypass.setting.delay=Delay (sec)
+module.screenbypass.setting.copy_response=Copy Response
+module.screenbypass.setting.check_channels=Check Channels
+module.screenbypass.setting.session_channels=Session Channels (UUID)
+module.screenbypass.setting.bind=Bind
+notification.screenbypass.title.response_copied=Response Copied
+notification.screenbypass.message.response_copied=Server request copied to clipboard.
+notification.screenbypass.title.visuals_restored=Visuals Restored
+notification.screenbypass.message.visuals_restored=Bypass check completed.
+
+# === ScreenHistory Module ===
+module.screenhistory.name=Screen History
+module.screenhistory.desc=Opens a GUI with a list of recently opened screens for quick return.
+module.screenhistory.setting.history_limit=History Limit
+module.screenhistory.setting.open_history=Open History
+
+# === ScriptManager Module ===
+module.scriptmanager.name=Script Manager
+module.scriptmanager.desc=Allows you to view and edit NPC scripts.
+module.scriptmanager.setting.open_editor=Open Editor
+notification.scriptmanager.title=ScriptManager
+notification.scriptmanager.message.requesting_scripts=Requesting scripts for 
+notification.scriptmanager.message.npc_not_found=NPC not found.
+notification.scriptmanager.message.mod_not_found=CustomNPCs mod not found.
+
+# === SmartMovingConfigModule Module ===
+module.smartmovingconfig.name=SmartMoving Config
+module.smartmovingconfig.desc=Opens a GUI to edit SmartMoving mod settings directly in the game.
+module.smartmovingconfig.setting.bind=Bind
+chat.smartmovingconfig.mod_not_found=SmartMoving mod not found. Editing is unavailable.
+chat.smartmovingconfig.reflection_error=Failed to access the SmartMoving config object.
+
+# === SmartSpammer Module ===
+module.smartspammer.name=Smart Spammer
+module.smartspammer.desc=Opens a GUI to configure and run automatic message or command spam.
+module.smartspammer.setting.message=Message
+module.smartspammer.setting.interval=Interval (ms)
+module.smartspammer.setting.duration=Duration (s)
+module.smartspammer.setting.rand_charset=Chars for {rand}
+module.smartspammer.setting.sequence_list=List for {seq}
+module.smartspammer.setting.open_gui=Open GUI
+notification.smartspammer.title.started=Spammer Started
+notification.smartspammer.message.started=Running in the background.
+notification.smartspammer.title.stopped=Spammer Stopped
+notification.smartspammer.message.stopped=Stopped by user.
+notification.smartspammer.title.error=File Error
+notification.smartspammer.message.file_empty=File is empty: 
+notification.smartspammer.message.invalid_path=Invalid file path: 
+notification.smartspammer.message.read_error=File not found or inaccessible: 
+notification.smartspammer.title.finished=Spammer Finished
+notification.smartspammer.message.finished=Task completed.
+notification.smartspammer.title.file_check=File Check
+notification.smartspammer.message.no_files=No {file} placeholders found.
+notification.smartspammer.message.files_ok=All file(s) are okay.
+notification.smartspammer.message.check_error=Found an error: 
+
+# === Spinner Module ===
+module.spinner.name=Spinner
+module.spinner.desc=Spins the player (visible to everyone). Yaw and pitch speed are linked and controlled by a single slider. Safe: does not modify C03 packets.
+module.spinner.setting.yaw_speed=Yaw Speed (deg/s)
+module.spinner.setting.packet_rate=Packet Rate (Hz)
+module.spinner.setting.smooth_sending=Smooth Sending
+module.spinner.setting.vertical_spin=Vertical Spin (pitch)
+module.spinner.setting.pitch_amplitude=Pitch Amplitude (deg)
+module.spinner.setting.bind=Bind
+notification.spinner.title=Spinner
+notification.spinner.message.enabled=Enabled
+notification.spinner.message.disabled=Disabled
+
+# === Sprint Module ===
+module.sprint.name=Sprint
+module.sprint.desc=Automatically enables sprinting when moving.
+module.sprint.setting.bind=Bind
+
+# === Stalker Module ===
+module.stalker.name=Stalker
+module.stalker.desc=Smoothly follows a player, mimicking jumps and swimming. Stops at a minimum distance and disengages at a maximum distance.
+module.stalker.setting.follow_closest=Follow Closest
+module.stalker.setting.target_nickname=Target Nickname
+module.stalker.setting.min_distance=Min. Distance
+module.stalker.setting.max_distance=Max. Distance
+module.stalker.setting.move_speed=Move Speed
+module.stalker.setting.render_path=Render Path
+module.stalker.setting.mimic_actions=Mimic Jumps/Swimming
+module.stalker.setting.bind=Bind
+
+# === Suicide Module ===
+module.suicide.name=Suicide
+module.suicide.desc=Instantly kills your character by simulating a fall from a great height. Useful for quickly escaping traps.
+module.suicide.setting.bind=Bind
+
+# === TeleportSpeed Module ===
+module.teleportspeed.name=TeleportSpeed
+module.teleportspeed.desc=Simulates short teleports by stepping forward along your look direction for the selected number of blocks.
+module.teleportspeed.setting.steps=Steps
+module.teleportspeed.setting.climb_height=Climb Height
+module.teleportspeed.setting.bind=Bind
+
+
+# === Fly Module ===
+module.fly.name=Fly
+module.fly.desc=Flight with multiple modes (Vanilla, Motion, Packet, Glide, Jetpack) and adjustable speed.
+module.fly.setting.speed=Flight speed
+module.fly.setting.bind=Bind
+module.fly.setting.mode=Mode
+module.fly.mode.vanilla=Vanilla
+module.fly.mode.motion=Motion
+module.fly.mode.packet=Packet
+module.fly.mode.glide=Glide
+module.fly.mode.jetpack=Jetpack
+
+# (FlyBurst removed; merged into Fly as Jetpack/Packet modes)
+
+# === PathNavigator Module ===
+module.pathnavigator.name=Path Navigator
+module.pathnavigator.desc=Uses the smart A* pathfinder to walk to the selected coordinates and renders the calculated trail.
+module.pathnavigator.setting.target=Target coordinates (x y z or ~ relative)
+module.pathnavigator.setting.speed=Movement speed
+module.pathnavigator.setting.trail=Trail opacity
+module.pathnavigator.setting.replan=Replan delay (sec)
+module.pathnavigator.setting.bind=Bind
+module.pathnavigator.notify.title.error=Pathfinding
+module.pathnavigator.notify.title.success=Pathfinding
+module.pathnavigator.notify.title.info=Pathfinding
+module.pathnavigator.notify.world=The world is not loaded.
+module.pathnavigator.notify.bad_target=Invalid coordinates. Use \"x y z\" or \"~ ~ ~\" format.
+module.pathnavigator.notify.searching=Searching for a route...
+module.pathnavigator.notify.no_path=No valid path could be found.
+module.pathnavigator.notify.error=Path error: 
+module.pathnavigator.notify.path_ready=Path ready (%d nodes).
+module.pathnavigator.notify.done=Destination reached.
+module.pathnavigator.notify.replan=Replanning path...
+
+
+
+# === TimerModule Module ===
+module.timer.name=Timer
+module.timer.desc=Speeds up or slows down the passage of time on the client side. High values can cause issues on servers.
+module.timer.setting.speed=Speed
+module.timer.setting.bind=Bind
+
+# === Tracers Module ===
+module.tracers.name=Tracers
+module.tracers.desc=Draws lines to various entities and objects. Fixed the 'shaking' issue when moving.
+module.tracers.setting.players=Players
+module.tracers.setting.hostile_mobs=Hostile Mobs
+module.tracers.setting.friendly_mobs=Friendly Mobs
+module.tracers.setting.items=Items
+module.tracers.setting.chests=Chests
+module.tracers.setting.ender_chests=Ender Chests
+module.tracers.setting.line_width=Line Width
+module.tracers.setting.line_origin=Line Origin
+module.tracers.setting.origin.center=From Center
+module.tracers.setting.origin.feet=From Feet
+module.tracers.setting.bind=Bind
+
+# === WorldSelector Module ===
+module.worldselector.name=World Selector
+module.worldselector.desc=Instantly opens the single-player world selection menu from anywhere in the game.
+module.worldselector.setting.bind=Bind
+# === Categories ===
+category.combat=Combat
+category.movement=Movement
+category.render=Render
+category.player=Player
+category.exploit=Exploit
+category.world=World
+category.misc=Misc
+category.fun=Fun
+category.settings=Settings
+
+# === NBT Viewer Module ===
+module.nbtviewer.name=NBT Viewer
+module.nbtviewer.desc=View and attempt to edit NBT data of the targeted entity or block.
+module.nbtviewer.setting.bind=Activate
+
+# === NBT Editor GUI ===
+nbtedit.title.editor=NBT Editor
+nbtedit.title.editor_full=NBTTagCompound Editor
+nbtedit.title.tile=NBT: %s @ %s,%s,%s
+nbtedit.title.entity=NBT: %s (ID: %s)
+nbtedit.button.save=Save
+nbtedit.button.cancel=Cancel
+nbtedit.button.from_json=From JSON
+nbtedit.button.to_json=To JSON
+nbtedit.button.info=Info
+nbtedit.button.send_to_server=Send to Server
+nbtedit.button.cancel_edit=Cancel Edit
+nbtedit.error.instance_not_bytearray=Invalid NBT: 'Instance' tag must be a ByteArray. Aborting load from JSON.
+nbtedit.error.invalid_format=Invalid NBT Format: %s
+
+# === NBT Viewer Notifications ===
+notification.nbtviewer.title=NBT Viewer
+notification.nbtviewer.no_target=No target with NBT data.
+notification.nbtviewer.read_error=Error while reading data.
+notification.nbtviewer.copied=Full NBT data copied.
+
+# === NBT Sender Notifications ===
+notification.nbtsender.title=NBT Sender
+notification.nbtsender.tile_try=Attempting to update TileEntity...
+notification.nbtsender.entity_try=[Experimental] Attempting to update Entity...
+notification.nbtsender.no_target=No target to send.
+
+# === Smart Spammer ===
+smartspammer.title=Smart Spammer
+smartspammer.placeholder.message=Enter a message or /command...
+smartspammer.field.message=Message or command:
+smartspammer.field.interval=Interval (ms):
+smartspammer.field.duration=Duration (sec):
+smartspammer.button.placeholder_settings=Placeholder Settings
+smartspammer.button.info=Info
+smartspammer.button.start=Start Spamming
+smartspammer.button.stop=Stop Spamming
+smartspammer.button.close=Close
+smartspammer.status.active=Status: Active
+smartspammer.status.idle=Status: Idle
+notification.smartspammer.active=Spammer is active
+notification.smartspammer.background=Running in the background.
+
+# === Packet Sniffer ===
+sniffer.title=Packet Sniffer
+sniffer.title.select=Select a packet to blacklist...
+sniffer.header.folder=Folder
+sniffer.header.clear=Clear
+sniffer.header.pause=Pause
+sniffer.header.resume=Resume
+sniffer.header.blacklist=Blacklist
+sniffer.header.blacklist_on=On
+sniffer.header.blacklist_off=Off
+sniffer.tooltip.folder=Open Log Folder
+sniffer.tooltip.clear=Clear Log & Restart File
+sniffer.tooltip.pause=Pause/Resume
+sniffer.tooltip.blacklist_toggle=LMB: Edit | RMB: Toggle
+sniffer.message.resend=[Sniffer] Re-sent %s
+sniffer.message.copied=[Sniffer] Copied %s to clipboard.
+
+# === Blacklist Editor ===
+blacklist.button.back=Back to Sniffer
+blacklist.title=Packet Blacklist Editor
+blacklist.header.classes=--- Blacklisted Classes ---
+blacklist.header.channels=--- Blacklisted FML Channels ---
+blacklist.add_button=[+] Add packet to blacklist...
+
+# === Packet Details ===
+details.button.edit_payload_nbt=Edit NBT from Payload
+details.button.edit_fields=Replay / Edit Fields...
+details.button.back=Back to Sniffer
+details.button.blacklist_add=Add to Blacklist
+details.button.blacklist_remove=Remove from Blacklist
+details.payload_hex_heading=--- RAW PAYLOAD (HEX) ---
+details.error.nbt_edit_title=NBT Edit Error
+details.error.nbt_edit_only_c17=Only supported for C17CustomPayload.
+details.notify.sent.title=Packet Sent
+details.notify.sent.message=Sent C17 with modified NBT.
+details.notify.error.title=Send Error
+details.notify.error.message=Failed to send modified packet.
+
+
+module.autospace.name=Auto Space
+module.autospace.desc=Continuously holds the jump key, even inside GUIs.
+
+# === EntityCounter Module ===
+module.entitycounter.name=Entity Counter
+module.entitycounter.desc=Displays the number of entities (items, players, mobs) around you to detect lag sources or players.
+module.entitycounter.setting.range=Scan Range
+module.entitycounter.setting.players=Players
+module.entitycounter.setting.items=Dropped Items
+module.entitycounter.setting.mobs=Mobs & Animals
+module.entitycounter.setting.npcs=NPCs
+module.entitycounter.setting.tiles=Tile Entities (Chests/Machines)
+module.entitycounter.setting.bind=Bind
+
+# === NoRender Module ===
+module.norender.name=NoRender
+module.norender.desc=Disables rendering and processing of specific entities to boost FPS.
+module.norender.setting.items=Items
+module.norender.setting.particles=Particles
+module.norender.setting.explosions=Explosions
+module.norender.setting.falling_blocks=Falling Blocks
+module.norender.setting.bind=Bind
+
+module.packetspammer.name=Packet Spammer
+module.packetspammer.desc=Continuously sends a specific packet. Choose from Favorites or enter raw HEX data for C17PacketCustomPayload.
+module.packetspammer.setting.mode=Source
+module.packetspammer.setting.delay=Delay (ms)
+module.packetspammer.setting.open_gui=Open GUI
+
+# === Dropper Module ===
+module.dropper.name=Auto Dropper
+module.dropper.desc=Automatically drops items of a specific type. Waits for an item to appear in inventory, then drops all items of that type.
+module.dropper.setting.delay=Delay (ms)
+module.dropper.setting.bind=Bind
+notification.dropper.target_set=Target Set:
+
+# === Packet Editor ===
+editor.button.send_packet=Send Packet
+editor.button.back=Back to Details
+editor.loading_fonts=Loading fonts, please wait...
+editor.tab.view_raw=View Raw
+editor.tab.edit_fields=Edit Fields
+editor.button.view_as_text=View as Text
+editor.button.view_as_hex=View as HEX
+editor.error.decode_bytes=Failed to decode bytes.
+
+# === Main Menu ===
+mainmenu.button.multiplayer=Multiplayer
+mainmenu.button.singleplayer=Singleplayer
+mainmenu.button.accounts=Accounts
+mainmenu.button.options=Options
+mainmenu.button.quit=Quit
+
+# === Generic Buttons ===
+generic.button.save=Save
+generic.button.cancel=Cancel
+
+# === Account Manager ===
+account.button.save=Save
+account.button.back=Back
+account.button.add=Add
+account.button.edit=Edit
+account.button.delete=В§cDelete
+account.button.cancel=Cancel
+notification.account.error.critical_title=Critical Error
+notification.account.error.username_field_missing=Username field not found.
+notification.account.error.title=Error
+notification.account.error.username_empty=Account name cannot be empty.
+notification.account.error.account_not_found=Could not find account to save.
+notification.account.login_error.title=Login Error
+notification.account.login_error.apply_failed=Failed to apply session.
+notification.account.saved_new.title=Account Created
+notification.account.saved_new.message=Account '%s' saved.
+notification.account.saved.title=Account Saved
+notification.account.saved.message=Account '%s' updated.
+notification.account.tokens_updated.title=Tokens Updated
+notification.account.tokens_updated.message=Successfully updated tokens for current account.
+
+# === NBT Editor (more buttons) ===
+nbtedit.button.copy_full=Copy Full NBT
+nbtedit.button.attempt_edit_send=В§eAttempt Edit & Send
+nbtedit.button.close=Close
+nbtedit.button.back=Back to NBT Editor
+
+# === GUI Object Inspector ===
+inspector.button.copy_all=Copy All
+inspector.button.back=Back
+inspector.title.gui=GUI Inspector
+inspector.title.short=Inspector
+inspector.message.report_copied=Full report copied!
+inspector.message.line_copied=Line copied!
+inspector.message.value_set=Set: %s
+inspector.message.value_changed=Value changed successfully.
+inspector.error.title=Error
+inspector.error.null_for_primitive=Cannot set null to a primitive type
+inspector.error.boolean_expected=Boolean must be 'true' or 'false'
+inspector.error.unsupported_type=Unsupported type: %s
+inspector.error.invalid_syntax=Invalid syntax: 'countxID[/damage]'
+inspector.error.unknown_item_id=Unknown item ID: %s
+inspector.error.nbt_must_be_compound=NBT must be a Compound tag.
+inspector.error.nbt_parse_failed=Failed to parse NBT: %s
+inspector.input.title=New value for %s
+
+# === Account Manager Buttons (GUI wires)
+account.button.edit_inline=Edit
+account.placeholder.username=New username
+nbtedit.label.name=Name
+nbtedit.label.value=Value
+nbtedit.error.duplicate_tag_name=Duplicate Tag Name
+
+# Details screen extra errors
+details.error.reflection_title=Reflection Error
+details.error.reflection_payload_access=Could not access packet payload.
+details.error.payload_null=Packet payload is null.
+details.error.nbt_edit_no_valid=No valid NBT found in payload.
+
+# Editor notifications/messages
+editor.notify.send_error.title=Send Error
+editor.notify.send_error.invalid_fields=Fix invalid fields before sending.
+editor.notify.sent.title=Packet Sent
+editor.notify.sent.to_server=%s sent to server.
+editor.notify.processed.title=Packet Processed
+editor.notify.processed.locally=%s processed locally.
+editor.message.no_fields=No editable fields found for this packet.
+editor.message.fml_edit_hint=FMLProxyPacket data must be edited via 'Edit NBT from Payload'.
+editor.field.not_editable=Not editable
+
+# === Fly Modes (added) ===
+module.fly.setting.mode=Mode
+module.fly.mode.vanilla=Vanilla
+module.fly.mode.motion=Motion
+module.fly.mode.packet=Packet
+module.fly.mode.glide=Glide
+module.fly.mode.jetpack=Jetpack
+
+module.esp.setting.nametags_scale=Nametags Size
