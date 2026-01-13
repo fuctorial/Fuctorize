@@ -1,0 +1,122 @@
+// C:\Fuctorize\build.gradle
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "ForgeGradlePatch"
+            url  = "https://github.com/juanmuscaria/maven/raw/master"
+        }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:[1.2-1.4.6-SNAPSHOT,)"
+    }
+}
+
+repositories {
+    flatDir { dirs 'deps' } // Убрали libs, т.к. они больше не нужны
+    mavenCentral()
+    maven { name = "MinecraftForge"; url = "https://maven.minecraftforge.net/" }
+    maven { name = "Minecraft";      url = "https://libraries.minecraft.net/" }
+}
+
+apply plugin: 'forge'
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+version = "1.0"
+group   = "ru.fuctorial.fuctorize"
+archivesBaseName = "Fuctorize"
+
+minecraft {
+    version = "1.7.10-10.13.4.1614-1.7.10"
+    runDir = "minecraft-debug"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+afterEvaluate {
+    downloadMcpTools.enabled = false
+    task copyMcpFile(type: Copy) {
+        from "C:/Users/brawl/Downloads/mcp_stable-12-1.7.10.zip"
+        into "${gradle.gradleUserHomeDir}/caches/minecraft/de/oceanlabs/mcp/mcp_stable/12-1.7.10/"
+        rename { "mcp_stable-12-1.7.10.zip" }
+    }
+    tasks.matching { it.name == 'extractMcpData' }.all {
+        dependsOn copyMcpFile
+        enabled = false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'deps', include: '*.jar')
+}
+
+jar {
+    // Ничего не встраиваем и ничего не исключаем. Просто собираем JAR.
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+import java.util.zip.ZipFile
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+
+task addArchiveComment {
+    description = "Rewrites the just-built JAR to include an archive comment"
+    group = "build"
+    dependsOn jar
+    doLast {
+        File jarFile = jar.archivePath
+        if (!jarFile.exists()) { return }
+        File tmpFile = new File(jarFile.parentFile, jarFile.name + ".tmp")
+        try {
+            ZipFile zipIn = new ZipFile(jarFile)
+            ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(tmpFile))
+            zipOut.setComment("ru.fuctorial.fuctorize.JavaInjector\nnet.minecraft.launchwrapper.LaunchClassLoader")
+            zipIn.entries().each { entry ->
+                ZipEntry newEntry = new ZipEntry(entry.name)
+                newEntry.time = entry.time
+                zipOut.putNextEntry(newEntry)
+                zipIn.getInputStream(entry).withCloseable { is ->
+                    byte[] buffer = new byte[8192]
+                    int len
+                    while ((len = is.read(buffer)) > 0) {
+                        zipOut.write(buffer, 0, len)
+                    }
+                }
+                zipOut.closeEntry()
+            }
+            zipOut.close()
+            zipIn.close()
+            int attempts = 5
+            while (attempts > 0 && !jarFile.delete()) {
+                println "Could not delete original JAR, retrying in 200ms..."
+                sleep(200)
+                attempts--
+            }
+            if (!jarFile.exists()) {
+                if (!tmpFile.renameTo(jarFile)) { throw new GradleException("Could not rename temp JAR to original name") }
+                println "✔ Added archive comment to $jarFile"
+            } else {
+                tmpFile.delete()
+                throw new GradleException("Could not delete original JAR after multiple attempts: $jarFile. It might be locked.")
+            }
+        } catch (Exception e) {
+            if (tmpFile.exists()) { tmpFile.delete() }
+            throw e
+        }
+    }
+}
+
+build.finalizedBy addArchiveComment

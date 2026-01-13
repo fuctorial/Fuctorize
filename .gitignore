@@ -1,0 +1,85 @@
+# Gradle
+.gradle/
+build/
+out/
+!gradle/wrapper/gradle-wrapper.properties
+
+# Gradle wrapper
+gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+workspace.xml
+# IDEA misc
+*.ipr
+
+# Java / class / jars
+*.class
+*.jar
+*.war
+*.ear
+
+# Build / temp
+tmp/
+logs/
+*.log
+taskLogs/
+build/
+.reobf/
+*.orig
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python scripts outputs / pycache
+__pycache__/
+*.pyc
+
+# Native / binary tools / exe
+*.exe
+zip.exe
+
+# libs / dependencies (local libs folder)
+libs/
+deps/
+
+# Minecraft / debug / runtime data (DO NOT PUSH)
+minecraft-debug/
+minecraft-debug/**/*
+*.mca
+*.dat
+saves/
+playerdata/
+crash-reports/
+screenshots/
+fuctorize/logs/
+minecraft-debug/latest.log
+minecraft-debug/*.log.gz
+
+# MCP / caches / generated mappings
+.mcp/
+tmp/
+.reobf/
+
+# IDEA run configs, local settings
+*.iml
+.idea/
+*.ipr
+workspace.xml
+
+# Misc
+*.keystore
+*.p12
+
+# JetBrains specific caches
+/.gradle/
+/build/
+/out/
+
+# Local settings/config files
+config.json
+hider.json
+sniffer_blacklist.json
