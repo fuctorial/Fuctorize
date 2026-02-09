@@ -14,6 +14,80 @@ tooltip.advancedtooltip.label.item_class=Item Class:
 tooltip.advancedtooltip.label.block_class=Block Class: 
 tooltip.advancedtooltip.label.nbt=NBT: 
 
+module.vclip.name=VClip
+module.vclip.desc=Teleports you up or down through blocks.
+module.vclip.setting.height=Height
+
+module.crosshair.name=Crosshair
+module.crosshair.desc=Customizable crosshair overlay.
+module.crosshair.setting.color=Color
+module.crosshair.setting.size=Length
+module.crosshair.setting.width=Thickness
+module.crosshair.setting.gap=Gap
+module.crosshair.setting.outline=Outline
+module.crosshair.setting.dot=Center Dot
+module.crosshair.setting.t_shape=T-Shape
+module.crosshair.setting.bind=Keybind
+
+module.aimassist.name=Aim Assist
+module.aimassist.desc=Automatically corrects aim towards targets when attacking.
+module.aimassist.setting.range=Range
+module.aimassist.setting.visible_only=Visible Check
+module.aimassist.setting.fov=FOV
+module.aimassist.setting.speed=Smoothness
+module.aimassist.setting.hitchance=Hit Chance %
+module.aimassist.setting.click_only=Click Only
+module.aimassist.setting.weapon_only=Weapon Only
+module.aimassist.setting.players=Players
+module.aimassist.setting.hostile_mobs=Mobs
+module.aimassist.setting.friendly_mobs=Animals
+module.aimassist.setting.customnpc=NPCs
+module.aimassist.setting.bind=Keybind
+
+module.customesp.name=Custom ESP
+module.customesp.desc=Highlights user-selected entities or blocks.
+module.customesp.setting.select=Select Target
+module.customesp.setting.reset=Reset Target
+module.customesp.setting.range=Scan Range
+module.customesp.setting.limit=Object Limit
+module.customesp.setting.color=Color
+module.customesp.setting.show_tags=Show Names
+module.customesp.setting.bind=Bind
+
+notification.customesp.select_start=Look at target and press Right Click. (ESC to cancel)
+notification.customesp.select_cancel=Selection cancelled.
+notification.customesp.selected=Selected target:
+notification.customesp.reset=Target reset.
+module.colors.setting.custom_esp=Custom ESP Target
+module.colors.setting.crosshair=Crosshair
+
+module.moderatorlist.name=Moderator List
+module.moderatorlist.desc=Shows listed moderators if they are online.
+module.moderatorlist.setting.scale=Scale
+module.moderatorlist.setting.bg=Background
+module.moderatorlist.setting.open_editor=Open Editor (Bind)
+
+moderator.editor.title=Moderator Editor
+moderator.editor.add=Add
+generic.button.back=Back
+module.colors.setting.randombox=Random Boxes
+module.randomboxesp.name=RandomBox ESP
+module.randomboxesp.desc=Highlights Random Boxes from Stalker mod.
+module.randomboxesp.setting.show_boxes=Show Boxes
+module.randomboxesp.setting.show_tags=Show Tags
+module.randomboxesp.setting.tag_distance=Show Distance
+module.randomboxesp.setting.distance=Render Distance
+module.randomboxesp.setting.bind=Bind
+tag.randomboxesp.name=Random Box
+
+# ESP Update
+module.esp.setting.custom_npcs=CustomNPCs
+module.esp.setting.nt_players=NT: Players
+module.esp.setting.nt_mobs=NT: Mobs
+module.esp.setting.nt_animals=NT: Animals
+module.esp.setting.nt_items=NT: Items
+module.esp.setting.nt_npcs=NT: NPCs
+
 # === AnomalyESP Module ===
 module.anomalyesp.name=Anomaly ESP
 module.anomalyesp.desc=Displays a box and information around Stalker mod anomalies. Allows seeing them through walls.
@@ -665,6 +739,12 @@ editor.message.no_fields=No editable fields found for this packet.
 editor.message.fml_edit_hint=FMLProxyPacket data must be edited via 'Edit NBT from Payload'.
 editor.field.not_editable=Not editable
 
+module.connectioninfo.name=Connection Info
+module.connectioninfo.desc=Notifies locally about player connection status.
+chat.connectioninfo.join=§7[§a+§7] §f%s
+chat.connectioninfo.leave=§7[§c-§7] §f%s
+chat.connectioninfo.leave_mod=§7[§c-§7] §c%s §7(Left or Vanished)
+
 # === Fly Modes (added) ===
 module.fly.setting.mode=Mode
 module.fly.mode.vanilla=Vanilla
@@ -672,5 +752,8 @@ module.fly.mode.motion=Motion
 module.fly.mode.packet=Packet
 module.fly.mode.glide=Glide
 module.fly.mode.jetpack=Jetpack
+
+
+module.customesp.setting.strict=Strict Match (Meta/NBT)
 
 module.esp.setting.nametags_scale=Nametags Size

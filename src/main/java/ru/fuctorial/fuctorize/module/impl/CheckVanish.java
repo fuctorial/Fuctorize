@@ -1,4 +1,3 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\module\impl\CheckVanish.java
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -17,11 +16,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.input.Keyboard;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CheckVanish extends Module {
 
@@ -30,9 +26,14 @@ public class CheckVanish extends Module {
     private SliderSetting checkInterval;
     private BooleanSetting useMcsrvApi;
 
-    private final List<String> vanishedPlayers = new CopyOnWriteArrayList<>();
+    // Используем Set для быстрого поиска, потокобезопасный
+    private final Set<String> vanishedPlayers = Collections.newSetFromMap(new ConcurrentHashMap<>());
     private volatile String hudInfo = Lang.get("hud.checkvanish.status.starting");
     private volatile Thread checkThread;
+
+    // Анти-фликер переменные
+    private int potentialVanishCount = 0;
+    private long lastDetectionTime = 0;
 
     public CheckVanish(FuctorizeClient client) {
         super(client);
@@ -44,8 +45,8 @@ public class CheckVanish extends Module {
 
         playSound = new BooleanSetting(Lang.get("module.checkvanish.setting.play_sound"), true);
         showOnHud = new BooleanSetting(Lang.get("module.checkvanish.setting.show_on_hud"), true);
-        useMcsrvApi = new BooleanSetting(Lang.get("module.checkvanish.setting.use_mcsrv_api"), true);
-        checkInterval = new SliderSetting(Lang.get("module.checkvanish.setting.check_interval"), 10.0, 5.0, 60.0, 1.0);
+        useMcsrvApi = new BooleanSetting(Lang.get("module.checkvanish.setting.use_mcsrv_api"), false); // По умолчанию лучше false ради скорости
+        checkInterval = new SliderSetting(Lang.get("module.checkvanish.setting.check_interval"), 5.0, 2.0, 60.0, 1.0);
 
         addSetting(playSound);
         addSetting(showOnHud);
@@ -63,9 +64,11 @@ public class CheckVanish extends Module {
 
     @Override
     public void onEnable() {
+        vanishedPlayers.clear();
+        potentialVanishCount = 0;
         if (checkThread == null || !checkThread.isAlive()) {
             checkThread = new Thread(this::runCheckLoop);
-            checkThread.setName("Fuctorize-VanishCheck-Thread");
+            checkThread.setName("Fuctorize-VanishCheck");
             checkThread.setDaemon(true);
             checkThread.start();
         }
@@ -78,29 +81,38 @@ public class CheckVanish extends Module {
             checkThread = null;
         }
         vanishedPlayers.clear();
-        hudInfo = Lang.get("hud.checkvanish.status.off");
+        hudInfo = "";
     }
 
     private void runCheckLoop() {
         while (this.isEnabled() && !Thread.currentThread().isInterrupted()) {
             try {
                 if (mc.thePlayer == null || mc.theWorld == null) {
-                    hudInfo = Lang.get("hud.checkvanish.status.waiting");
+                    hudInfo = "§7Waiting for game...";
                     Thread.sleep(2000);
                     continue;
                 }
 
                 ServerData serverData = mc.func_147104_D();
                 if (serverData == null || serverData.serverIP == null) {
-                    hudInfo = Lang.get("hud.checkvanish.status.singleplayer");
-                    Thread.sleep(10000);
+                    hudInfo = "§7Singleplayer";
+                    Thread.sleep(5000);
                     continue;
                 }
 
-                NetUtils.VanishResult result = NetUtils.performMegaCheck(serverData.serverIP, useMcsrvApi.enabled);
+                // 1. Получаем список игроков из Таба (локально)
+                Set<String> tabPlayers = getTabPlayerNames();
+                int tabCount = tabPlayers.size();
+
+                // 2. Делаем сетевую проверку
+                // Если включен API или в прошлом цикле были подозреваемые - форсируем детальную проверку
+                boolean forceDetail = useMcsrvApi.enabled || potentialVanishCount > 0;
+                NetUtils.VanishResult result = NetUtils.performMegaCheck(serverData.serverIP, forceDetail);
 
                 if (result.isSuccess()) {
-                    processVanishResult(result);
+                    processLogic(result, tabPlayers, tabCount);
+                } else {
+                    hudInfo = "§cCheck Failed";
                 }
 
                 Thread.sleep((long) (checkInterval.value * 1000));
@@ -109,88 +121,131 @@ public class CheckVanish extends Module {
                 break;
             } catch (Exception e) {
                 e.printStackTrace();
-                try { Thread.sleep(5000); } catch (InterruptedException ignored) { break; }
             }
         }
     }
 
-    private void processVanishResult(NetUtils.VanishResult result) {
-        Set<String> playersInTab = getTabPlayerNames();
-        List<String> newVanishedList = new ArrayList<>();
+    private void processLogic(NetUtils.VanishResult result, Set<String> tabPlayers, int tabCount) {
         int serverCount = result.getOnlineCount();
-        int tabCount = playersInTab.size();
 
+        // --- ДЕТЕКЦИЯ ПО ИМЕНАМ (Точная) ---
         if (result.hasExactNames()) {
-            Set<String> pingedNames = new HashSet<>(result.getPlayerNames());
-            for (String pingedName : pingedNames) {
-                if (!playersInTab.contains(pingedName)) {
-                    newVanishedList.add(pingedName);
+            Set<String> remoteNames = new HashSet<>(result.getPlayerNames());
+            List<String> detected = new ArrayList<>();
+
+            for (String name : remoteNames) {
+                // Если имя есть на сервере, но нет в табе = Ваниш
+                if (!tabPlayers.contains(name)) {
+                    detected.add(name);
                 }
             }
-            updateAndPlaySounds(newVanishedList);
-            updateHudInfoWithNames();
+
+            updateVanishList(detected);
+            updateHud(detected.size(), true);
+            return;
+        }
+
+        // --- ДЕТЕКЦИЯ ПО КОЛИЧЕСТВУ (Приблизительная) ---
+        // serverCount = реальный онлайн (из пинга)
+        // tabCount = видимый онлайн
+        int diff = serverCount - tabCount;
+
+        if (diff > 0) {
+            // Чтобы избежать ложных срабатываний при входе игрока (когда пинг обновился, а таб еще нет),
+            // мы ждем подтверждения в следующем цикле, если это "новый" ваниш.
+            long now = System.currentTimeMillis();
+
+            // Если разница держится уже более 2 секунд (защита от лага при входе)
+            if (potentialVanishCount == diff && (now - lastDetectionTime > 2000)) {
+                vanishedPlayers.clear(); // Имен нет, чистим старые
+                updateHud(diff, false);
+                if (diff != potentialVanishCount) { // Только если изменилось число
+                    playAlertSound();
+                }
+            } else if (potentialVanishCount != diff) {
+                // Число изменилось, начинаем отсчет заново
+                potentialVanishCount = diff;
+                lastDetectionTime = now;
+                hudInfo = "§eVerifying...";
+            }
         } else {
-            int vanishedCount = serverCount - tabCount;
-            if (vanishedCount > 0) {
-                updateHudInfoWithoutNames(vanishedCount);
-                this.vanishedPlayers.clear();
+            potentialVanishCount = 0;
+            if (!vanishedPlayers.isEmpty()) {
+                vanishedPlayers.clear();
+                hudInfo = "§aClean";
             } else {
-                updateAndPlaySounds(new ArrayList<>());
-                updateHudInfoWithNames();
+                hudInfo = "§aClean";
             }
         }
     }
 
-    private void updateAndPlaySounds(List<String> newVanishedList) {
-        if (playSound.enabled) {
-            for (String name : newVanishedList) {
-                if (!this.vanishedPlayers.contains(name)) {
-                    mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("mob.endermen.portal"), 1.0F));
-                }
-            }
-            for (String name : this.vanishedPlayers) {
-                if (!newVanishedList.contains(name)) {
-                    mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("random.orb"), 0.5F));
-                }
+    private void updateVanishList(List<String> currentDetected) {
+        boolean newVanishFound = false;
+
+        // Удаляем тех, кто вышел из ваниша
+        vanishedPlayers.removeIf(name -> !currentDetected.contains(name));
+
+        // Добавляем новых
+        for (String name : currentDetected) {
+            if (vanishedPlayers.add(name)) {
+                newVanishFound = true;
             }
         }
-        this.vanishedPlayers.clear();
-        this.vanishedPlayers.addAll(newVanishedList);
+
+        if (newVanishFound) {
+            playAlertSound();
+        }
+    }
+
+    private void playAlertSound() {
+        if (playSound.enabled && mc.thePlayer != null) {
+            mc.getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("mob.endermen.portal"), 1.0F));
+        }
+    }
+
+    private void updateHud(int count, boolean hasNames) {
+        if (count <= 0) {
+            hudInfo = "§aClean";
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("§cIn Vanish: ").append(count);
+
+        if (hasNames && !vanishedPlayers.isEmpty()) {
+            sb.append(" §7[").append(String.join(", ", vanishedPlayers)).append("]");
+        } else {
+            sb.append(" §f(Unknown)");
+        }
+        hudInfo = sb.toString();
     }
 
     private Set<String> getTabPlayerNames() {
         Set<String> names = new HashSet<>();
         if (mc.thePlayer != null && mc.thePlayer.sendQueue != null) {
-            for (Object infoObj : mc.thePlayer.sendQueue.playerInfoList) {
-                if (infoObj instanceof GuiPlayerInfo) {
-                    GuiPlayerInfo info = (GuiPlayerInfo) infoObj;
-                    if (info.name != null) names.add(info.name);
+            // playerInfoList иногда может быть null или изменяться в другом потоке, нужен try-catch или копия
+            try {
+                List<GuiPlayerInfo> list = new ArrayList<>(mc.thePlayer.sendQueue.playerInfoList);
+                for (GuiPlayerInfo info : list) {
+                    if (info != null && info.name != null) names.add(info.name);
                 }
+            } catch (Exception e) {
+                // Игнорируем concurrency issues
             }
         }
         return names;
     }
 
-    private void updateHudInfoWithNames() {
-        int vanishCount = vanishedPlayers.size();
-        String namesString = "";
-        if (vanishCount > 0) {
-            namesString = " §7[" + String.join(", ", vanishedPlayers) + "]";
-        }
-        hudInfo = (vanishCount > 0 ? "§c" : "§a") + Lang.get("hud.checkvanish.status.in_vanish") + vanishCount + namesString;
-    }
-
-    private void updateHudInfoWithoutNames(int count) {
-        hudInfo = "§c" + Lang.get("hud.checkvanish.status.in_vanish") + count + " §f" + Lang.get("hud.checkvanish.status.unknown_names");
-    }
-
     @Override
     public void onRender2D(RenderGameOverlayEvent.Text event) {
-        if (shouldShowOnHud() && client.fontManager != null && client.fontManager.isReady()) {
+        if (shouldShowOnHud() && client.fontManager != null) {
             CustomFontRenderer font = client.fontManager.bold_22;
-            float hudWidth = font.getStringWidth(hudInfo) + 4;
+            if (hudInfo == null) return;
+
+            float hudWidth = font.getStringWidth(hudInfo);
             float hudX = (event.resolution.getScaledWidth() - hudWidth) / 2.0f;
-            float hudY = 5;
+            float hudY = 10; // Чуть ниже, чтобы не накладываться на боссбар
+
             font.drawString(hudInfo, hudX + 1, hudY + 1, 0x50000000);
             font.drawString(hudInfo, hudX, hudY, -1);
         }
