@@ -6,7 +6,7 @@ import ru.fuctorial.fuctorize.client.render.TagData;
 import ru.fuctorial.fuctorize.module.Category;
 import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.*;
-import ru.fuctorial.fuctorize.utils.Lang;
+import ru.fuctorial.fuctorize.utils.Lang; // Импорт Lang
 import ru.fuctorial.fuctorize.utils.RenderUtils;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.gui.ScaledResolution;
@@ -44,9 +44,15 @@ public class ESP extends Module {
     private BooleanSetting mobs;
     private BooleanSetting animals;
     private BooleanSetting items;
+    private BooleanSetting customNpcs;
     private BooleanSetting chests;
     private BooleanSetting enderChests;
-    private BooleanSetting nameTags;
+
+    private BooleanSetting ntPlayers;
+    private BooleanSetting ntMobs;
+    private BooleanSetting ntAnimals;
+    private BooleanSetting ntItems;
+    private BooleanSetting ntNpcs;
     private SliderSetting nameTagsScale;
     private BooleanSetting tagHealth;
     private BooleanSetting tagDistance;
@@ -55,7 +61,7 @@ public class ESP extends Module {
     private Class<?> npcClass = null;
     private final List<TagData> tagDataList = new ArrayList<>();
     private EntityLivingBase lastPlayerReference;
-    // Cached projection state for NameTags per frame
+
     private final FloatBuffer ntModelview = BufferUtils.createFloatBuffer(16);
     private final FloatBuffer ntProjection = BufferUtils.createFloatBuffer(16);
     private final IntBuffer ntViewport = BufferUtils.createIntBuffer(16);
@@ -71,9 +77,8 @@ public class ESP extends Module {
         super(client);
         try {
             npcClass = Class.forName("noppes.npcs.entity.EntityCustomNpc");
-            System.out.println("Fuctorize/ESP: CustomNPCs mod detected.");
         } catch (ClassNotFoundException e) {
-            System.out.println("Fuctorize/ESP: CustomNPCs mod not found, NPC ESP will be disabled.");
+            // Ignored
         }
     }
 
@@ -81,14 +86,23 @@ public class ESP extends Module {
     public void init() {
         setMetadata("esp", Lang.get("module.esp.name"), Category.RENDER);
 
+        // --- ESP Boxes ---
         players = new BooleanSetting(Lang.get("module.esp.setting.players"), true);
         mobs = new BooleanSetting(Lang.get("module.esp.setting.hostile_mobs"), true);
         animals = new BooleanSetting(Lang.get("module.esp.setting.friendly_mobs"), false);
         items = new BooleanSetting(Lang.get("module.esp.setting.items"), false);
+        customNpcs = new BooleanSetting(Lang.get("module.esp.setting.custom_npcs"), true); // Локализовано
         chests = new BooleanSetting(Lang.get("module.esp.setting.chests"), true);
         enderChests = new BooleanSetting(Lang.get("module.esp.setting.ender_chests"), true);
 
-        nameTags = new BooleanSetting(Lang.get("module.esp.setting.nametags"), true);
+        // --- NameTags ---
+        // Используем ключи для локализации
+        ntPlayers = new BooleanSetting(Lang.get("module.esp.setting.nt_players"), true);
+        ntMobs = new BooleanSetting(Lang.get("module.esp.setting.nt_mobs"), false);
+        ntAnimals = new BooleanSetting(Lang.get("module.esp.setting.nt_animals"), false);
+        ntItems = new BooleanSetting(Lang.get("module.esp.setting.nt_items"), true);
+        ntNpcs = new BooleanSetting(Lang.get("module.esp.setting.nt_npcs"), true);
+
         nameTagsScale = new SliderSetting(Lang.get("module.esp.setting.nametags_scale"), 1.0, 0.5, 2.0, 0.05);
         tagHealth = new BooleanSetting(Lang.get("module.esp.setting.tag_health"), true);
         tagDistance = new BooleanSetting(Lang.get("module.esp.setting.tag_distance"), true);
@@ -98,14 +112,21 @@ public class ESP extends Module {
         addSetting(mobs);
         addSetting(animals);
         addSetting(items);
+        addSetting(customNpcs);
         addSetting(chests);
         addSetting(enderChests);
         addSetting(new SeparatorSetting());
-        addSetting(nameTags);
+
+        addSetting(ntPlayers);
+        addSetting(ntMobs);
+        addSetting(ntAnimals);
+        addSetting(ntItems);
+        addSetting(ntNpcs);
         addSetting(nameTagsScale);
         addSetting(tagHealth);
         addSetting(tagDistance);
         addSetting(tagItemCount);
+
         addSetting(new BindSetting(Lang.get("module.esp.setting.bind"), Keyboard.KEY_NONE));
     }
 
@@ -122,7 +143,6 @@ public class ESP extends Module {
 
         tagDataList.clear();
 
-        // Prepare per-frame projection state for stable NameTags
         try {
             GL11.glGetFloat(GL11.GL_MODELVIEW_MATRIX, ntModelview);
             GL11.glGetFloat(GL11.GL_PROJECTION_MATRIX, ntProjection);
@@ -132,18 +152,17 @@ public class ESP extends Module {
         ntCamX = RenderManager.instance.renderPosX;
         ntCamY = RenderManager.instance.renderPosY;
         ntCamZ = RenderManager.instance.renderPosZ;
-        // Interpolated camera for frustum to minimize flicker
-        {
-            float pt = event.partialTicks;
-            double lx = renderView.lastTickPosX;
-            double ly = renderView.lastTickPosY;
-            double lz = renderView.lastTickPosZ;
-            double vx = lx + (renderView.posX - lx) * pt;
-            double vy = ly + (renderView.posY - ly) * pt;
-            double vz = lz + (renderView.posZ - lz) * pt;
-            ntFrustrum = new Frustrum();
-            ntFrustrum.setPosition(vx, vy, vz);
-        }
+
+        float pt = event.partialTicks;
+        double lx = renderView.lastTickPosX;
+        double ly = renderView.lastTickPosY;
+        double lz = renderView.lastTickPosZ;
+        double vx = lx + (renderView.posX - lx) * pt;
+        double vy = ly + (renderView.posY - ly) * pt;
+        double vz = lz + (renderView.posZ - lz) * pt;
+        ntFrustrum = new Frustrum();
+        ntFrustrum.setPosition(vx, vy, vz);
+
         ntNow = System.currentTimeMillis();
         if (!ntLastSeen.isEmpty()) {
             ntLastSeen.entrySet().removeIf(e -> ntNow - e.getValue() > 1000L);
@@ -155,12 +174,17 @@ public class ESP extends Module {
 
         for (Object o : mc.theWorld.loadedEntityList) {
             Entity entity = (Entity) o;
-            int color = getColorForEntity(entity, renderView);
-            if (color != 0) {
+            if (entity == renderView) continue;
+
+            int color = getBaseColor(entity);
+            if (color == 0) continue;
+
+            if (shouldRenderBox(entity)) {
                 renderESPBox(entity.boundingBox, color);
-                if (nameTags.enabled) {
-                    calculateAndStoreTagData(entity, event.partialTicks, color, renderView);
-                }
+            }
+
+            if (shouldRenderNameTag(entity)) {
+                calculateAndStoreTagData(entity, event.partialTicks, color, renderView);
             }
         }
 
@@ -183,6 +207,33 @@ public class ESP extends Module {
     @Override
     public void onRender2D(RenderGameOverlayEvent.Text event) {
         client.nameTagRenderer.renderTagList(tagDataList);
+    }
+
+    private int getBaseColor(Entity entity) {
+        if (entity instanceof EntityPlayer) return Colors.playersColor.getColor();
+        if (entity instanceof EntityMob) return Colors.mobsColor.getColor();
+        if (entity instanceof EntityAnimal) return Colors.animalsColor.getColor();
+        if (entity instanceof EntityItem) return Colors.itemsColor.getColor();
+        if (npcClass != null && npcClass.isInstance(entity)) return new Color(0xFF8C00).getRGB();
+        return 0;
+    }
+
+    private boolean shouldRenderBox(Entity entity) {
+        if (entity instanceof EntityPlayer) return players.enabled;
+        if (entity instanceof EntityMob) return mobs.enabled;
+        if (entity instanceof EntityAnimal) return animals.enabled;
+        if (entity instanceof EntityItem) return items.enabled;
+        if (npcClass != null && npcClass.isInstance(entity)) return customNpcs.enabled;
+        return false;
+    }
+
+    private boolean shouldRenderNameTag(Entity entity) {
+        if (entity instanceof EntityPlayer) return ntPlayers.enabled;
+        if (entity instanceof EntityMob) return ntMobs.enabled;
+        if (entity instanceof EntityAnimal) return ntAnimals.enabled;
+        if (entity instanceof EntityItem) return ntItems.enabled;
+        if (npcClass != null && npcClass.isInstance(entity)) return ntNpcs.enabled;
+        return false;
     }
 
     private void calculateAndStoreTagData(Entity entity, float partialTicks, int espColor, EntityLivingBase renderView) {
@@ -258,8 +309,7 @@ public class ESP extends Module {
         tagDataList.add(new TagData(nameLine, infoLine, espColor, healthPercent, coords, distance, stableKey, scaleMul));
     }
 
-    private float[] projectAabbToGui(double minX, double minY, double minZ,
-                                     double maxX, double maxY, double maxZ) {
+    private float[] projectAabbToGui(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
         double[] xs = {minX, maxX};
         double[] ys = {minY, maxY};
         double[] zs = {minZ, maxZ};
@@ -319,16 +369,6 @@ public class ESP extends Module {
         float minSY = Math.min(topSY, botSY);
         float maxSY = Math.max(topSY, botSY);
         return new float[]{topSX - 0.5f, minSY, topSX + 0.5f, maxSY};
-    }
-
-    private int getColorForEntity(Entity entity, EntityLivingBase renderView) {
-        if (entity == renderView) return 0;
-        if (players.enabled && entity instanceof EntityPlayer) return Colors.playersColor.getColor();
-        if (mobs.enabled && entity instanceof EntityMob) return Colors.mobsColor.getColor();
-        if (animals.enabled && entity instanceof EntityAnimal) return Colors.animalsColor.getColor();
-        if (items.enabled && entity instanceof EntityItem) return Colors.itemsColor.getColor();
-        if (npcClass != null && npcClass.isInstance(entity)) return new Color(0xFF8C00).getRGB();
-        return 0;
     }
 
     private void renderESPBox(AxisAlignedBB bb, int color) {

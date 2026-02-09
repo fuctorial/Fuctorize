@@ -14,6 +14,90 @@ tooltip.advancedtooltip.label.item_class=Класс предмета:
 tooltip.advancedtooltip.label.block_class=Класс блока: 
 tooltip.advancedtooltip.label.nbt=NBT: 
 
+module.vclip.name=VClip
+module.vclip.desc=Телепортация вверх или вниз сквозь блоки.
+module.vclip.setting.height=Высота
+
+module.moderatorlist.name=Лист модеров
+module.moderatorlist.desc=Показывает модераторов из списка, если они в сети.
+module.moderatorlist.setting.scale=Размер
+module.moderatorlist.setting.bg=Фон
+module.moderatorlist.setting.open_editor=Открыть редактор (Бинд)
+
+moderator.editor.title=Редактор модераторов
+moderator.editor.add=Добавить
+generic.button.back=Назад
+
+# ESP Update
+module.esp.setting.custom_npcs=CustomNPCs
+module.esp.setting.nt_players=Ники: Игроки
+module.esp.setting.nt_mobs=Ники: Мобы
+module.esp.setting.nt_animals=Ники: Животные
+module.esp.setting.nt_items=Ники: Предметы
+module.esp.setting.nt_npcs=Ники: NPC
+
+module.colors.setting.randombox=Рандомные Ящики
+module.randomboxesp.name=ESP на рандомбоксы
+module.randomboxesp.desc=Подсвечивает Рандомные ящики из мода Stalker.
+module.randomboxesp.setting.show_boxes=Показывать боксы
+module.randomboxesp.setting.show_tags=Показывать теги
+module.randomboxesp.setting.tag_distance=Дистанция в теге
+module.randomboxesp.setting.distance=Дальность прорисовки
+module.randomboxesp.setting.bind=Бинд
+tag.randomboxesp.name=Рандомный ящик
+
+module.connectioninfo.name=Connection Info
+module.connectioninfo.desc=Пишет в чат о входе/выходе игроков. Отслеживает модераторов.
+chat.connectioninfo.join=§7[§a+§7] §f%s
+chat.connectioninfo.leave=§7[§c-§7] §f%s
+chat.connectioninfo.leave_mod=§7[§c-§7] §c%s §7(Вышел или ушел в Vanish)
+
+module.aimassist.name=Aim Assist
+module.aimassist.desc=Плавная доводка прицела на цель при атаке.
+module.aimassist.setting.range=Дистанция
+module.aimassist.setting.fov=Угол обзора (FOV)
+module.aimassist.setting.speed=Плавность
+module.aimassist.setting.hitchance=Шанс попадания %
+module.aimassist.setting.click_only=Только при клике
+module.aimassist.setting.weapon_only=Только с оружием
+module.aimassist.setting.players=Игроки
+module.aimassist.setting.hostile_mobs=Мобы
+module.aimassist.setting.friendly_mobs=Животные
+module.aimassist.setting.customnpc=CustomNpc
+module.aimassist.setting.bind=Бинд
+module.aimassist.setting.visible_only=Проверка прямой видимости
+module.customesp.setting.strict=Строгое соотв. (Meta/NBT)
+
+module.colors.setting.custom_esp=Цель КастомESP
+module.colors.setting.crosshair=Прицел
+
+module.customesp.name=Кастом ESP
+module.customesp.desc=Подсвечивает выбранные блоки или сущности.
+module.customesp.setting.select=Выбрать цель
+module.customesp.setting.reset=Сбросить цель
+module.customesp.setting.range=Радиус скана
+module.customesp.setting.limit=Лимит объектов
+module.customesp.setting.color=Цвет
+module.customesp.setting.show_tags=Показывать имена
+module.customesp.setting.bind=Кнопка
+
+notification.customesp.select_start=Наведитесь на цель и нажмите ПКМ. (ESC для отмены)
+notification.customesp.select_cancel=Выбор отменен.
+notification.customesp.selected=Цель выбрана:
+notification.customesp.reset=Цель сброшена.
+
+module.crosshair.name=Прицел
+module.crosshair.desc=Заменяет стандартный прицел на настраиваемый.
+module.crosshair.setting.color=Цвет
+module.crosshair.setting.size=Длина линий
+module.crosshair.setting.width=Толщина
+module.crosshair.setting.gap=Отступ
+module.crosshair.setting.outline=Обводка
+module.crosshair.setting.dot=Точка в центре
+module.crosshair.setting.t_shape=Т-образный
+module.crosshair.setting.bind=Бинд
+
+
 # === AnomalyESP Module ===
 module.anomalyesp.name=ESP на аномалии
 module.anomalyesp.desc=Отображает рамку и информацию вокруг аномалий из мода Stalker. Позволяет видеть их сквозь стены.

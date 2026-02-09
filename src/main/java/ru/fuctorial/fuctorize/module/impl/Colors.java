@@ -1,4 +1,3 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\module\impl\Colors.java
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -22,6 +21,11 @@ public class Colors extends Module {
     public static ColorSetting artifactColor;
     public static ColorSetting spawnColor;
     public static ColorSetting barrierColor;
+    public static ColorSetting randomBoxColor;
+
+    // --- НОВЫЕ ПОЛЯ ---
+    public static ColorSetting customEspColor;
+    public static ColorSetting crosshairColor;
 
     public Colors(FuctorizeClient client) {
         super(client);
@@ -44,14 +48,23 @@ public class Colors extends Module {
         addSetting(itemsColor);
         addSetting(new SeparatorSetting());
 
+        // --- Custom ESP & Crosshair ---
+        customEspColor = new ColorSetting(Lang.get("module.colors.setting.custom_esp"), new Color(0, 255, 255));
+        crosshairColor = new ColorSetting(Lang.get("module.colors.setting.crosshair"), new Color(0, 255, 0));
+        addSetting(customEspColor);
+        addSetting(crosshairColor);
+
+        addSetting(new SeparatorSetting());
+        randomBoxColor = new ColorSetting(Lang.get("module.colors.setting.randombox"), new Color(180, 0, 255));
+        addSetting(randomBoxColor);
         chestsColor = new ColorSetting(Lang.get("module.colors.setting.chests"), new Color(0xFFFF00));
         enderChestsColor = new ColorSetting(Lang.get("module.colors.setting.ender_chests"), new Color(0x800080));
         barrierColor = new ColorSetting(Lang.get("module.colors.setting.barriers_esp"), new Color(255, 255, 0, 100));
         addSetting(chestsColor);
         addSetting(enderChestsColor);
         addSetting(barrierColor);
-        addSetting(new SeparatorSetting());
 
+        addSetting(new SeparatorSetting());
         anomalyColor = new ColorSetting(Lang.get("module.colors.setting.anomalies_stalker"), new Color(255, 80, 0));
         artifactColor = new ColorSetting(Lang.get("module.colors.setting.artifacts_stalker"), new Color(0, 255, 80));
         spawnColor = new ColorSetting(Lang.get("module.colors.setting.artifact_spawns"), new Color(150, 150, 150));
