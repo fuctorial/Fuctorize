@@ -1,10 +1,10 @@
-package ru.fuctorial.fuctorize.utils; // <-- Изменить package
+package ru.fuctorial.fuctorize.utils;  
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 
-// ru.fuctorial/fuctorize/utils/Statics.java
+ 
 
 
 

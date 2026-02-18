@@ -26,12 +26,12 @@ public class CheckVanish extends Module {
     private SliderSetting checkInterval;
     private BooleanSetting useMcsrvApi;
 
-    // Используем Set для быстрого поиска, потокобезопасный
+     
     private final Set<String> vanishedPlayers = Collections.newSetFromMap(new ConcurrentHashMap<>());
     private volatile String hudInfo = Lang.get("hud.checkvanish.status.starting");
     private volatile Thread checkThread;
 
-    // Анти-фликер переменные
+     
     private int potentialVanishCount = 0;
     private long lastDetectionTime = 0;
 
@@ -45,7 +45,7 @@ public class CheckVanish extends Module {
 
         playSound = new BooleanSetting(Lang.get("module.checkvanish.setting.play_sound"), true);
         showOnHud = new BooleanSetting(Lang.get("module.checkvanish.setting.show_on_hud"), true);
-        useMcsrvApi = new BooleanSetting(Lang.get("module.checkvanish.setting.use_mcsrv_api"), false); // По умолчанию лучше false ради скорости
+        useMcsrvApi = new BooleanSetting(Lang.get("module.checkvanish.setting.use_mcsrv_api"), false);  
         checkInterval = new SliderSetting(Lang.get("module.checkvanish.setting.check_interval"), 5.0, 2.0, 60.0, 1.0);
 
         addSetting(playSound);
@@ -100,12 +100,12 @@ public class CheckVanish extends Module {
                     continue;
                 }
 
-                // 1. Получаем список игроков из Таба (локально)
+                 
                 Set<String> tabPlayers = getTabPlayerNames();
                 int tabCount = tabPlayers.size();
 
-                // 2. Делаем сетевую проверку
-                // Если включен API или в прошлом цикле были подозреваемые - форсируем детальную проверку
+                 
+                 
                 boolean forceDetail = useMcsrvApi.enabled || potentialVanishCount > 0;
                 NetUtils.VanishResult result = NetUtils.performMegaCheck(serverData.serverIP, forceDetail);
 
@@ -128,13 +128,13 @@ public class CheckVanish extends Module {
     private void processLogic(NetUtils.VanishResult result, Set<String> tabPlayers, int tabCount) {
         int serverCount = result.getOnlineCount();
 
-        // --- ДЕТЕКЦИЯ ПО ИМЕНАМ (Точная) ---
+         
         if (result.hasExactNames()) {
             Set<String> remoteNames = new HashSet<>(result.getPlayerNames());
             List<String> detected = new ArrayList<>();
 
             for (String name : remoteNames) {
-                // Если имя есть на сервере, но нет в табе = Ваниш
+                 
                 if (!tabPlayers.contains(name)) {
                     detected.add(name);
                 }
@@ -145,25 +145,25 @@ public class CheckVanish extends Module {
             return;
         }
 
-        // --- ДЕТЕКЦИЯ ПО КОЛИЧЕСТВУ (Приблизительная) ---
-        // serverCount = реальный онлайн (из пинга)
-        // tabCount = видимый онлайн
+         
+         
+         
         int diff = serverCount - tabCount;
 
         if (diff > 0) {
-            // Чтобы избежать ложных срабатываний при входе игрока (когда пинг обновился, а таб еще нет),
-            // мы ждем подтверждения в следующем цикле, если это "новый" ваниш.
+             
+             
             long now = System.currentTimeMillis();
 
-            // Если разница держится уже более 2 секунд (защита от лага при входе)
+             
             if (potentialVanishCount == diff && (now - lastDetectionTime > 2000)) {
-                vanishedPlayers.clear(); // Имен нет, чистим старые
+                vanishedPlayers.clear();  
                 updateHud(diff, false);
-                if (diff != potentialVanishCount) { // Только если изменилось число
+                if (diff != potentialVanishCount) {  
                     playAlertSound();
                 }
             } else if (potentialVanishCount != diff) {
-                // Число изменилось, начинаем отсчет заново
+                 
                 potentialVanishCount = diff;
                 lastDetectionTime = now;
                 hudInfo = "§eVerifying...";
@@ -182,10 +182,10 @@ public class CheckVanish extends Module {
     private void updateVanishList(List<String> currentDetected) {
         boolean newVanishFound = false;
 
-        // Удаляем тех, кто вышел из ваниша
+         
         vanishedPlayers.removeIf(name -> !currentDetected.contains(name));
 
-        // Добавляем новых
+         
         for (String name : currentDetected) {
             if (vanishedPlayers.add(name)) {
                 newVanishFound = true;
@@ -223,14 +223,14 @@ public class CheckVanish extends Module {
     private Set<String> getTabPlayerNames() {
         Set<String> names = new HashSet<>();
         if (mc.thePlayer != null && mc.thePlayer.sendQueue != null) {
-            // playerInfoList иногда может быть null или изменяться в другом потоке, нужен try-catch или копия
+             
             try {
                 List<GuiPlayerInfo> list = new ArrayList<>(mc.thePlayer.sendQueue.playerInfoList);
                 for (GuiPlayerInfo info : list) {
                     if (info != null && info.name != null) names.add(info.name);
                 }
             } catch (Exception e) {
-                // Игнорируем concurrency issues
+                 
             }
         }
         return names;
@@ -244,7 +244,7 @@ public class CheckVanish extends Module {
 
             float hudWidth = font.getStringWidth(hudInfo);
             float hudX = (event.resolution.getScaledWidth() - hudWidth) / 2.0f;
-            float hudY = 10; // Чуть ниже, чтобы не накладываться на боссбар
+            float hudY = 10;  
 
             font.drawString(hudInfo, hudX + 1, hudY + 1, 0x50000000);
             font.drawString(hudInfo, hudX, hudY, -1);

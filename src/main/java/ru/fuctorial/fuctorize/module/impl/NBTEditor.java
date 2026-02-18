@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\NBTEditor.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -6,7 +6,7 @@ import ru.fuctorial.fuctorize.client.gui.nbtedit.GuiNBTEdit;
 import ru.fuctorial.fuctorize.module.Category;
 import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.BindSetting;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import ru.fuctorial.fuctorize.utils.Statics;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

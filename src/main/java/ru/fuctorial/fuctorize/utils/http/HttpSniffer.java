@@ -27,10 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * Global HTTP hook that wraps java.net URL connections to capture request/response details.
- * Installed once via URL.setURLStreamHandlerFactory and delegates to the default handlers.
- */
+ 
 public final class HttpSniffer implements URLStreamHandlerFactory {
 
     private static volatile boolean installed = false;
@@ -69,11 +66,11 @@ public final class HttpSniffer implements URLStreamHandlerFactory {
                 System.err.println("Fuctorize/HttpSniffer: Failed to create delegating handler for protocol " + protocol);
             }
         }
-        return null; // fallback to JVM defaults for other protocols
+        return null;  
     }
 
     private static URLStreamHandler createDefaultHandler(String protocol) throws Exception {
-        // Reflectively instantiate JRE default handlers to avoid compile-time dependency on sun.*
+         
         String cls = "sun.net.www.protocol." + protocol + ".Handler";
         Class<?> c = Class.forName(cls);
         return (URLStreamHandler) c.newInstance();
@@ -129,7 +126,7 @@ public final class HttpSniffer implements URLStreamHandlerFactory {
             c.url = d.getURL() != null ? d.getURL().toString() : null;
             try { c.method = getRequestMethod(); } catch (Exception ignored) {}
             c.requestHeaders = new LinkedHashMap<String, List<String>>();
-            // Merge headers set via API and getRequestProperties (if available)
+             
             try {
                 Map<String, List<String>> props = d.getRequestProperties();
                 if (props != null) c.requestHeaders.putAll(props);
@@ -141,14 +138,14 @@ public final class HttpSniffer implements URLStreamHandlerFactory {
             }
             c.requestBody = reqBody;
             c.connection = d;
-            // Defer response fields until later
+             
             synchronized (lock) {
                 if (recent.size() >= 8) recent.removeFirst();
                 recent.addLast(c);
             }
         }
 
-        // --- Overrides delegating to 'd' with capture ---
+         
         @Override public void connect() throws IOException { ensureCapturedOnce(); d.connect(); }
         @Override public void disconnect() { d.disconnect(); }
         @Override public boolean usingProxy() { return d.usingProxy(); }
@@ -176,7 +173,7 @@ public final class HttpSniffer implements URLStreamHandlerFactory {
                 updateResponseMeta();
                 return new TeeInputStream(is, respBody);
             } catch (IOException e) {
-                // Try error stream to still capture body
+                 
                 InputStream err = d.getErrorStream();
                 updateResponseMeta();
                 if (err != null) return new TeeInputStream(err, respBody);
@@ -208,7 +205,7 @@ public final class HttpSniffer implements URLStreamHandlerFactory {
         @Override public String getResponseMessage() throws IOException { ensureCapturedOnce(); String msg = d.getResponseMessage(); updateResponseMeta(); return msg; }
         @Override public Map<String, List<String>> getHeaderFields() { return d.getHeaderFields(); }
 
-        // Delegate remaining getters/setters to 'd'
+         
         @Override public Object getContent() throws IOException { return d.getContent(); }
         @Override public Object getContent(Class[] classes) throws IOException { return d.getContent(classes); }
         @Override public long getIfModifiedSince() { return d.getIfModifiedSince(); }
@@ -228,7 +225,7 @@ public final class HttpSniffer implements URLStreamHandlerFactory {
         @Override public void setDefaultUseCaches(boolean defaultusecaches) { d.setDefaultUseCaches(defaultusecaches); }
         @Override public boolean getUseCaches() { return d.getUseCaches(); }
         @Override public void setUseCaches(boolean usecaches) { d.setUseCaches(usecaches); }
-        // URLConnection in Java 8 does not expose a dedicated accessor beyond getIfModifiedSince
+         
         @Override public void setIfModifiedSince(long ifmodifiedsince) { d.setIfModifiedSince(ifmodifiedsince); }
         @Override public int getConnectTimeout() { return d.getConnectTimeout(); }
         @Override public void setConnectTimeout(int timeout) { d.setConnectTimeout(timeout); }
@@ -367,7 +364,7 @@ public final class HttpSniffer implements URLStreamHandlerFactory {
         if (baos == null) return null;
         byte[] data = baos.toByteArray();
         if (data.length == 0) return null;
-        // Prefer UTF-8 printable text; otherwise return HEX trimmed
+         
         String asText = new String(data, UTF8);
         if (isMostlyPrintable(asText)) {
             if (asText.length() > 8000) return asText.substring(0, 8000) + "...";

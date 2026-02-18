@@ -239,21 +239,21 @@ public class BotNavigator {
             lastRecalculation = nowCheck;
         }
 
-        // --- ПРАВКА: ПРЕДЗАГРУЗКА (PREFETCH) ---
-        // Если осталось меньше 15 узлов (RECALC_AHEAD_THRESHOLD) и мы еще не ищем путь — ищем заранее!
+         
+         
         if (currentPath != null && !currentPath.isEmpty()
                 && (currentPath.size() - currentNodeIndex) < RECALC_AHEAD_THRESHOLD
                 && pathSegmentQueue.isEmpty()
                 && activeCalculations.get() == 0) {
 
-            // Проверяем, что мы не у самого финиша (ближе 20 блоков), иначе будет спам запросами
+             
             double distToFinalTarget = Math.sqrt(mc.thePlayer.getDistanceSq(targetX, targetY, targetZ));
             if (distToFinalTarget > 20.0) {
                 System.out.println("[PREFETCH] Approaching segment end. Pre-calculating next chunk...");
                 requestNewPathSegment(false);
             }
         }
-        // ---------------------------------------
+         
 
         switch (state) {
             case WALKING: handleWalkingState(); break;
@@ -266,26 +266,26 @@ public class BotNavigator {
         handleStuckAndPathEnd();
     }
 
-    // ИСПРАВЛЕННЫЙ МЕТОД updateState С ЗАЩИТОЙ ОТ СБРОСА FAILSAFE
+     
     private void updateState() {
         if (currentPath == null || currentNodeIndex >= currentPath.size()) {
             state = MovementState.IDLE;
             return;
         }
 
-        // === ЗАЩИТА ОТ СБРОСА (STICKY BREAKING) ===
-        // Если мы уже ломаем блок (назначенный Failsafe'ом), не даем логике ниже перебить это решение.
+         
+         
         if (state == MovementState.BREAKING_BLOCK) {
-            // Если блок всё еще непроходим (твердый) - продолжаем ломать!
+             
             if (!PathfindingUtils.isBlockPassable(mc.theWorld, actionTargetX, actionTargetY, actionTargetZ)) {
-                return; // ВЫХОДИМ, сохраняя состояние BREAKING
+                return;  
             } else {
-                // Блок сломан! Сбрасываемся.
+                 
                 System.out.println("[UPDATE] Block broken, resuming path.");
                 breakingStartTime = 0;
                 InputUtils.releaseAttack();
                 mc.playerController.resetBlockRemoving();
-                // Даем коду ниже выбрать следующее действие (идти/прыгать)
+                 
             }
         }
 
@@ -298,36 +298,36 @@ public class BotNavigator {
         if (activeNode.breakBlocks > 0) {
             int desiredY = activeNode.y;
             int targetBreakX = activeNode.x;
-            // По дефолту целимся в ноги (нижний блок прохода)
+             
             int targetBreakY = YMath.feetFromGround(desiredY);
             int targetBreakZ = activeNode.z;
 
-            boolean overrideTarget = false; // <--- ФИКС: Флаг запрета переключения на голову
+            boolean overrideTarget = false;  
 
-            // Если мы идем ВНИЗ (предыдущий узел выше текущего)
+             
             if (currentNodeIndex > 0) {
                 PathNode prev = currentPath.get(currentNodeIndex - 1);
                 if (prev.y > activeNode.y) {
-                    // Если блок под ногами (в предыдущей точке) непроходим - значит это пол, который надо прокопать
+                     
                     if (!PathfindingUtils.isBlockPassable(mc.theWorld, prev.x, prev.y, prev.z)) {
                         targetBreakX = prev.x;
                         targetBreakY = prev.y;
                         targetBreakZ = prev.z;
-                        overrideTarget = true; // <--- ФИКС: Запоминаем, что цель жестко задана (копаем пол)
+                        overrideTarget = true;  
                     }
                 }
             }
 
-            // Если цель НЕ зафиксирована вручную (overrideTarget == false),
-            // то проверяем: если ноги уже свободны, переключаемся на голову.
-            // Раньше это срабатывало всегда, из-за чего при копке вниз бот целился в воздух (голову) вместо пола.
+             
+             
+             
             if (!overrideTarget && PathfindingUtils.isBlockPassable(mc.theWorld, targetBreakX, targetBreakY, targetBreakZ)) {
                 targetBreakX = activeNode.x;
                 targetBreakY = YMath.headFromGround(desiredY);
                 targetBreakZ = activeNode.z;
             }
 
-            // Если итоговый блок непроходим - начинаем ломать
+             
             if (!PathfindingUtils.isBlockPassable(mc.theWorld, targetBreakX, targetBreakY, targetBreakZ)) {
                 int[] actual = getOccludingBlock(targetBreakX, targetBreakY, targetBreakZ);
                 int finalX = actual[0];
@@ -349,7 +349,7 @@ public class BotNavigator {
             }
         }
 
-        // --- ЛОГИКА УСТАНОВКИ (PLACING) ---
+         
         if (activeNode.placeBlocks > 0) {
             int targetY = activeNode.y;
             if (activeNode.moveType == MovementType.PILLAR) targetY = YMath.groundFromPlayerPosY(mc.thePlayer.boundingBox.minY);
@@ -365,7 +365,7 @@ public class BotNavigator {
             }
         }
 
-        // --- ПРЫЖКИ И СПУСК ---
+         
         if (activeNode.needsJump && mc.thePlayer.onGround && mc.thePlayer.boundingBox.minY < activeNode.getFeetY() - 0.1) {
             if (!ensureHeadroomForAscendSafe()) return;
             state = MovementState.JUMPING;
@@ -381,7 +381,7 @@ public class BotNavigator {
             return;
         }
 
-        // Если ни одно из условий выше не сработало, значит идем
+         
         state = MovementState.WALKING;
     }
 
@@ -438,10 +438,10 @@ public class BotNavigator {
         if (mc.thePlayer == null || mc.theWorld == null) return new int[]{targetX, targetY, targetZ};
         Vec3 eyes = Vec3.createVectorHelper(mc.thePlayer.posX, mc.thePlayer.boundingBox.minY + mc.thePlayer.getEyeHeight(), mc.thePlayer.posZ);
         Vec3 targetCenter = Vec3.createVectorHelper(targetX + 0.5, targetY + 0.5, targetZ + 0.5);
-        // false, false, false -> не останавливаться на жидкости, проверять коллизию
+         
         MovingObjectPosition mop = mc.theWorld.rayTraceBlocks(eyes, targetCenter, false);
         if (mop != null && mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
-            // Если попали не в цель, и препятствие непроходимо - ломаем препятствие
+             
             if ((mop.blockX != targetX || mop.blockY != targetY || mop.blockZ != targetZ) &&
                     !PathfindingUtils.isBlockPassable(mc.theWorld, mop.blockX, mop.blockY, mop.blockZ)) {
                 return new int[]{mop.blockX, mop.blockY, mop.blockZ};
@@ -454,59 +454,59 @@ public class BotNavigator {
         World world = mc.theWorld;
         EntityPlayer player = mc.thePlayer;
 
-        // =================================================================================
-        // === 1. АВАРИЙНАЯ ПРОВЕРКА ПРЕПЯТСТВИЙ (FAILSAFE) ===
-        // Если PathFinder посчитал путь чистым, но физически там блок - ломаем его.
-        // =================================================================================
+         
+         
+         
+         
 
         int targetX = activeNode.x;
-        int targetY = activeNode.y; // Опорный блок (на котором стоят)
+        int targetY = activeNode.y;  
         int targetZ = activeNode.z;
 
-        // Координаты, где должны оказаться ноги и голова в целевом узле
+         
         int targetFeetY = YMath.feetFromGround(targetY);
         int targetHeadY = YMath.headFromGround(targetY);
 
-        // A) Проверяем место для НОГ в целевом узле
+         
         if (!PathfindingUtils.isBlockPassable(world, targetX, targetFeetY, targetZ)) {
             System.out.println("[WALK-FAILSAFE] Target feet blocked! Forcing break at " + targetX + "," + targetFeetY + "," + targetZ);
             switchToBreaking(targetX, targetFeetY, targetZ);
             return;
         }
 
-        // B) Проверяем место для ГОЛОВЫ в целевом узле (часто мешает при прыжках)
+         
         if (!PathfindingUtils.isBlockPassable(world, targetX, targetHeadY, targetZ)) {
             System.out.println("[WALK-FAILSAFE] Target head blocked! Forcing break at " + targetX + "," + targetHeadY + "," + targetZ);
             switchToBreaking(targetX, targetHeadY, targetZ);
             return;
         }
 
-        // C) Проверяем ПРИТОЛОКУ (Lintel) - блок перед лицом на ТЕКУЩЕЙ высоте
-        // Это критично для спуска: мы идем в узел ниже, но перед лицом стена.
+         
+         
         int currentHeadY = YMath.headFromPlayerPosY(player.boundingBox.minY);
 
-        // Проверяем только если целевой узел не под нами (движение вбок)
+         
         if (targetX != MathHelper.floor_double(player.posX) || targetZ != MathHelper.floor_double(player.posZ)) {
-            // Проверяем блок по координатам X/Z цели, но на высоте НАШЕЙ головы
+             
             if (!PathfindingUtils.isBlockPassable(world, targetX, currentHeadY, targetZ)) {
-                // Убедимся, что мы не стоим внутри этого блока (лагами занесло)
+                 
                 double distToBlock = player.getDistanceSq(targetX + 0.5, currentHeadY + 0.5, targetZ + 0.5);
-                if (distToBlock > 0.3) { // Если блок впереди
+                if (distToBlock > 0.3) {  
                     System.out.println("[WALK-FAILSAFE] Face blocked (Lintel)! Forcing break at " + targetX + "," + currentHeadY + "," + targetZ);
                     switchToBreaking(targetX, currentHeadY, targetZ);
                     return;
                 }
             }
         }
-        // =================================================================================
+         
 
 
-        // --- Стандартная логика движения (Original Logic) ---
+         
 
         boolean playerHasLowCeiling = hasLowCeilingAt(world, player.posX, player.boundingBox.minY, player.posZ);
         boolean targetHasLowCeiling = hasLowCeilingAt(world, activeNode.x + 0.5, activeNode.getFeetY(), activeNode.z + 0.5);
 
-        // RayTrace проверка (оставлена как fallback, но Failsafe выше обычно срабатывает раньше)
+         
         if (!hasForwardLineOfSightToNode(activeNode) && !playerHasLowCeiling && !targetHasLowCeiling) {
             int px = MathHelper.floor_double(player.posX);
             int pz = MathHelper.floor_double(player.posZ);
@@ -527,7 +527,7 @@ public class BotNavigator {
             }
         }
 
-        // Parkour Skip Logic
+         
         if (ENABLE_PARKOUR_FURTHEST_SKIP) {
             try {
                 if (currentPath != null && currentNodeIndex + 1 < currentPath.size()) {
@@ -564,7 +564,7 @@ public class BotNavigator {
             } catch (Throwable ignored) {}
         }
 
-        // Выбор цели для движения (LookAhead)
+         
         PathNode moveTargetNode = getEffectiveTargetNode();
         if (moveTargetNode == null) {
             int moveAheadIndex = Math.min(currentNodeIndex, currentPath.size() - 1);
@@ -573,7 +573,7 @@ public class BotNavigator {
 
         Vec3 moveTarget;
 
-        // Определяем типы движения
+         
         boolean isAscend = moveTargetNode.moveType != null &&
                 (moveTargetNode.moveType == MovementType.ASCEND ||
                         moveTargetNode.moveType == MovementType.DIAGONAL_ASCEND);
@@ -584,26 +584,26 @@ public class BotNavigator {
                         moveTargetNode.moveType == MovementType.FALL);
 
         if (isFall) {
-            // ФИКС ЗАСТРЕВАНИЯ ПРИ СПУСКЕ:
-            // Если мы спускаемся/падаем, мы НЕ должны целиться в пол внизу (getFeetY).
-            // Мы должны целиться в ту же горизонтальную точку, но на НАШЕЙ текущей высоте.
-            // Это создает чисто горизонтальный вектор движения, бот "сшагивает" с края,
-            // не пытаясь "вжаться" в стену блока под собой.
+             
+             
+             
+             
+             
             moveTarget = Vec3.createVectorHelper(moveTargetNode.x + 0.5, mc.thePlayer.boundingBox.minY, moveTargetNode.z + 0.5);
 
-            // Дополнительно: отключаем спринт при аккуратном спуске, чтобы не перелететь
-            if (moveTargetNode.moveType != MovementType.FALL) { // При FALL можно и спринтовать, если далеко
+             
+            if (moveTargetNode.moveType != MovementType.FALL) {  
                 mc.thePlayer.setSprinting(false);
             }
         } else if (isAscend && mc.thePlayer.onGround) {
-            // При подъеме (перед прыжком) тоже целимся по своей высоте, чтобы не упереться в ступеньку
+             
             moveTarget = Vec3.createVectorHelper(moveTargetNode.x + 0.5, mc.thePlayer.boundingBox.minY, moveTargetNode.z + 0.5);
         } else {
-            // Стандартное движение по ровной поверхности
+             
             moveTarget = Vec3.createVectorHelper(moveTargetNode.x + 0.5, moveTargetNode.getFeetY(), moveTargetNode.z + 0.5);
         }
 
-        // Pillar / Bridge Detection while walking
+         
         if (currentPath != null && currentNodeIndex + 1 < currentPath.size()) {
             PathNode upcoming = currentPath.get(currentNodeIndex + 1);
             if (upcoming.moveType == MovementType.PILLAR || upcoming.moveType == MovementType.BRIDGE) {
@@ -618,14 +618,14 @@ public class BotNavigator {
             }
         }
 
-        // Parkour Jump Logic
+         
         if (activeNode.moveType != null && activeNode.moveType == MovementType.PARKOUR) {
             PathNode prevNode = (currentNodeIndex > 0 ? currentPath.get(currentNodeIndex - 1) : null);
             if (prevNode != null) {
                 int dirX = Integer.signum(activeNode.x - prevNode.x);
                 int dirZ = Integer.signum(activeNode.z - prevNode.z);
 
-                // Если застряли перед прыжком
+                 
                 if (mc.thePlayer.fallDistance > 0.9 ||
                         mc.thePlayer.boundingBox.minY + 0.2 < Math.min(prevNode.getFeetY(), activeNode.getFeetY()) - 0.8) {
                     if (FuctorizeClient.INSTANCE != null && FuctorizeClient.INSTANCE.pathfindingManager != null) {
@@ -639,23 +639,23 @@ public class BotNavigator {
                     return;
                 }
 
-                // Логика прыжка (JumpHelper logic inlined or called)
+                 
                 int stride = Math.max(Math.abs(activeNode.x - prevNode.x), Math.abs(activeNode.z - prevNode.z));
                 boolean shortJump = stride <= 2;
 
-                // Рассчет дистанции до края
+                 
                 double launchBlockX = prevNode.x + dirX + 0.5;
                 double launchBlockZ = prevNode.z + dirZ + 0.5;
-                // Упрощенная проверка для 1.7.10
+                 
                 double distToTarget = Math.sqrt(Math.pow(activeNode.x+0.5 - player.posX, 2) + Math.pow(activeNode.z+0.5 - player.posZ, 2));
 
-                // Прыгаем если близко к краю блока
-                // (Полная логика тут объемная, оставляем ваш старый код, если он работал, или JumpHelper)
+                 
+                 
                 ru.fuctorial.fuctorize.utils.pathfinding.JumpHelper.applyParkourJump(mc, activeNode, prevNode);
             }
         }
 
-        // Regular Jump Logic
+         
         if (activeNode != null && mc.thePlayer.onGround) {
             boolean ascendMove = (activeNode.moveType == MovementType.ASCEND || activeNode.moveType == MovementType.DIAGONAL_ASCEND);
             boolean shouldJumpForNode = activeNode.needsJump || ascendMove;
@@ -665,7 +665,7 @@ public class BotNavigator {
                 ru.fuctorial.fuctorize.utils.pathfinding.JumpHelper.applyAscendJump(mc, activeNode);
             }
 
-            // Step-up check (если перед нами блок 1-й высоты)
+             
             int pbx = MathHelper.floor_double(mc.thePlayer.posX);
             int pby = YMath.groundFromPlayerPosY(mc.thePlayer.boundingBox.minY);
             int pbz = MathHelper.floor_double(mc.thePlayer.posZ);
@@ -675,14 +675,14 @@ public class BotNavigator {
                 int frontX = pbx + dirX;
                 int frontZ = pbz + dirZ;
                 int feetY = YMath.feetFromGround(pby);
-                // Если спереди блок и надо подняться
+                 
                 if (!PathfindingUtils.isBlockPassable(mc.theWorld, frontX, feetY, frontZ)) {
                     double dyToTarget = activeNode.getFeetY() - mc.thePlayer.boundingBox.minY;
                     if (dyToTarget > 0.05 && dyToTarget <= 1.2) {
                         if (PathfindingUtils.isBlockPassable(mc.theWorld, frontX, YMath.headFromGround(pby), frontZ)) {
                             MovementUtils.jump();
                         } else {
-                            // Стена (feet+head blocked) - Failsafe выше уже должен был это поймать, но на всякий случай:
+                             
                             switchToBreaking(frontX, feetY, frontZ);
                             return;
                         }
@@ -691,10 +691,10 @@ public class BotNavigator {
             }
         }
 
-        // Применяем движение
+         
         MovementUtils.updateMovementOnly(moveTarget);
 
-        // Проверка достижения центра узла
+         
         double dx = mc.thePlayer.posX - (activeNode.x + 0.5);
         double dy = mc.thePlayer.boundingBox.minY - activeNode.getFeetY();
         double dz = mc.thePlayer.posZ - (activeNode.z + 0.5);
@@ -726,9 +726,9 @@ public class BotNavigator {
         }
     }
 
-    // Вспомогательный метод для переключения в режим ломания из любого места
+     
     private void switchToBreaking(int x, int y, int z) {
-        // ЛОГ: Видим, какой конкретно блок вызвал остановку
+         
         System.out.println("[FAILSAFE] LOCKED target: " + x + "," + y + "," + z);
 
         state = MovementState.BREAKING_BLOCK;
@@ -736,13 +736,13 @@ public class BotNavigator {
         actionTargetY = y;
         actionTargetZ = z;
 
-        // Сбрасываем таймер застревания на старт
+         
         breakingStartTime = System.currentTimeMillis();
         breakingBlockX = x;
         breakingBlockY = y;
         breakingBlockZ = z;
 
-        // Принудительно останавливаемся
+         
         MovementUtils.stopMovement();
     }
 
@@ -852,7 +852,7 @@ public class BotNavigator {
     }
 
     private void handleBreakingState() {
-        // 1. Если блок уже сломан (стал проходимым), сбрасываемся и идем дальше
+         
         if (PathfindingUtils.isBlockPassable(mc.theWorld, actionTargetX, actionTargetY, actionTargetZ)) {
             InputUtils.releaseAttack();
             mc.playerController.resetBlockRemoving();
@@ -861,11 +861,11 @@ public class BotNavigator {
             return;
         }
 
-        // 2. Останавливаемся и смотрим на блок
+         
         MovementUtils.stopMovement();
         MovementUtils.lookAtBlock(actionTargetX, actionTargetY, actionTargetZ);
 
-        // 3. Обновляем mc.objectMouseOver, чтобы наводка была идеальной
+         
         Vec3 eyes = Vec3.createVectorHelper(mc.thePlayer.posX, mc.thePlayer.posY + mc.thePlayer.getEyeHeight(), mc.thePlayer.posZ);
         Vec3 blockVec = Vec3.createVectorHelper(actionTargetX + 0.5, actionTargetY + 0.5, actionTargetZ + 0.5);
 
@@ -880,12 +880,12 @@ public class BotNavigator {
 
         mc.objectMouseOver = new MovingObjectPosition(actionTargetX, actionTargetY, actionTargetZ, side, blockVec, true);
 
-        // 4. Зажимаем кнопку для обычной игры
+         
         InputUtils.pressAttack();
         mc.thePlayer.swingItem();
 
-        // 5. ФИКС ПАУЗЫ: Если открыт GUI (экран не null), ванильный майнкрафт ИГНОРИРУЕТ нажатие кнопок.
-        // Поэтому в этом случае (и только в этом!) мы вручную заставляем контроллер продолжать ломать.
+         
+         
         if (mc.currentScreen != null) {
             mc.playerController.onPlayerDamageBlock(actionTargetX, actionTargetY, actionTargetZ, side);
         }
@@ -1046,7 +1046,7 @@ public class BotNavigator {
         resetStuckDetector();
         activeCalculations.incrementAndGet();
 
-        // 1. Определяем точку старта
+         
         double startX, startY, startZ;
         if (isFirstPath) {
             startX = player.posX;
@@ -1059,13 +1059,13 @@ public class BotNavigator {
             startY = lastNode.getFeetY();
             startZ = lastNode.z + 0.5;
         } else if (currentPath != null && !currentPath.isEmpty()) {
-            // Prefetch case: Queue is empty, but we have a current path. Start from its end.
+             
             PathNode lastNode = currentPath.get(currentPath.size() - 1);
             startX = lastNode.x + 0.5;
             startY = lastNode.getFeetY();
             startZ = lastNode.z + 0.5;
         } else {
-            // Fallback (should not happen ideally)
+             
             startX = player.posX;
             startY = Math.floor(player.boundingBox.minY) + 0.01;
             startZ = player.posZ;
@@ -1078,28 +1078,28 @@ public class BotNavigator {
         World w = mc.theWorld;
         double finalTargetY = this.targetY;
 
-        // 2. ЛОГИКА КОРРЕКЦИИ Y (Только если чанк прогружен!)
-        // Если чанк загружен, проверяем, можно ли стоять в целевой точке.
-        // Если нельзя (Y - залупа), ищем нормальный Y в этой же колонне.
+         
+         
+         
         if (w.blockExists(MathHelper.floor_double(targetX), MathHelper.floor_double(targetY), MathHelper.floor_double(targetZ))) {
             int tx = MathHelper.floor_double(targetX);
             int ty = MathHelper.floor_double(targetY);
             int tz = MathHelper.floor_double(targetZ);
 
-            // Проверяем, стоим ли мы в блоке или в воздухе
+             
             if (!PathfindingUtils.canStandAt(w, targetX, targetY, targetZ) ||
                     PathfindingUtils.isDangerousToStand(w, tx, YMath.feetFromGround(ty), tz)) {
 
-                // Ищем безопасную высоту (вверх и вниз)
-                Integer safeY = PathfindingUtils.findStandingYAllowingDown(w, tx, ty, tz, 10.0, 30.0); // Ищем +/- широко
+                 
+                Integer safeY = PathfindingUtils.findStandingYAllowingDown(w, tx, ty, tz, 10.0, 30.0);  
                 if (safeY != null) {
                     finalTargetY = safeY;
-                    // Обновляем глобальную цель, чтобы не пересчитывать каждый раз
+                     
                     this.targetY = safeY;
                     System.out.println("[NAV] Target Y adjusted to safe ground: " + safeY);
                 } else {
-                    // Если совсем жопа и встать негде - вот тут можно включить поиск "ближайшей точки"
-                    // Но пока оставим как есть, пусть пытается подойти максимально близко
+                     
+                     
                 }
             }
         }
@@ -1108,27 +1108,27 @@ public class BotNavigator {
 
         CompletableFuture<PathResult> future;
 
-        // 3. ЗАПУСК ПОИСКА (БЕЗ ПРОВЕРОК НА TARGET_STANDABLE)
-        // Сначала всегда пробуем найти путь (прямой или к границе чанка)
-        // "findPathToNearest" используем ТОЛЬКО если мы уже зафейлились много раз (застряли)
+         
+         
+         
 
         if (consecutivePathFailures >= 3) {
-            // Если мы уже 3 раза не смогли найти путь — значит мы застряли или цель в жопе.
-            // Только тогда расширяем радиус поиска.
+             
+             
             int adaptiveRadius = Math.min(32, 4 + consecutivePathFailures * 2);
             future = FuctorizeClient.INSTANCE.pathfindingManager.findPathToNearestAsync(
                     startX, startY, startZ, targetX, searchTargetY, targetZ, adaptiveRadius
             );
         } else {
-            // СТАНДАРТНЫЙ РЕЖИМ: Идем в координаты.
-            // Если далеко/не прогружено -> findPathTowardUnloadedTarget сам разберется и поведет к границе X/Z.
+             
+             
             CompletableFuture<PathResult> direct = FuctorizeClient.INSTANCE.pathfindingManager.findPathAsync(
                     startX, startY, startZ, targetX, searchTargetY, targetZ
             );
 
             future = direct.handle((res, ex) -> {
                 if (ex != null || (res != null && !res.isSuccess())) {
-                    // Прямой путь не вышел (далеко/стены). Запускаем поиск к границе прогрузки.
+                     
                     return FuctorizeClient.INSTANCE.pathfindingManager.findPathTowardUnloadedTarget(
                             startX, startY, startZ, targetX, searchTargetY, targetZ
                     );
@@ -1142,13 +1142,13 @@ public class BotNavigator {
 
             if (!isNavigating) return;
 
-            // ИЗМЕНЕНИЕ: Принимаем SUCCESS или PARTIAL (если путь достаточно длинный)
+             
             boolean isValidPath = result.isSuccess() || (result.isPartial() && result.getPathLength() > 2);
 
             if (isValidPath) {
                 List<PathNode> path = result.getPath();
 
-                // Лог для отладки
+                 
                 if (result.isPartial()) {
                     System.out.println("[BotNavigator] Accepted PARTIAL path of length " + result.getPathLength());
                 }
@@ -1166,8 +1166,8 @@ public class BotNavigator {
                 consecutivePathFailures++;
                 System.out.println("Pathfinding error: " + result.getErrorMessage() + " (attempt " + consecutivePathFailures + ")");
 
-// Если мы зафейлились уже 5 раз подряд — значит, мы застряли или стоим криво.
-                // Пытаемся найти случайную точку рядом и отойти на неё, чтобы сбросить позицию.
+ 
+                 
                 if (consecutivePathFailures >= 5) {
                     System.out.println("[Unstuck] Too many failures (" + consecutivePathFailures + "). Attempting emergency move...");
 
@@ -1177,27 +1177,27 @@ public class BotNavigator {
 
                     boolean foundEscape = false;
 
-                    // Делаем 15 попыток найти случайную точку в радиусе 6 блоков
+                     
                     for (int i = 0; i < 15; i++) {
-                        double rx = pX + (Math.random() - 0.5) * 12.0; // +/- 6 блоков
+                        double rx = pX + (Math.random() - 0.5) * 12.0;  
                         double rz = pZ + (Math.random() - 0.5) * 12.0;
 
                         int ix = MathHelper.floor_double(rx);
                         int iz = MathHelper.floor_double(rz);
 
-                        // Ищем нормальный Y (чуть выше или чуть ниже)
+                         
                         Integer safeY = PathfindingUtils.findStandingYAllowingDown(mc.theWorld, ix, pY, iz, 2.0, 3.0);
 
                         if (safeY != null) {
-                            // Проверяем, что это не та же самая точка, где мы стоим
+                             
                             if (Math.abs(ix - MathHelper.floor_double(pX)) < 2 && Math.abs(iz - MathHelper.floor_double(pZ)) < 2) {
                                 continue;
                             }
 
                             System.out.println("[Unstuck] Found local escape target: " + ix + "," + safeY + "," + iz);
 
-                            // ПРИНУДИТЕЛЬНО запускаем поиск короткого пути к этой точке
-                            // Используем findPathSync (синхронно, так как мы уже в колбэке), чтобы сразу применить
+                             
+                             
                             PathResult escapeResult = FuctorizeClient.INSTANCE.pathfindingManager.findPathSync(
                                     mc.thePlayer.posX, mc.thePlayer.boundingBox.minY, mc.thePlayer.posZ,
                                     ix + 0.5, safeY, iz + 0.5
@@ -1207,19 +1207,19 @@ public class BotNavigator {
                                 System.out.println("[Unstuck] Escape path found! Executing deviation.");
                                 currentPath = escapeResult.getPath();
                                 setNodeIndex(0);
-                                consecutivePathFailures = 0; // Сбрасываем счетчик ошибок
+                                consecutivePathFailures = 0;  
                                 foundEscape = true;
-                                break; // Выходим из цикла перебора точек
+                                break;  
                             }
                         }
                     }
 
                     if (!foundEscape) {
-                        // Если даже отойти не получилось - просто прыгаем на месте (иногда помогает обновить boundingBox)
+                         
                         if (mc.thePlayer.onGround) {
                             mc.thePlayer.jump();
                         }
-                        // И сбрасываем счетчик, чтобы не спамило каждый тик
+                         
                         if (consecutivePathFailures > 20) consecutivePathFailures = 0;
                     }
                 }
@@ -1576,7 +1576,7 @@ public class BotNavigator {
 
     private void checkAndRecalculatePath() {
         if (isNavigating && currentPath != null && currentNodeIndex >= currentPath.size()) {
-            // Path ended, but not at target. Request new segment.
+             
             if (!pathSegmentQueue.isEmpty()) {
                 currentPath = pathSegmentQueue.poll();
                 setNodeIndex(0);
@@ -1590,14 +1590,14 @@ public class BotNavigator {
 
         if (currentPath == null || mc.thePlayer == null || currentNodeIndex >= currentPath.size()) return;
 
-        // --- ФИКС ОБХОДА: Блокируем пересчет, если мы заняты копанием ---
+         
         if (state == MovementState.BREAKING_BLOCK) {
             long now = System.currentTimeMillis();
 
-            // Единственное исключение: если мы долбим блок слишком долго (зависли/забагались)
+             
             if (breakingStartTime > 0L && (now - breakingStartTime) >= BREAKING_FAIL_TIMEOUT_MS) {
                 if (FuctorizeClient.INSTANCE != null && FuctorizeClient.INSTANCE.pathfindingManager != null && activeNode != null) {
-                    // Штрафуем этот узел, чтобы в следующий раз путь строился не через него
+                     
                     FuctorizeClient.INSTANCE.pathfindingManager.addTemporaryPenalty(activeNode, STUCK_PENALTY_COST);
                 }
                 InputUtils.releaseAttack();
@@ -1605,11 +1605,11 @@ public class BotNavigator {
                 recalculatePath();
             }
 
-            // Если таймаут не вышел — ПРОСТО ВЫХОДИМ.
-            // Не даем боту искать новый путь, пока он не доломает текущий блок.
+             
+             
             return;
         }
-        // --------------------------------------------------------------
+         
 
         try { checkInventoryAndAdapt(); } catch (Throwable ignored) {}
         try {
@@ -1620,7 +1620,7 @@ public class BotNavigator {
             }
         } catch (Throwable ignored) {}
 
-        // Логика проверки паркура (оставляем без изменений)
+         
         PathNode node = currentPath.get(currentNodeIndex);
         long now = System.currentTimeMillis();
         if (attemptNodeRef != node) {
@@ -1760,9 +1760,9 @@ public class BotNavigator {
                     centeringNode = centerDistSq <= (relaxRadius * relaxRadius);
                 }
 
-                // --- ИЗМЕНЕНИЕ: Добавлена проверка состояния BREAKING_BLOCK ---
+                 
                 if (state == MovementState.BREAKING_BLOCK) {
-                    resetStuckDetector(); // Не считаем застреванием, если мы в процессе копания
+                    resetStuckDetector();  
                 } else if (qdistSq < QUICK_STUCK_DISTANCE_SQ) {
                     if (centeringNode) {
                         resetStuckDetector();

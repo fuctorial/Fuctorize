@@ -10,7 +10,7 @@ import net.minecraft.nbt.*;
 
 public class GuiEditSingleNBT extends Gui {
 
-    // ИЗМЕНЕНИЕ: public, чтобы другие классы видели ширину окна
+     
     public static final int WIDTH = 250;
 
     private int currentHeight = 120;
@@ -46,7 +46,7 @@ public class GuiEditSingleNBT extends Gui {
         }
     }
 
-    // Метод принимает размеры ЭКРАНА и сам центрирует окно
+     
     public void initGUI(int screenWidth, int screenHeight) {
         this.x = (screenWidth - WIDTH) / 2;
         this.y = (screenHeight - this.currentHeight) / 2;
@@ -118,7 +118,7 @@ public class GuiEditSingleNBT extends Gui {
             this.parent.nodeEdited(this.node);
             this.parent.closeWindow();
         } catch (Exception e) {
-            // Ignore save if invalid
+             
         }
     }
 
@@ -270,9 +270,9 @@ public class GuiEditSingleNBT extends Gui {
         }
     }
 
-    // ВАЖНО: В GuiScreen методы называются mouseClickMove и mouseMovedOrUp
-    // Но так как GuiEditSingleNBT это просто Gui (а не GuiScreen), мы создаем свои методы
-    // и вызываем их из GuiNBTTree (родительского экрана)
+     
+     
+     
 
     public void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
         if (this.valueTextArea != null) {

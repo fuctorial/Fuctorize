@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\client\manager\FontManager.java
+ 
 package ru.fuctorial.fuctorize.manager;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -58,13 +58,13 @@ public class FontManager {
             if (inputStream == null) {
                 System.out.println(">>> FONT-DEBUG: Not found by Class.getResourceAsStream. Trying ContextClassLoader with variants...");
                 ClassLoader ctx = Thread.currentThread().getContextClassLoader();
-                // try exact
+                 
                 inputStream = ctx.getResourceAsStream(fontPath);
-                // try without leading "assets/"
+                 
                 if (inputStream == null && fontPath.startsWith("assets/")) {
                     inputStream = ctx.getResourceAsStream(fontPath.substring("assets/".length()));
                 }
-                // try with leading slash
+                 
                 if (inputStream == null) {
                     inputStream = ctx.getResourceAsStream("/" + fontPath);
                 }

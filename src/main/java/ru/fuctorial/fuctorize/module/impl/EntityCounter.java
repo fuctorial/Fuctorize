@@ -83,12 +83,12 @@ public class EntityCounter extends Module {
         int p = 0, i = 0, m = 0, a = 0, n = 0, t = 0;
         double rSq = range.value * range.value;
 
-        // --- ИЗМЕНЕНИЕ ЗДЕСЬ: Интеграция с NoRender ---
-        // Проверяем, включен ли NoRender
+         
+         
         NoRender noRender = (NoRender) client.moduleManager.getModuleByKey("norender");
         boolean isNoRenderItemsActive = noRender != null && noRender.isEnabled() && noRender.items.enabled;
 
-        // Если NoRender активен, берем его счетчик (он считает ВСЕ загруженные предметы)
+         
         if (isNoRenderItemsActive) {
             i = NoRender.removedItemsCount;
         }
@@ -97,7 +97,7 @@ public class EntityCounter extends Module {
             Entity entity = (Entity) obj;
             if (entity == mc.thePlayer) continue;
 
-            // Если NoRender включен, предметы мы уже посчитали выше, пропускаем их здесь
+             
             if (isNoRenderItemsActive && entity instanceof EntityItem) continue;
 
             if (mc.thePlayer.getDistanceSqToEntity(entity) > rSq) continue;
@@ -142,7 +142,7 @@ public class EntityCounter extends Module {
         if (showPlayers.enabled) lines.add("Players: " + getColorForCount(countPlayers, 10, 50) + countPlayers);
         if (showNpcs.enabled && countNpcs > 0) lines.add("NPCs: " + "\u00A7e" + countNpcs);
 
-        // Для предметов добавляем пометку, если данные взяты из NoRender (All loaded)
+         
         NoRender noRender = (NoRender) client.moduleManager.getModuleByKey("norender");
         String itemSuffix = (noRender != null && noRender.isEnabled() && noRender.items.enabled) ? " (Global)" : "";
 

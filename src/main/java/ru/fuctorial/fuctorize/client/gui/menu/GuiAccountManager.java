@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\menu\GuiAccountManager.java
+ 
 package ru.fuctorial.fuctorize.client.gui.menu;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -19,7 +19,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.Color;
-// import java.io.IOException; // IOException больше не используется
+ 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -39,10 +39,10 @@ public class GuiAccountManager extends GuiScreen {
     private final Map<String, GuiTextField> editableFields = new LinkedHashMap<>();
 
     private int panelX, panelY, panelWidth, panelHeight;
-    // Удалена ссылка на фоновую текстуру
-    // private static final ResourceLocation MANAGER_BG = new ResourceLocation("fuctorize", "textures/gui/manager_bg.png");
-    // Удален флаг существования текстуры
-    // private boolean managerBgExists = false;
+     
+     
+     
+     
     public static SkinProvider currentSkinProvider = SkinProvider.MOJANG;
 
     private long lastInitTime = 0;
@@ -66,18 +66,10 @@ public class GuiAccountManager extends GuiScreen {
         Keyboard.enableRepeatEvents(true);
         this.lastInitTime = System.currentTimeMillis();
 
-        // Удалена проверка на существование текстуры
-        /*
-        try {
-            mc.getResourceManager().getResource(MANAGER_BG);
-            this.managerBgExists = true;
-        } catch (IOException e) {
-            System.err.println("Fuctorize: Could not find account manager background texture. Using fallback color.");
-            this.managerBgExists = false;
-        }
-        */
+         
+         
 
-        // --- RESPONSIVE LAYOUT IMPLEMENTATION ---
+         
         float widthPercent = 0.6f;
         float heightPercent = 0.7f;
         int minWidth = 380;
@@ -118,11 +110,11 @@ public class GuiAccountManager extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        // Удалена логика отрисовки фона на основе изображения
-        // Теперь всегда отрисовывается сплошной цвет
+         
+         
         RenderUtils.drawRect(0, 0, this.width, this.height, new Color(20, 20, 22).getRGB());
 
-        // The rest of the GUI is drawn on top of the background
+         
         RenderUtils.drawRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight, Theme.CATEGORY_BG.getRGB());
         RenderUtils.drawRect(panelX - 1, panelY - 1, panelX + panelWidth + 1, panelY, Theme.BORDER.getRGB());
         RenderUtils.drawRect(panelX - 1, panelY - 1, panelX, panelY + panelHeight + 1, Theme.BORDER.getRGB());
@@ -144,7 +136,7 @@ public class GuiAccountManager extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    // ... все остальные методы в GuiAccountManager остаются без изменений ...
+     
     private void setupOnlineEditGui() {
         editableFields.clear();
         onlineContentHeight = 0;
@@ -284,7 +276,7 @@ public class GuiAccountManager extends GuiScreen {
         initGui();
     }
 
-    // Localized save logic used by UI buttons
+     
     private void handleSaveLocalized() {
         GuiTextField usernameField = editableFields.get("username");
         if (usernameField == null) {

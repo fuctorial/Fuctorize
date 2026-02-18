@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\nbtedit\GuiTextField.java
+ 
 package ru.fuctorial.fuctorize.client.gui.nbtedit;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -16,8 +16,8 @@ import java.util.regex.Pattern;
 
 public class GuiTextField extends Gui {
 
-    // The font renderer is no longer stored as a field.
-    // It will be fetched from the FontManager on every use.
+     
+     
     public int xPos;
     public int yPos;
     public int width;
@@ -35,11 +35,11 @@ public class GuiTextField extends Gui {
     private boolean visible = true;
     private final boolean allowSection;
     private String placeholder;
-    // --- NEW FIELD FOR SYNTAX HIGHLIGHTING ---
+     
     private boolean syntaxHighlighting = false;
     private static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("(\\{[^}]+})");
 
-    // The constructor no longer takes a CustomFontRenderer argument.
+     
     public GuiTextField(int x, int y, int w, int h, boolean allowSection) {
         this.xPos = x;
         this.yPos = y;
@@ -51,13 +51,13 @@ public class GuiTextField extends Gui {
         this.placeholder = placeholder;
     }
 
-    // --- NEW METHOD to enable highlighting ---
+     
     public void setSyntaxHighlighting(boolean enable) {
         this.syntaxHighlighting = enable;
     }
 
 
-    // Helper method to get the current, valid font renderer instance.
+     
     private CustomFontRenderer getFont() {
         return FuctorizeClient.INSTANCE.fontManager.regular_18;
     }
@@ -166,7 +166,7 @@ public class GuiTextField extends Gui {
         if (!this.isFocused() && this.text.isEmpty() && this.placeholder != null) {
             getFont().drawString(this.placeholder, textX, textY, Theme.TEXT_GRAY.getRGB());
         } else {
-            // --- MODIFIED: SYNTAX HIGHLIGHTING LOGIC ---
+             
             if (syntaxHighlighting && !visibleText.isEmpty()) {
                 drawHighlightedText(visibleText, textX, textY, textColor);
             } else if (visibleText.length() > 0) {
@@ -204,17 +204,17 @@ public class GuiTextField extends Gui {
         float currentX = x;
 
         while (matcher.find()) {
-            // Draw text before the placeholder
+             
             String precedingText = text.substring(lastEnd, matcher.start());
             if (!precedingText.isEmpty()) {
                 getFont().drawString(precedingText, currentX, y, defaultColor);
                 currentX += getFont().getStringWidth(precedingText);
             }
-            // Draw the placeholder itself with syntax-based color
+             
             String placeholderText = matcher.group(1);
-            // NEW: Check if the placeholder syntax is valid.
+             
             boolean isValid = SmartSpammer.isValidPlaceholderSyntax(placeholderText);
-            // Use orange for valid placeholders, red for invalid ones.
+             
             int placeholderColor = isValid ? Theme.ORANGE.getRGB() : 0xFFFF5555;
 
             getFont().drawString(placeholderText, currentX, y, placeholderColor);
@@ -223,7 +223,7 @@ public class GuiTextField extends Gui {
             lastEnd = matcher.end();
         }
 
-        // Draw any remaining text after the last placeholder
+         
         if (lastEnd < text.length()) {
             String remainingText = text.substring(lastEnd);
             getFont().drawString(remainingText, currentX, y, defaultColor);
@@ -278,9 +278,9 @@ public class GuiTextField extends Gui {
         boolean wasClicked = mouseX >= this.xPos && mouseX < this.xPos + this.width &&
                 mouseY >= this.yPos && mouseY < this.yPos + this.height;
 
-        // ФУНДАМЕНТАЛЬНЫЙ ФИКС:
-        // Если кликнули мимо - всегда снимаем фокус (false).
-        // Если кликнули по полю - ставим фокус (true).
+         
+         
+         
         if (this.isEnabled) {
             this.setFocused(wasClicked);
         }

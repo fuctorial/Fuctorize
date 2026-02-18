@@ -24,7 +24,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 public class PacketBlocker extends Module {
 
-    // Списки блокировки (доступны статически для GUI)
+     
     public static final Set<String> blockedClasses = new CopyOnWriteArraySet<>();
     public static final Set<BlockedPacketRule> blockedRules = new CopyOnWriteArraySet<>();
 
@@ -56,7 +56,7 @@ public class PacketBlocker extends Module {
         toggle();
     }
 
-    // === ЛОГИКА БЛОКИРОВКИ ===
+     
 
     @Override
     public void onPacketSend(PacketEvent.Send event) {
@@ -73,7 +73,7 @@ public class PacketBlocker extends Module {
     }
 
     private boolean shouldBlock(Packet packet) {
-        // 1. Проверка каналов (для FML/CustomPayload)
+         
         if (packet instanceof FMLProxyPacket) {
             FMLProxyPacket fmlPacket = (FMLProxyPacket) packet;
             String channel = fmlPacket.channel();
@@ -81,14 +81,14 @@ public class PacketBlocker extends Module {
 
             for (BlockedPacketRule rule : blockedRules) {
                 if (rule.channelName.equals(channel)) {
-                    // Если в правиле нет payloadHex, значит блочим весь канал
+                     
                     if (rule.payloadHex == null) return true;
-                    // Если есть, сверяем содержимое
+                     
                     if (rule.payloadHex.equals(payload)) return true;
                 }
             }
         }
-        // 2. Проверка класса пакета
+         
         return blockedClasses.contains(packet.getClass().getName());
     }
 
@@ -96,17 +96,17 @@ public class PacketBlocker extends Module {
         ByteBuf buf = packet.payload().copy();
         byte[] bytes = new byte[buf.readableBytes()];
         buf.readBytes(bytes);
-        // Важно освободить копию буфера, чтобы не текла память,
-        // хотя для copy() это может быть не критично, если GC справится, но лучше явно.
-        // В Netty 4 ReferenceCountUtil.release(buf)
-        // Но здесь мы просто читаем.
+         
+         
+         
+         
         
         StringBuilder sb = new StringBuilder();
-        int maxBytes = Math.min(bytes.length, 256); // Ограничим длину для сверки, хотя лучше все
-        // Для точности блокировки лучше брать все байты, но для производительности и UI...
-        // В PacketInfo было ограничение 256. Давайте пока уберем ограничение или сделаем разумным.
-        // Если пакет огромный, строка будет огромной.
-        // Но для CustomNPCs там обычно мало данных.
+        int maxBytes = Math.min(bytes.length, 256);  
+         
+         
+         
+         
         
         for (byte b : bytes) {
             sb.append(String.format("%02X ", b));
@@ -114,7 +114,7 @@ public class PacketBlocker extends Module {
         return sb.toString().trim();
     }
 
-    // === УПРАВЛЕНИЕ СПИСКАМИ ===
+     
 
     public static void addClassBlock(String className) {
         blockedClasses.add(className);
@@ -136,7 +136,7 @@ public class PacketBlocker extends Module {
         saveConfig();
     }
 
-    // === КОНФИГ ===
+     
 
     public static void saveConfig() {
         try {
@@ -162,7 +162,7 @@ public class PacketBlocker extends Module {
             if (root.has("rules")) {
                 blockedRules.addAll(GSON.fromJson(root.get("rules"), new TypeToken<Set<BlockedPacketRule>>(){}.getType()));
             }
-            // Обратная совместимость: если был старый конфиг с channels
+             
             if (root.has("channels")) {
                 Set<String> oldChannels = GSON.fromJson(root.get("channels"), new TypeToken<Set<String>>(){}.getType());
                 for (String ch : oldChannels) {
@@ -176,7 +176,7 @@ public class PacketBlocker extends Module {
 
     public static class BlockedPacketRule {
         public String channelName;
-        public String payloadHex; // null means block all channel
+        public String payloadHex;  
 
         public BlockedPacketRule(String channelName, String payloadHex) {
             this.channelName = channelName;

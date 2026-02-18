@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\manager\Account.java
+ 
 package ru.fuctorial.fuctorize.manager;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class Account {
     public Account(String username, Map<String, String> initialTokens) {
         this();
         this.username = username;
-        // Ensure the username is not duplicated in the tokens map
+         
         this.tokens = new HashMap<>(initialTokens);
         this.tokens.remove("username");
     }
@@ -44,8 +44,8 @@ public class Account {
     }
 
     public void setToken(String key, String value) {
-        // This method now only deals with the tokens map.
-        // Username is handled by setUsername.
+         
+         
         if (key != null && value != null) {
             tokens.put(key, value);
         }

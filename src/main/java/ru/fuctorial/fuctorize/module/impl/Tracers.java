@@ -1,11 +1,11 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\Tracers.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
 import ru.fuctorial.fuctorize.module.Category;
 import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.*;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import ru.fuctorial.fuctorize.utils.RenderUtils;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;

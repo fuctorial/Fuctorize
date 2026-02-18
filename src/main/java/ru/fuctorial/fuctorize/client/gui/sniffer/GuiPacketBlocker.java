@@ -32,7 +32,7 @@ public class GuiPacketBlocker extends GuiScreen {
 
     @Override
     public void initGui() {
-        this.panelWidth = Math.min(500, this.width - 40); // Чуть шире, чтобы влез хекс
+        this.panelWidth = Math.min(500, this.width - 40);  
         this.panelHeight = Math.min(350, this.height - 60);
         this.x = (this.width - this.panelWidth) / 2;
         this.y = (this.height - this.panelHeight) / 2;
@@ -46,22 +46,22 @@ public class GuiPacketBlocker extends GuiScreen {
 
     private void rebuildRows() {
         rows.clear();
-        // Добавляем классы
+         
         for (String cls : PacketBlocker.blockedClasses) {
             rows.add(new Row(cls, null));
         }
-        // Добавляем правила (каналы)
+         
         for (PacketBlocker.BlockedPacketRule rule : PacketBlocker.blockedRules) {
             rows.add(new Row(rule.channelName, rule.payloadHex));
         }
-        // Сортировка: сначала классы, потом каналы
+         
         rows.sort((r1, r2) -> {
             boolean r1IsCh = r1.isChannel();
             boolean r2IsCh = r2.isChannel();
             if (r1IsCh != r2IsCh) return Boolean.compare(r1IsCh, r2IsCh);
             return r1.displayName.compareToIgnoreCase(r2.displayName);
         });
-        totalContentHeight = rows.size() * 18 + 25; // + место под кнопку Add
+        totalContentHeight = rows.size() * 18 + 25;  
     }
 
     @Override
@@ -79,30 +79,30 @@ public class GuiPacketBlocker extends GuiScreen {
 
         int currentY = topBounds - scrollOffset;
 
-        // --- КНОПКА ДОБАВЛЕНИЯ ---
+         
         if (isMouseOver(mouseX, mouseY, x + 10, currentY, panelWidth - 20, 15)) {
             if (mouseButton == 0) {
-                // ОТКРЫВАЕМ SNIFFER В РЕЖИМЕ ВЫБОРА
+                 
                 GuiPacketSniffer sniffer = new GuiPacketSniffer(this);
 
-                // Передаем лямбду: что делать с выбранным пакетом
+                 
                 sniffer.setSelectionMode(this, (info) -> {
                     if (info.rawPacket instanceof FMLProxyPacket) {
                         FMLProxyPacket fml = (FMLProxyPacket) info.rawPacket;
                         String channel = fml.channel();
                         
-                        // Проверяем Shift для блокировки всего канала
+                         
                         if (isShiftKeyDown()) {
                             PacketBlocker.addRule(channel, null);
                             ChatUtils.printMessage(EnumChatFormatting.RED + "[Blocker] Blocked entire channel: " + channel);
                         } else {
-                            // Иначе блочим конкретный пакет
+                             
                             String payload = PacketBlocker.getPayloadHex(fml);
                             PacketBlocker.addRule(channel, payload);
                             ChatUtils.printMessage(EnumChatFormatting.RED + "[Blocker] Blocked specific packet on channel: " + channel);
                         }
                     } else {
-                        // Иначе блокируем класс
+                         
                         PacketBlocker.addClassBlock(info.rawPacket.getClass().getName());
                         ChatUtils.printMessage(EnumChatFormatting.RED + "[Blocker] Blocked class: " + info.rawPacket.getClass().getSimpleName());
                     }
@@ -112,9 +112,9 @@ public class GuiPacketBlocker extends GuiScreen {
             }
             return;
         }
-        currentY += 20; // Отступ после кнопки
+        currentY += 20;  
 
-        // --- КНОПКИ УДАЛЕНИЯ ---
+         
         for (Row row : rows) {
             if (row.isMinusClicked(mouseX, mouseY, currentY)) {
                 if (mouseButton == 0) {
@@ -123,7 +123,7 @@ public class GuiPacketBlocker extends GuiScreen {
                     } else {
                         PacketBlocker.removeClassBlock(row.key);
                     }
-                    initGui(); // Перерисовать список
+                    initGui();  
                     return;
                 }
             }
@@ -151,7 +151,7 @@ public class GuiPacketBlocker extends GuiScreen {
         drawDefaultBackground();
         if (FuctorizeClient.INSTANCE.fontManager == null || !FuctorizeClient.INSTANCE.fontManager.isReady()) return;
 
-        // Отрисовка фона
+         
         RenderUtils.drawRect(x, y, x + panelWidth, y + panelHeight, Theme.CATEGORY_BG.getRGB());
         RenderUtils.drawRect(x - 1, y - 1, x + panelWidth + 1, y, Theme.BORDER.getRGB());
         RenderUtils.drawRect(x - 1, y - 1, x, y + panelHeight + 1, Theme.BORDER.getRGB());
@@ -170,14 +170,14 @@ public class GuiPacketBlocker extends GuiScreen {
 
         int currentY = topBounds - scrollOffset;
 
-        // Рисуем кнопку добавления
+         
         boolean addHover = isMouseOver(mouseX, mouseY, x + 10, currentY, panelWidth - 20, 15);
         RenderUtils.drawRect(x + 10, currentY, x + panelWidth - 10, currentY + 15, addHover ? Theme.COMPONENT_BG_HOVER.getRGB() : Theme.COMPONENT_BG.getRGB());
         String addText = "[ + ] Добавить (Shift = весь канал)";
         font.drawString(addText, x + (panelWidth - font.getStringWidth(addText)) / 2f, currentY + 4, Theme.ORANGE.getRGB());
         currentY += 20;
 
-        // Рисуем список
+         
         for (Row row : rows) {
             if (currentY + 18 > topBounds && currentY < bottomBounds) {
                 row.draw(mouseX, mouseY, currentY, x, panelWidth);
@@ -198,10 +198,10 @@ public class GuiPacketBlocker extends GuiScreen {
         return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
     }
 
-    // Вспомогательный класс для строки
+     
     private class Row {
         String key;
-        String payloadHex; // null if class or full channel
+        String payloadHex;  
         String displayName;
 
         Row(String key, String payloadHex) {
@@ -209,9 +209,9 @@ public class GuiPacketBlocker extends GuiScreen {
             this.payloadHex = payloadHex;
             
             if (payloadHex == null) {
-                // Это либо класс, либо полный канал
-                // Определим по наличию в blockedClasses, но здесь мы просто передали key
-                // Если это класс, он обычно содержит точки и CamelCase
+                 
+                 
+                 
                 if (PacketBlocker.blockedClasses.contains(key)) {
                     if (key.contains(".")) {
                         this.displayName = key.substring(key.lastIndexOf('.') + 1).replace('$', '.');
@@ -222,7 +222,7 @@ public class GuiPacketBlocker extends GuiScreen {
                     this.displayName = "[ALL] " + key;
                 }
             } else {
-                // Это конкретный пакет канала
+                 
                 String shortHex = payloadHex.length() > 20 ? payloadHex.substring(0, 20) + "..." : payloadHex;
                 this.displayName = "[" + shortHex + "] " + key;
             }
@@ -243,7 +243,7 @@ public class GuiPacketBlocker extends GuiScreen {
             CustomFontRenderer font = FuctorizeClient.INSTANCE.fontManager.regular_18;
             font.drawString(displayName, rowX + 4, yPos + 4, -1);
 
-            // Кнопка удаления
+             
             int minusX = rowX + rowW - 16;
             boolean minusHover = isMouseOver(mouseX, mouseY, minusX, yPos, 16, rowH);
             int delColor = minusHover ? new Color(255, 50, 50, 200).getRGB() : new Color(200, 50, 50, 150).getRGB();

@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\clickgui\AbstractFrame.java
+ 
 package ru.fuctorial.fuctorize.client.gui.clickgui;
 
 import ru.fuctorial.fuctorize.client.gui.clickgui.components.CategoryComponent;
@@ -30,7 +30,7 @@ public abstract class AbstractFrame {
         this.height = height;
     }
 
-    // --- ABSTRACT METHODS ---
+     
     public abstract void setup();
     public abstract void drawScreen(int mouseX, int mouseY);
     public abstract void mouseClicked(int mouseX, int mouseY, int mouseButton);
@@ -38,28 +38,16 @@ public abstract class AbstractFrame {
     public abstract void keyTyped(char typedChar, int keyCode);
     public abstract void mouseScrolled(int direction);
 
-    /**
-     * Checks if any text input component within this frame is currently focused.
-     * @return true if a text input is focused.
-     */
+     
     public abstract boolean isAnyTextFieldFocused();
 
-    /**
-     * Sets the currently active category.
-     * @param category The category object (can be an enum or String).
-     */
+     
     public abstract void setCurrentCategory(Object category);
 
-    /**
-     * Returns the module component that is currently awaiting a key assignment.
-     * @return ModuleComponent or null.
-     */
+     
     public abstract ModuleComponent getBindingComponent();
 
-    /**
-     * Sets the module component that will await a key assignment.
-     * @param component The component to set.
-     */
+     
     public abstract void setBindingComponent(ModuleComponent component);
 
     public Object getCurrentCategory() {

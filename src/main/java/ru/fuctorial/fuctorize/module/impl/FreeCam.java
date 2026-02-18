@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\FreeCam.java
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -18,7 +18,7 @@ public class FreeCam extends Module {
     private SliderSetting speedSetting;
     private EntityFakePlayer freecamEntity;
 
-    // Сохраняем позицию, где игрок вошел в FreeCam
+     
     private double startX, startY, startZ;
     private float startYaw, startPitch;
 
@@ -46,14 +46,14 @@ public class FreeCam extends Module {
             return;
         }
 
-        // 1. Сохраняем реальную позицию
+         
         startX = mc.thePlayer.posX;
         startY = mc.thePlayer.posY;
         startZ = mc.thePlayer.posZ;
         startYaw = mc.thePlayer.rotationYaw;
         startPitch = mc.thePlayer.rotationPitch;
 
-        // 2. Создаем клона
+         
         freecamEntity = new EntityFakePlayer(mc.theWorld, mc.thePlayer.getGameProfile());
         freecamEntity.setPositionAndRotation(startX, startY, startZ, startYaw, startPitch);
         freecamEntity.rotationYawHead = mc.thePlayer.rotationYawHead;
@@ -62,7 +62,7 @@ public class FreeCam extends Module {
 
         mc.theWorld.addEntityToWorld(-100, freecamEntity);
 
-        // 3. Переключаем рендер
+         
         mc.renderViewEntity = freecamEntity;
     }
 
@@ -70,21 +70,21 @@ public class FreeCam extends Module {
     public void onDisable() {
         if (mc.thePlayer == null) return;
 
-        // 1. Возвращаем рендер
+         
         mc.renderViewEntity = mc.thePlayer;
 
-        // 2. Удаляем фейка
+         
         if (freecamEntity != null) {
             mc.theWorld.removeEntityFromWorld(freecamEntity.getEntityId());
             freecamEntity = null;
         }
 
-        // 3. Сбрасываем движение реального игрока, чтобы он не дернулся после выхода
+         
         mc.thePlayer.motionX = 0;
         mc.thePlayer.motionY = 0;
         mc.thePlayer.motionZ = 0;
 
-        // Восстанавливаем поворот головы (опционально, если хотите вернуть прицел туда, где были)
+         
         mc.thePlayer.rotationYaw = startYaw;
         mc.thePlayer.rotationPitch = startPitch;
     }
@@ -93,27 +93,27 @@ public class FreeCam extends Module {
     public void onUpdate() {
         if (freecamEntity == null || mc.thePlayer == null) return;
 
-        // --- ЛОГИКА ФЕЙКА ---
-        // Синхронизируем поворот камеры (мыши) с фейком.
-        // Minecraft меняет mc.thePlayer.rotationYaw, когда мы двигаем мышкой.
-        // Мы передаем это вращение фейку, чтобы камера крутилась.
+         
+         
+         
+         
         freecamEntity.rotationYaw = mc.thePlayer.rotationYaw;
         freecamEntity.rotationPitch = mc.thePlayer.rotationPitch;
         freecamEntity.rotationYawHead = mc.thePlayer.rotationYawHead;
 
-        // Двигаем фейка (он читает клавиши сам)
+         
         freecamEntity.updateMovement((float) speedSetting.value);
 
-        // --- ЛОГИКА ОРИГИНАЛА ---
-        // Жестко фиксируем позицию оригинала.
-        // Мы НЕ блокируем вращение (rotationYaw), чтобы мышь работала плавно.
-        // Но так как пакеты отменены (см. onPacketSend), сервер не узнает, что мы крутим головой.
+         
+         
+         
+         
         mc.thePlayer.setPosition(startX, startY, startZ);
         mc.thePlayer.motionX = 0;
         mc.thePlayer.motionY = 0;
         mc.thePlayer.motionZ = 0;
 
-        // Блокируем логические флаги движения у оригинала, чтобы не срабатывали анимации
+         
         if (mc.thePlayer instanceof EntityPlayerSP) {
             EntityPlayerSP playerSP = (EntityPlayerSP) mc.thePlayer;
             playerSP.setSprinting(false);
@@ -128,8 +128,8 @@ public class FreeCam extends Module {
 
     @Override
     public void onPacketSend(PacketEvent.Send event) {
-        // Блокируем отправку пакетов движения игрока, чтобы сервер видел нас стоящими на месте.
-        // C03PacketPlayer включает в себя C04, C05, C06.
+         
+         
         if (event.getPacket() instanceof C03PacketPlayer) {
             event.setCanceled(true);
         }

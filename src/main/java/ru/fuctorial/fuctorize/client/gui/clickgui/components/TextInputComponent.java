@@ -7,7 +7,7 @@ import net.minecraft.client.gui.Gui;
 import org.lwjgl.input.Keyboard;
 
 
-// Файл: C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\clickgui\components\TextInputComponent.java
+ 
 
 
 
@@ -20,14 +20,14 @@ public class TextInputComponent extends Component {
         super(parent, x, y, width, height);
         this.setting = setting;
 
-        // --- ДОБАВИТЬ ЭТОТ БЛОК ---
-        // Рассчитываем высоту на основе шрифта
+         
+         
         if (getFont() != null) {
             this.height = getFont().getHeight() + VERTICAL_PADDING * 2;
         } else {
-            this.height = 16; // Запасное значение
+            this.height = 16;  
         }
-        // --- КОНЕЦ БЛОКА ---
+         
     }
 
     @Override
@@ -36,7 +36,7 @@ public class TextInputComponent extends Component {
         if (getFont() == null) return;
 
         int animatedBgColor = animateColor(Theme.SETTING_BG.getRGB(), animFactor);
-        //Gui.drawRect(parent.x + x, parent.y + y, parent.x + x + width, parent.y + y + height, animatedBgColor);
+         
 
         String displayText = setting.name + ": " + setting.text;
 
@@ -56,7 +56,7 @@ public class TextInputComponent extends Component {
                 setting.text = setting.text.substring(0, setting.text.length() - 1);
             }
         } else if (net.minecraft.util.ChatAllowedCharacters.isAllowedCharacter(typedChar)) {
-            // Allow most characters, just like in chat.
+             
             setting.text += typedChar;
         }
     }

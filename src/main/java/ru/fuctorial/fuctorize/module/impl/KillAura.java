@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\KillAura.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -7,7 +7,7 @@ import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.BindSetting;
 import ru.fuctorial.fuctorize.module.settings.BooleanSetting;
 import ru.fuctorial.fuctorize.module.settings.SliderSetting;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import ru.fuctorial.fuctorize.utils.NetUtils;
 import ru.fuctorial.fuctorize.utils.RotationUtils;
 import ru.fuctorial.fuctorize.utils.TimerUtils;
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class KillAura extends Module {
 
-    // --- Settings ---
+     
     private SliderSetting range;
     private SliderSetting cps;
     private BooleanSetting autoBlock;
@@ -38,7 +38,7 @@ public class KillAura extends Module {
     private BooleanSetting swing;
     private BooleanSetting aimbot;
 
-    // --- Internal State ---
+     
     private EntityLivingBase target;
     private final TimerUtils attackTimer = new TimerUtils();
     private boolean isBlocking = false;
@@ -49,7 +49,7 @@ public class KillAura extends Module {
         try {
             npcClass = Class.forName("noppes.npcs.entity.EntityNPCInterface");
         } catch (ClassNotFoundException e) {
-            // CustomNPCs is not present, which is fine.
+             
         }
     }
 

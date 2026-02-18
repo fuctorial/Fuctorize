@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import ru.fuctorial.fuctorize.Fuctorize; // <-- ИСПРАВЛЕНИЕ: Снова импортируем Fuctorize
+import ru.fuctorial.fuctorize.Fuctorize;  
 
 import java.io.File;
 import java.io.FileReader;
@@ -12,7 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 
-// ru.fuctorial/fuctorize/client/manager/ModHiderConfig.java
+ 
 
 
 
@@ -30,7 +30,7 @@ public class ModHiderConfig {
     public static void load() {
         if (!CONFIG_FILE.exists()) {
             System.out.println("Fuctorize Hider: No config found. Using default OptiFine disguise.");
-            // --- ИСПРАВЛЕНИЕ: Обращаемся к полям в Fuctorize ---
+             
             Fuctorize.modId = DEFAULT_MOD_ID;
             Fuctorize.modVersion = DEFAULT_VERSION;
             save();
@@ -67,7 +67,7 @@ public class ModHiderConfig {
             CONFIG_FILE.getParentFile().mkdirs();
 
             JsonObject json = new JsonObject();
-            // --- ИСПРАВЛЕНИЕ: Обращаемся к полям в Fuctorize ---
+             
             json.addProperty("modid", Fuctorize.modId);
             json.addProperty("version", Fuctorize.modVersion);
 

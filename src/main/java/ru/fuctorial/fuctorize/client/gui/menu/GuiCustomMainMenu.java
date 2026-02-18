@@ -16,8 +16,8 @@ import java.util.List;
 
 public class GuiCustomMainMenu extends GuiScreen {
 
-    // Удалена ссылка на фоновую текстуру
-    // private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation("fuctorize", "textures/gui/main_menu_bg.png");
+     
+     
     private AnimationUtils masterAnimation;
     private final List<StyledButton> orderedButtons = new ArrayList<>();
 
@@ -32,8 +32,8 @@ public class GuiCustomMainMenu extends GuiScreen {
     private float titleY, subtitleY;
     private boolean hasBeenInitialized = false;
     private boolean animationPlayed = false;
-    // Удален флаг существования текстуры
-    // private boolean backgroundTextureExists = false;
+     
+     
 
     @Override
     public void initGui() {
@@ -60,9 +60,9 @@ public class GuiCustomMainMenu extends GuiScreen {
             return;
         }
 
-        // --- НОВАЯ ЛОГИКА РАСЧЕТА ШИРИНЫ ---
+         
 
-        // 1. Собираем тексты всех кнопок, чтобы найти самый длинный
+         
         String txtSingle = ru.fuctorial.fuctorize.utils.Lang.get("mainmenu.button.singleplayer");
         String txtMulti = ru.fuctorial.fuctorize.utils.Lang.get("mainmenu.button.multiplayer");
         String txtAcc = ru.fuctorial.fuctorize.utils.Lang.get("mainmenu.button.accounts");
@@ -82,18 +82,18 @@ public class GuiCustomMainMenu extends GuiScreen {
 
         int buttonHeight = 22;
 
-        // Рассчитываем "вертикальный зазор" (сколько места сверху и снизу от текста внутри кнопки)
-        // Например: (22 - 9) = 13 пикселей "воздуха" по вертикали.
+         
+         
         int totalVerticalPadding = buttonHeight - subtitleFont.getHeight();
 
-        // Делаем ширину кнопки: макс. текст + этот зазор + еще немного (например 20px) для комфорта по бокам
+         
         int buttonWidth = maxTextWidth + totalVerticalPadding + 20;
 
-        // Опционально: ставим минимальную ширину, чтобы слишком короткие слова (типа "Quit") не делали кнопку крошечной
+         
         if (buttonWidth < 120) {
             buttonWidth = 120;
         }
-        // -----------------------------------
+         
 
         int spacing = 5;
         int titleToButtonSpacing = 25;
@@ -109,7 +109,7 @@ public class GuiCustomMainMenu extends GuiScreen {
 
         int centerX = this.width / 2;
 
-        // Используем рассчитанный buttonWidth
+         
         orderedButtons.add(new StyledButton(1, centerX - buttonWidth / 2, buttonBlockStartY, buttonWidth, buttonHeight, txtMulti));
         orderedButtons.add(new StyledButton(0, centerX - buttonWidth / 2, buttonBlockStartY + (buttonHeight + spacing), buttonWidth, buttonHeight, txtSingle));
         orderedButtons.add(new StyledButton(4, centerX - buttonWidth / 2, buttonBlockStartY + (buttonHeight + spacing) * 2, buttonWidth, buttonHeight, txtAcc));
@@ -126,7 +126,7 @@ public class GuiCustomMainMenu extends GuiScreen {
             this.initGui();
         }
 
-        // Удалена логика отрисовки фонового изображения и оставлена только отрисовка сплошного цвета
+         
         RenderUtils.drawRect(0, 0, this.width, this.height, new Color(20, 20, 22).getRGB());
 
         if (!this.hasBeenInitialized) {
@@ -136,16 +136,16 @@ public class GuiCustomMainMenu extends GuiScreen {
 
         double masterProgress;
 
-        // ensure we have animation object if we need to play animation
+         
         if (!this.animationPlayed) {
             if (this.masterAnimation == null) {
-                // create animation on-demand (case: menu was cached and resetAnimation() вызван)
+                 
                 this.masterAnimation = new AnimationUtils(900, AnimationUtils.Easing.EASE_OUT_QUAD);
                 this.masterAnimation.setDirection(true);
             }
             masterProgress = this.masterAnimation.getAnimationFactor();
         } else {
-            // animation already played — skip animations by using full progress
+             
             masterProgress = 1.0;
         }
         double titleProgress = getAnimationProgress(masterProgress, TITLE_ANIM_START, TITLE_ANIM_DURATION);
@@ -220,18 +220,14 @@ public class GuiCustomMainMenu extends GuiScreen {
         }
     }
 
-    /**
-     * ARCHITECTURAL FIX: Override keyTyped to prevent the default GuiScreen behavior
-     * for the ESCAPE key, which would otherwise cause the main menu to "close" and
-     * immediately re-initialize, re-playing the intro animation.
-     */
+     
     @Override
     protected void keyTyped(char typedChar, int keyCode) {
         if (keyCode == Keyboard.KEY_ESCAPE) {
-            // Do nothing when ESC is pressed in the main menu.
+             
             return;
         }
-        // For any other key, allow the default behavior.
+         
         try {
             super.keyTyped(typedChar, keyCode);
         } catch (Exception e) {
@@ -239,30 +235,30 @@ public class GuiCustomMainMenu extends GuiScreen {
         }
     }
 
-    // =================================================================================
-    // === ИСПРАВЛЕНИЕ НАХОДИТСЯ ЗДЕСЬ ==================================================
-    // =================================================================================
+     
+     
+     
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        // УБРАНО: super.mouseClicked(mouseX, mouseY, mouseButton);
-        // Мы обрабатываем клики вручную ниже, чтобы учитывать прогресс анимации.
-        // Вызов super приводил к двойному срабатыванию (звук + действие) и позволял кликать невидимые кнопки.
+         
+         
+         
 
         if (mouseButton == 0) {
             for (int i = 0; i < this.orderedButtons.size(); i++) {
                 StyledButton button = this.orderedButtons.get(i);
 
-                // --- НАЧАЛО ИСПРАВЛЕНИЯ ---
-                // Безопасно получаем прогресс анимации.
-                // Если masterAnimation равен null (анимация завершилась), считаем прогресс равным 1.0.
+                 
+                 
+                 
                 double masterProgress = (this.masterAnimation != null) ? this.masterAnimation.getAnimationFactor() : 1.0;
-                // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
+                 
 
-                // Дальше логика остается прежней, но теперь она не вызовет NullPointerException
+                 
                 double buttonProgress = getAnimationProgress(masterProgress, BUTTON_ANIM_START + (i * BUTTON_STAGGER), BUTTON_ANIM_DURATION);
 
                 if (buttonProgress >= 1.0 && button.mousePressed(this.mc, mouseX, mouseY)) {
-                    button.func_146113_a(this.mc.getSoundHandler()); // playSound
+                    button.func_146113_a(this.mc.getSoundHandler());  
                     this.actionPerformed(button);
                     return;
                 }
@@ -278,11 +274,11 @@ public class GuiCustomMainMenu extends GuiScreen {
     }
 
     public void resetAnimation() {
-        // не уничтожаем другие данные меню — только готовим анимацию к повторному проигрыванию
+         
         this.animationPlayed = false;
-        // сбросим masterAnimation, чтобы оно заново создавалось при следующем init/draw
+         
         this.masterAnimation = null;
-        // Не меняем hasBeenInitialized — меню уже инициализировано (кнопки и т.п. остаются).
+         
     }
 
     @Override

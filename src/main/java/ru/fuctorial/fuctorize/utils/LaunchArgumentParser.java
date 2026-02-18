@@ -30,22 +30,22 @@ public class LaunchArgumentParser {
             }
         }
 
-        // --- FINAL FIX: Universal online mode detection based on heuristic, not hardcoded names ---
+         
         launchedWithTokens = false;
         for (Map.Entry<String, String> entry : discoveredTokens.entrySet()) {
             String key = entry.getKey().toLowerCase();
             String value = entry.getValue();
 
-            // Ignore username and properties, as they can be short and non-token-like.
+             
             if (key.equals("username") || key.equals("userproperties")) {
                 continue;
             }
 
-            // Heuristic: A long, alphanumeric string is very likely a session token.
+             
             if (value != null && value.length() > 16 && value.matches("[a-zA-Z0-9]+")) {
                 System.out.println("Fuctorize: Heuristic match found for token '" + key + "'. Activating ONLINE account mode.");
                 launchedWithTokens = true;
-                break; // One match is enough to confirm online mode.
+                break;  
             }
         }
 
@@ -56,10 +56,7 @@ public class LaunchArgumentParser {
         parsed = true;
     }
 
-    /**
-     * Checks if the game was launched with session-specific tokens based on a universal heuristic.
-     * @return true if tokens were found.
-     */
+     
     public static boolean isLaunchedWithTokens() {
         if (!parsed) {
             parse();
@@ -67,10 +64,7 @@ public class LaunchArgumentParser {
         return launchedWithTokens;
     }
 
-    /**
-     * Gets all discovered key-value arguments.
-     * @return A map of all found arguments.
-     */
+     
     public static Map<String, String> getDiscoveredTokens() {
         if (!parsed) {
             parse();

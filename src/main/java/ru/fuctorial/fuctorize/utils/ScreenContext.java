@@ -73,7 +73,7 @@ public class ScreenContext {
             Class<?> stalkerGameMenuClass = Class.forName("org.rhino.stalker.core.side.client.gui.menu.GuiGameMenu");
             registerProvider(stalkerGameMenuClass, emptyProvider);
         } catch (ClassNotFoundException e) {
-            // Mod not present, do nothing.
+             
         }
 
         registerProvider(GuiGameOver.class, screen -> buildGameOverContext());
@@ -126,7 +126,7 @@ public class ScreenContext {
                     return buildResult(label, screen.getClass().getName() + ":" + name);
                 }
             }
-        } catch (Throwable t) { /* ignore */ }
+        } catch (Throwable t) {   }
         return null;
     }
 

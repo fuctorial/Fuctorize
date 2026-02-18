@@ -1,66 +1,59 @@
 package ru.fuctorial.fuctorize.utils.pathfinding;
 
-/**
- * Р С™Р С•Р Р…РЎвЂћР С‘Р С–РЎС“РЎР‚Р В°РЎвЂ Р С‘РЎРЏ РЎРѓРЎвЂљР С•Р С‘Р СР С•РЎРѓРЎвЂљР ВµР в„– Р С‘ РЎвЂљР В°Р в„–Р СР В°РЎС“РЎвЂљР С•Р Р† Р Т‘Р В»РЎРЏ Р С—Р С•Р С‘РЎРѓР С”Р В° Р С—РЎС“РЎвЂљР С‘ (Р С—Р С• Р В°Р Р…Р В°Р В»Р С•Р С–Р С‘Р С‘ РЎРѓ Baritone).
- */
+ 
 public final class PathingConfig {
     private PathingConfig() {}
 
-    // Р РЋРЎвЂљР С•Р С‘Р СР С•РЎРѓРЎвЂљР С‘ Р Т‘Р Р†Р С‘Р В¶Р ВµР Р…Р С‘Р в„– (РЎвЂљР С‘Р С”Р С‘)
+     
     public static final double TICKS_WALK = 4.633;
-    public static final double TICKS_SPRINT = 3.564; // Р Р…Р Вµ Р С‘РЎРѓР С—Р С•Р В»РЎРЉР В·РЎС“Р ВµРЎвЂљРЎРѓРЎРЏ Р С—Р С• РЎС“Р СР С•Р В»РЎвЂЎР В°Р Р…Р С‘РЎР‹
+    public static final double TICKS_SPRINT = 3.564;  
     public static final double TICKS_WATER = 9.091;
-    public static final double TICKS_SOUL_SAND = 9.266; // Р С—РЎР‚Р С‘Р В±Р В»Р С‘Р В·Р С‘РЎвЂљР ВµР В»РЎРЉР Р…Р С•
+    public static final double TICKS_SOUL_SAND = 9.266;  
     public static final double TICKS_LADDER_UP = 8.511;
     public static final double BREAK_TIME_COST_MULTIPLIER = 1.5;
     public static final double TICKS_LADDER_DOWN = 6.667;
     public static final double TICKS_SNEAK = 15.385;
-    public static final double TICKS_SWIM_SURFACE = 5.0;      // Р вЂРЎвЂ№РЎРѓРЎвЂљРЎР‚Р С•Р Вµ Р С—Р В»Р В°Р Р†Р В°Р Р…Р С‘Р Вµ
-    public static final double TICKS_SWIM_UNDERWATER = 12.0;  // Р СљР ВµР Т‘Р В»Р ВµР Р…Р Р…Р С•Р Вµ Р С—Р С•Р Т‘Р Р†Р С•Р Т‘Р Р…Р С•Р Вµ Р С—Р В»Р В°Р Р†Р В°Р Р…Р С‘Р Вµ
+    public static final double TICKS_SWIM_SURFACE = 5.0;       
+    public static final double TICKS_SWIM_UNDERWATER = 12.0;   
 
-    /**
-     * Р РЃРЎвЂљРЎР‚Р В°РЎвЂћ Р В·Р В° Р Т‘Р С‘Р В°Р С–Р С•Р Р…Р В°Р В»РЎРЉР Р…Р С•Р Вµ Р Т‘Р Р†Р С‘Р В¶Р ВµР Р…Р С‘Р Вµ, Р С”Р С•РЎвЂљР С•РЎР‚Р С•Р Вµ "РЎРѓРЎР‚Р ВµР В·Р В°Р ВµРЎвЂљ" РЎС“Р С–Р С•Р В» (Р С—РЎР‚Р С•РЎвЂ¦Р С•Р Т‘Р С‘РЎвЂљ Р Р†Р С—Р В»Р С•РЎвЂљР Р…РЎС“РЎР‹ Р С” Р В±Р В»Р С•Р С”РЎС“).
-     * Р вЂќР ВµР В»Р В°Р ВµРЎвЂљ РЎвЂљР В°Р С”Р С•Р в„– РЎвЂ¦Р С•Р Т‘ Р В±Р С•Р В»Р ВµР Вµ "Р Т‘Р С•РЎР‚Р С•Р С–Р С‘Р С", Р В·Р В°РЎРѓРЎвЂљР В°Р Р†Р В»РЎРЏРЎРЏ A* Р С—РЎР‚Р ВµР Т‘Р С—Р С•РЎвЂЎР ВµРЎРѓРЎвЂљРЎРЉ Р В±Р ВµР В·Р С•Р С—Р В°РЎРѓР Р…РЎвЂ№Р в„– Р С•Р В±РЎвЂ¦Р С•Р Т‘ Р С‘Р В· Р Т‘Р Р†РЎС“РЎвЂ¦ РЎв‚¬Р В°Р С–Р С•Р Р†.
-     * Р вЂ”Р Р…Р В°РЎвЂЎР ВµР Р…Р С‘Р Вµ Р Т‘Р С•Р В»Р В¶Р Р…Р С• Р В±РЎвЂ№РЎвЂљРЎРЉ Р Т‘Р С•РЎРѓРЎвЂљР В°РЎвЂљР С•РЎвЂЎР Р…РЎвЂ№Р С, РЎвЂЎРЎвЂљР С•Р В±РЎвЂ№ (РЎРѓРЎвЂљР С•Р С‘Р СР С•РЎРѓРЎвЂљРЎРЉ Р Т‘Р С‘Р В°Р С–Р С•Р Р…Р В°Р В»Р С‘ + РЎв‚¬РЎвЂљРЎР‚Р В°РЎвЂћ) > (РЎРѓРЎвЂљР С•Р С‘Р СР С•РЎРѓРЎвЂљРЎРЉ Р Т‘Р Р†РЎС“РЎвЂ¦ Р С—РЎР‚РЎРЏР СРЎвЂ№РЎвЂ¦ РЎв‚¬Р В°Р С–Р С•Р Р†).
-     * Р СџРЎР‚Р С‘Р СР ВµРЎР‚: (6.5 + 8.0) > (4.6 + 4.6).
-     */
+     
     public static final double CORNER_CUT_PENALTY = 8.0;
 
-    // --- Р ВР вЂ”Р СљР вЂўР СњР вЂўР СњР ВР вЂў ---
-    // Р РЃРЎвЂљРЎР‚Р В°РЎвЂћ Р В·Р В° Р С”Р В°Р В¶Р Т‘РЎвЂ№Р в„– Р В±Р В»Р С•Р С”, Р С—РЎР‚Р С•Р в„–Р Т‘Р ВµР Р…Р Р…РЎвЂ№Р в„– Р В·Р Р…Р В°РЎвЂЎР С‘РЎвЂљР ВµР В»РЎРЉР Р…Р С• Р Р…Р С‘Р В¶Р Вµ "Р С—Р С•Р Р†Р ВµРЎР‚РЎвЂ¦Р Р…Р С•РЎРѓРЎвЂљР С‘".
-    // Р РЋР Т‘Р ВµР В»Р В°Р Р… Р В·Р В°Р СР ВµРЎвЂљР Р…Р С• Р В±Р С•Р В»РЎРЉРЎв‚¬Р Вµ, РЎвЂЎР ВµР С РЎРѓРЎвЂљР С•Р С‘Р СР С•РЎРѓРЎвЂљРЎРЉ Р С”Р С•Р С—Р В°Р Р…Р С‘РЎРЏ Р С—Р В°РЎР‚РЎвЂ№ Р В±Р В»Р С•Р С”Р С•Р Р†, РЎвЂЎРЎвЂљР С•Р В±РЎвЂ№
-    // A* Р С—РЎР‚Р ВµР Т‘Р С—Р С•РЎвЂЎР С‘РЎвЂљР В°Р В» РЎР‚РЎвЂ№РЎвЂљРЎРЉ РЎвЂљРЎС“Р Р…Р Р…Р ВµР В»РЎРЉ Р Р…Р В° Р Р…Р С•РЎР‚Р СР В°Р В»РЎРЉР Р…Р С•Р С РЎС“РЎР‚Р С•Р Р†Р Р…Р Вµ, Р В° Р Р…Р Вµ РЎР‚Р С•Р С‘РЎвЂљРЎРЉ РЎвЂљРЎР‚Р В°Р Р…РЎв‚¬Р ВµРЎР‹.
+     
+     
+     
+     
     public static final double IN_TRENCH_PENALTY = 60.0;
 
-    // Р В­Р Р†РЎР‚Р С‘РЎРѓРЎвЂљР С‘Р С”Р В°
-    public static final double HEURISTIC_WEIGHT = 3.57; // < WALK, РЎвЂЎРЎвЂљР С•Р В±РЎвЂ№ Р С•РЎРѓРЎвЂљР В°Р Р†Р В°РЎвЂљРЎРЉРЎРѓРЎРЏ Р Т‘Р С•Р С—РЎС“РЎРѓРЎвЂљР С‘Р СР С•Р в„–
+     
+    public static final double HEURISTIC_WEIGHT = 3.57;  
 
-    // Р СћР В°Р в„–Р СР В°РЎС“РЎвЂљРЎвЂ№ (Р СРЎРѓ)
+     
     public static final int PRIMARY_TIMEOUT_MS = 2000;
     public static final int FAILURE_TIMEOUT_MS = 8000;
     public static final int PLAN_AHEAD_PRIMARY_TIMEOUT_MS = 4000;
     public static final int PLAN_AHEAD_FAILURE_TIMEOUT_MS = 6000;
 
-    // Р С›Р С–РЎР‚Р В°Р Р…Р С‘РЎвЂЎР ВµР Р…Р С‘Р Вµ РЎС“Р С–Р В»Р С•Р Р† Р С—Р С•Р Р†Р С•РЎР‚Р С•РЎвЂљР В° Р СР В°РЎР‚РЎв‚¬РЎР‚РЎС“РЎвЂљР В°
-    public static final boolean LIMIT_TURN_ANGLE = true; // Р вЂ™Р С”Р В»РЎР‹РЎвЂЎР С‘РЎвЂљРЎРЉ Р С•Р С–РЎР‚Р В°Р Р…Р С‘РЎвЂЎР ВµР Р…Р С‘Р Вµ Р Р…Р В° 45Р’В°
-    public static final double MAX_YAW_CHANGE_DEG = 45.0;   // Р вЂњР С•РЎР‚Р С‘Р В·Р С•Р Р…РЎвЂљР В°Р В»РЎРЉР Р…РЎвЂ№Р в„– Р С—Р С•Р Р†Р С•РЎР‚Р С•РЎвЂљ Р Р…Р Вµ Р В±Р С•Р В»Р ВµР Вµ 45Р’В° Р В·Р В° РЎв‚¬Р В°Р С–
-    public static final double MAX_PITCH_CHANGE_DEG = 45.0; // Р ВР В·Р СР ВµР Р…Р ВµР Р…Р С‘Р Вµ Р Р…Р В°Р С”Р В»Р С•Р Р…Р В° Р Р…Р Вµ Р В±Р С•Р В»Р ВµР Вµ 45Р’В° Р В·Р В° РЎв‚¬Р В°Р С–
-    public static final double MAX_ABS_PITCH_DEG = 75.0;    // Р С’Р В±РЎРѓР С•Р В»РЎР‹РЎвЂљР Р…РЎвЂ№Р в„– Р Р…Р В°Р С”Р В»Р С•Р Р… РЎв‚¬Р В°Р С–Р В° (Р В·Р В°Р С—РЎР‚Р ВµРЎвЂљ Р Р…Р В° Р Р†Р ВµРЎР‚РЎвЂљР С‘Р С”Р В°Р В»РЎРЉР Р…РЎвЂ№Р Вµ РЎРѓРЎвЂљР С•Р В»Р В±РЎвЂ№)
+     
+    public static final boolean LIMIT_TURN_ANGLE = true;  
+    public static final double MAX_YAW_CHANGE_DEG = 45.0;    
+    public static final double MAX_PITCH_CHANGE_DEG = 45.0;  
+    public static final double MAX_ABS_PITCH_DEG = 75.0;     
 
-    // Р СџРЎР‚Р С•РЎвЂЎР ВµР Вµ
+     
     public static final int MIN_SEGMENT_BLOCKS = 1;
     public static final int EDGE_COUNTER_THRESHOLD = 50;
     public static final double DIAGONAL_COST_FACTOR = Math.sqrt(2.0);
-    public static final double MIN_IMPROVEMENT_EPS = 0.01; // РЎвЂљР С‘Р С”Р С•Р Р†
+    public static final double MIN_IMPROVEMENT_EPS = 0.01;  
 
-    // Р РЋРЎвЂљР С•Р С‘Р СР С•РЎРѓРЎвЂљРЎРЉ Р С”Р С•Р С—Р В°Р Р…Р С‘РЎРЏ Р С‘ Р С—Р С•РЎРѓРЎвЂљРЎР‚Р С•Р в„–Р С”Р С‘
-    public static final double BLOCK_BREAK_ADDITIONAL_PENALTY = 8.0;  // Р Р€Р Р†Р ВµР В»Р С‘РЎвЂЎР ВµР Р…Р Р…РЎвЂ№Р в„– РЎв‚¬РЎвЂљРЎР‚Р В°РЎвЂћ Р В·Р В° Р С”Р С•Р С—Р С”РЎС“ Р В±Р В»Р С•Р С”Р В°
-    public static final double BLOCK_PLACEMENT_PENALTY_TICKS = 30.0;  // Р Р€Р Р†Р ВµР В»Р С‘РЎвЂЎР ВµР Р…Р Р…РЎвЂ№Р в„– РЎв‚¬РЎвЂљРЎР‚Р В°РЎвЂћ Р В·Р В° РЎС“РЎРѓРЎвЂљР В°Р Р…Р С•Р Р†Р С”РЎС“ Р В±Р В»Р С•Р С”Р В° (pillar)
+     
+    public static final double BLOCK_BREAK_ADDITIONAL_PENALTY = 8.0;   
+    public static final double BLOCK_PLACEMENT_PENALTY_TICKS = 30.0;   
 
     public static final double BACKTRACK_FACTOR = 0.5;
-    public static final double PARKOUR_PENALTY_TICKS = 6.0; // Доп. стоимость прыжка-паркура
+    public static final double PARKOUR_PENALTY_TICKS = 6.0;  
 
-    // Р С›РЎвЂљР В»Р В°Р Т‘Р С”Р В°
+     
     public static final boolean DEBUG = true;
 }
 

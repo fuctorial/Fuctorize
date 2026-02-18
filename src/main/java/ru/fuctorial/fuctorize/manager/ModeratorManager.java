@@ -19,7 +19,7 @@ public class ModeratorManager {
 
     public static void load() {
         if (!CONFIG_FILE.exists()) {
-            save(); // Создать пустой файл
+            save();  
             return;
         }
         try (FileReader reader = new FileReader(CONFIG_FILE)) {
@@ -64,7 +64,7 @@ public class ModeratorManager {
     }
 
     public static boolean isModerator(String name) {
-        // Игнорируем регистр для надежности
+         
         for (String mod : moderators) {
             if (mod.equalsIgnoreCase(name)) return true;
         }

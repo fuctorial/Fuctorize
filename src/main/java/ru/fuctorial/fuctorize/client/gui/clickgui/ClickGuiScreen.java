@@ -1,4 +1,4 @@
-// Файл: C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\clickgui\ClickGuiScreen.java
+ 
 package ru.fuctorial.fuctorize.client.gui.clickgui;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -27,25 +27,25 @@ public class ClickGuiScreen extends GuiScreen {
         int oldW = this.mainFrame.width;
         int oldH = this.mainFrame.height;
 
-        // 1. Задаем желаемые размеры в процентах (можно сделать их чуть больше)
-        float widthPercent = 0.45f; // 45% ширины экрана (было 50%)
-        float heightPercent = 0.7f;  // 70% высоты экрана (оставляем)
+         
+        float widthPercent = 0.45f;  
+        float heightPercent = 0.7f;   
 
-// 2. Рассчитываем начальные размеры
+ 
         int guiWidth = (int) (this.width * widthPercent);
         int guiHeight = (int) (this.height * heightPercent);
 
-// 3. Корректируем минимальные и максимальные размеры
-        int minWidth = 420;      // Минимальная ширина (уменьшаем, было 450)
-        int minHeight = 320;     // Минимальная высота (УВЕЛИЧИВАЕМ, было 280)
-        int maxWidth = 650;      // Максимальная ширина (уменьшаем, было 700)
-        int maxHeight = 500;     // Максимальная высота (оставляем)
+ 
+        int minWidth = 420;       
+        int minHeight = 320;      
+        int maxWidth = 650;       
+        int maxHeight = 500;      
 
-// 4. Применяем ограничения (ограничиваем рассчитанный размер)
+ 
         guiWidth = Math.max(minWidth, Math.min(maxWidth, guiWidth));
         guiHeight = Math.max(minHeight, Math.min(maxHeight, guiHeight));
 
-// 5. Финальная проверка: GUI не может быть больше самого окна (оставляем как есть)
+ 
         if (guiWidth > this.width - 40) {
             guiWidth = this.width - 40;
         }
@@ -53,13 +53,13 @@ public class ClickGuiScreen extends GuiScreen {
             guiHeight = this.height - 40;
         }
 
-// 6. Устанавливаем и центрируем итоговые размеры
+ 
         this.mainFrame.width = guiWidth;
         this.mainFrame.height = guiHeight;
         this.mainFrame.x = (this.width - guiWidth) / 2;
         this.mainFrame.y = (this.height - guiHeight) / 2;
 
-        // Compensate scroll for the change in visible area when resolution changes during open GUI
+         
         if (oldW > 0 && oldH > 0) {
             this.mainFrame.onResized(oldW, oldH, guiWidth, guiHeight);
         }
@@ -74,7 +74,7 @@ public class ClickGuiScreen extends GuiScreen {
 
     }
 
-    // Метод onGuiClosed() больше не нужен, так как блюр рисуется только когда открыт этот GUI
+     
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -83,7 +83,7 @@ public class ClickGuiScreen extends GuiScreen {
             this.hasFrameBeenSetup = true;
         }
 
-        // --- ЭТА СТРОКА УДАЛЕНА. БЛЮР ТЕПЕРЬ ВКЛЮЧАЕТСЯ АВТОМАТИЧЕСКИ ---
+         
 
         if (this.mainFrame != null) {
             double animFactor = openAnimation.getAnimationFactor();

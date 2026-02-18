@@ -8,7 +8,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
 
 
-// Файл: C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\clickgui\components\ModeComponent.java
+ 
 
 
 
@@ -20,14 +20,14 @@ public class ModeComponent extends Component {
         super(parent, x, y, width, height);
         this.setting = setting;
 
-        // --- ДОБАВИТЬ ЭТОТ БЛОК ---
-        // Рассчитываем высоту на основе шрифта
+         
+         
         if (getFont() != null) {
             this.height = getFont().getHeight() + VERTICAL_PADDING * 2;
         } else {
-            this.height = 16; // Запасное значение
+            this.height = 16;  
         }
-        // --- КОНЕЦ БЛОКА ---
+         
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ModeComponent extends Component {
         if (getFont() == null) return;
 
         int animatedBgColor = animateColor(Theme.SETTING_BG.getRGB(), animFactor);
-        //Gui.drawRect(parent.x + x, parent.y + y, parent.x + x + width, parent.y + y + height, animatedBgColor);
+         
 
         float textY = (parent.y + this.y) + (this.height / 2f) - (getFont().getHeight() / 2f);
         String displayText = setting.name + ": " + setting.getMode();

@@ -158,25 +158,25 @@ public class ModeratorList extends Module {
 
         float w = 80;
         float titleW = font.getStringWidth(Lang.get("module.moderatorlist.name"));
-        w = Math.max(w, titleW + 8); // Чуть шире отступы
+        w = Math.max(w, titleW + 8);  
 
         for (String m : onlineMods) {
             w = Math.max(w, font.getStringWidth(m) + 8);
         }
 
-        // Параметры верстки
+         
         int headerHeight = 16;
         int rowHeight = 12;
-        int bottomPadding = 4; // Отступ снизу, чтобы текст не лип к краю
+        int bottomPadding = 4;  
 
-        // Общая высота = Заголовок + (кол-во строк * высота строки) + отступ
+         
         float h = onlineMods.isEmpty() ? (headerHeight + rowHeight + bottomPadding) : (headerHeight + (onlineMods.size() * rowHeight) + bottomPadding);
 
         if (background.enabled) {
             RenderUtils.drawRect(0, 0, w, h, new Color(0, 0, 0, 150).getRGB());
         }
 
-        // Центрируем заголовок по высоте в пределах headerHeight (16px)
+         
         float titleX = (w - titleW) / 2f;
         float titleY = (headerHeight - font.getHeight()) / 2f;
         font.drawString(Lang.get("module.moderatorlist.name"), titleX, titleY, Theme.ORANGE.getRGB());
@@ -186,14 +186,14 @@ public class ModeratorList extends Module {
         if (onlineMods.isEmpty()) {
             String none = "None";
             float noneX = (w - font.getStringWidth(none)) / 2f;
-            // Центрируем "None" в первой строке
+             
             float centeredY = currentY + (rowHeight - font.getHeight()) / 2f;
             font.drawString(EnumChatFormatting.GRAY + none, noneX, centeredY, -1);
         } else {
             for (String m : onlineMods) {
                 float nameW = font.getStringWidth(m);
                 float nameX = (w - nameW) / 2f;
-                // Центрируем никнейм в текущей строке высотой rowHeight
+                 
                 float centeredY = currentY + (rowHeight - font.getHeight()) / 2f;
 
                 font.drawString(EnumChatFormatting.RED + m, nameX, centeredY, -1);

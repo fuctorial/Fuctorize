@@ -8,28 +8,28 @@ import java.util.Properties;
 
 public class Lang {
 
-    private static final Properties defaultTranslations = new Properties(); // en_US
-    private static final Properties translations = new Properties(); // Текущий язык
+    private static final Properties defaultTranslations = new Properties();  
+    private static final Properties translations = new Properties();  
     private static boolean isLoaded = false;
     private static final String FALLBACK_LANG = "en_US";
 
-    // --- НОВОЕ ПОЛЕ: Запоминаем, какой язык мы загружали последним ---
+     
     private static String lastLoadedLangCode = "";
 
     public static void load() {
-        // Получаем текущий код языка из Minecraft (например, "ru_RU" или "en_US")
+         
         String currentLang = getMinecraftLanguage();
 
-        // 1) Всегда грузим фоллбэк (en_US), если еще не загружен или если мы делаем полную перезагрузку
+         
         if (defaultTranslations.isEmpty()) {
             loadLangFile(FALLBACK_LANG, defaultTranslations);
         }
 
-        // 2) Очищаем текущие переводы и кладем туда фоллбэк
+         
         translations.clear();
         translations.putAll(defaultTranslations);
 
-        // 3) Если текущий язык не английский, грузим его поверх
+         
         if (!FALLBACK_LANG.equalsIgnoreCase(currentLang)) {
             loadLangFile(currentLang, translations);
         }
@@ -39,11 +39,11 @@ public class Lang {
         System.out.println("Fuctorize/Lang: Language updated to " + currentLang);
     }
 
-    // --- НОВЫЙ МЕТОД: Проверка и обновление ---
-    // Этот метод нужно вызывать в initGui главного меню
+     
+     
     public static void update() {
         String currentMcLang = getMinecraftLanguage();
-        // Если язык в майнкрафте изменился с момента последней загрузки - перезагружаем
+         
         if (!currentMcLang.equals(lastLoadedLangCode)) {
             load();
         }

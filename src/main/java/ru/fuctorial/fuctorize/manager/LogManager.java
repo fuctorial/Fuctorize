@@ -21,7 +21,7 @@ public class LogManager {
     private PrintWriter chatWriter;
     private PrintWriter payloadWriter;
 
-    // Добавляем ExecutorService для асинхронной записи
+     
     private final ExecutorService loggerThread = Executors.newSingleThreadExecutor();
 
     public LogManager() {
@@ -44,13 +44,13 @@ public class LogManager {
     }
 
     public void logPacket(PacketInfo info) {
-        // Отправляем задачу в отдельный поток
+         
         loggerThread.submit(() -> {
             if (packetWriter == null) return;
             String time = dateFormat.format(new Date());
 
-            // Здесь вызываем getSerializedData(). Так как мы в отдельном потоке,
-            // тяжелая рефлексия не подвесит игру.
+             
+             
             String data = info.getSerializedData();
 
             packetWriter.printf("[%s] [%s] %s -> %s%n", time, info.direction, info.name, data);
@@ -84,7 +84,7 @@ public class LogManager {
     }
 
     public void close() {
-        // Останавливаем поток логирования
+         
         loggerThread.shutdown();
 
         if (packetWriter != null) packetWriter.close();

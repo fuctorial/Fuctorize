@@ -3,7 +3,7 @@ package ru.fuctorial.fuctorize.utils.pathfinding;
 public class PathNode implements Comparable<PathNode> {
 
     public final int x;
-    public final int y; // Y-координата блока, НА КОТОРОМ СТОИТ ИГРОК (опорный блок)
+    public final int y;  
     public final int z;
     public int steps;
     public MovementType moveType;
@@ -18,7 +18,7 @@ public class PathNode implements Comparable<PathNode> {
 
     public PathNode(int x, int y, int z) {
         this.x = x;
-        this.y = y; // Y-координата ОПОРНОГО блока
+        this.y = y;  
         this.z = z;
         this.steps = 0;
         this.moveType = null;
@@ -31,23 +31,19 @@ public class PathNode implements Comparable<PathNode> {
         this.parent = null;
     }
 
-    // ========== ИЗМЕНЕНИЯ: Геттеры теперь работают от опорного блока 'y' ==========
+     
 
-    /**
-     * Возвращает Y-координату пространства, где находятся НОГИ игрока.
-     */
+     
     public int getFeetY() {
         return ru.fuctorial.fuctorize.utils.pathfinding.YMath.feetFromGround(this.y);
     }
 
-    /**
-     * Возвращает Y-координату центра тела игрока.
-     */
+     
     public double getCenterY() {
         return getFeetY() + 0.5;
     }
 
-    // ========== КОНЕЦ ИЗМЕНЕНИЙ ==========
+     
 
     public void updateFCost() {
         this.fCost = this.gCost + this.hCost;
@@ -83,9 +79,7 @@ public class PathNode implements Comparable<PathNode> {
                 x, y, z, steps, moveType, breakBlocks, placeBlocks, needsJump, fCost, gCost, hCost);
     }
 
-    /**
-     * Вычисляет расстояние до другого узла
-     */
+     
     public double distanceTo(PathNode other) {
         if (other == null) return Double.MAX_VALUE;
         double dx = this.x - other.x;

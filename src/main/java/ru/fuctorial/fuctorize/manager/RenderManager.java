@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\manager\RenderManager.java
+ 
 package ru.fuctorial.fuctorize.manager;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -13,18 +13,10 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 
 public class RenderManager {
 
-    /**
-     * If false, all client rendering is globally disabled.
-     * This is used to safely stop rendering when not in a world,
-     * preventing crashes from modules that might try to access a null player/world.
-     */
+     
     public static boolean allowRendering = true;
 
-    /**
-     * If true, ANY client rendering is immediately blocked at the highest level.
-     * Used for reliably bypassing screenshot requests.
-     * `volatile` ensures changes from the network thread are visible to the render thread.
-     */
+     
     public static volatile boolean renderingForceDisabled = false;
 
     private final List<IRenderable> renderables = new CopyOnWriteArrayList<>();
@@ -41,7 +33,7 @@ public class RenderManager {
 
     @SubscribeEvent
     public void onRender3D(RenderWorldLastEvent event) {
-        // Check both flags. The force-disable flag has precedence.
+         
         if (renderingForceDisabled || !allowRendering) {
             return;
         }
@@ -63,7 +55,7 @@ public class RenderManager {
 
     @SubscribeEvent
     public void onRender2D(RenderGameOverlayEvent.Text event) {
-        // Check both flags here as well.
+         
         if (renderingForceDisabled || !allowRendering) {
             return;
         }
@@ -79,7 +71,7 @@ public class RenderManager {
         }
     }
 
-    // Some environments may not fire Text consistently. Also notify modules at Post/ALL.
+     
     @SubscribeEvent
     public void onRender2DPost(RenderGameOverlayEvent.Post event) {
         if (renderingForceDisabled || !allowRendering) {

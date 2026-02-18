@@ -4,7 +4,7 @@ import ru.fuctorial.fuctorize.module.Module;
 import org.lwjgl.input.Keyboard;
 
 
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\module\settings\BindSetting.java
+ 
 
 
 
@@ -19,9 +19,9 @@ public class BindSetting extends Setting {
     }
 
     public String getKeyName() {
-        // --- ИЗМЕНЕНИЕ ЗДЕСЬ ---
-        // Если keyCode равен 0 (KEY_NONE), возвращаем пустую строку.
-        // В противном случае, возвращаем имя клавиши.
+         
+         
+         
         return this.keyCode == Keyboard.KEY_NONE ? "" : Keyboard.getKeyName(this.keyCode);
     }
 

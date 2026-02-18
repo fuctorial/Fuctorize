@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\manager\NotificationManager.java
+ 
 package ru.fuctorial.fuctorize.manager;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -31,24 +31,24 @@ public class NotificationManager {
             return;
         }
 
-        // Add this check to prevent notifications during a screenshot bypass.
+         
         if (RenderManager.renderingForceDisabled) {
             return;
         }
 
-        // Step 1: Remove expired notifications. This logic does not require fonts.
-        // It should always run if the list is not empty.
+         
+         
         if (!notifications.isEmpty()) {
             notifications.removeIf(n -> n.isExpired() && n.getAnimationFactor() <= 0);
         }
 
-        // Step 2: Check if ready to render.
-        // If fonts are not ready or there are no more notifications, exit.
+         
+         
         if (FuctorizeClient.INSTANCE == null || FuctorizeClient.INSTANCE.fontManager == null || !FuctorizeClient.INSTANCE.fontManager.isReady() || notifications.isEmpty()) {
             return;
         }
 
-        // Step 3: Render the remaining notifications.
+         
         ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
         CustomFontRenderer titleFont = FuctorizeClient.INSTANCE.fontManager.bold_22;
         CustomFontRenderer messageFont = FuctorizeClient.INSTANCE.fontManager.regular_18;

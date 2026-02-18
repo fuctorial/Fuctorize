@@ -9,7 +9,7 @@ import ru.fuctorial.fuctorize.manager.FavoritePacketManager;
 import ru.fuctorial.fuctorize.manager.PacketPersistence;
 import ru.fuctorial.fuctorize.utils.Lang;
 import ru.fuctorial.fuctorize.utils.NetUtils;
-import ru.fuctorial.fuctorize.utils.ReflectionUtils; // Не забудь импорт!
+import ru.fuctorial.fuctorize.utils.ReflectionUtils;  
 import ru.fuctorial.fuctorize.utils.RenderUtils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -79,28 +79,25 @@ public class GuiFavoritePackets extends GuiScreen {
             if (index >= 0 && index < list.size()) {
                 PacketPersistence.SavedPacketData selectedPacket = list.get(index);
 
-                if (mouseButton == 0) { // LEFT CLICK
+                if (mouseButton == 0) {  
                     if (deleteMode) {
                         FavoritePacketManager.remove(index);
                         this.totalContentHeight = FavoritePacketManager.getFavorites().size() * 22;
                     } else {
-                        // Обычная отправка (как было раньше)
+                         
                         processPacketAction(selectedPacket);
                     }
                 }
-                else if (mouseButton == 1) { // RIGHT CLICK
-                    // Открываем HEX редактор для выбранного пакета
-                    // Передаем индекс, чтобы можно было сохранить изменения
+                else if (mouseButton == 1) {  
+                     
+                     
                     mc.displayGuiScreen(new GuiHexEditor(this, selectedPacket, index));
                 }
             }
         }
     }
 
-    /**
-     * Главный метод обработки пакета.
-     * Различает входящие (для открытия GUI) и исходящие пакеты.
-     */
+     
     private void processPacketAction(PacketPersistence.SavedPacketData data) {
         Packet packet = PacketPersistence.reconstruct(data);
 
@@ -115,13 +112,13 @@ public class GuiFavoritePackets extends GuiScreen {
             if (simpleName.startsWith("S")) isIncoming = true;
         }
 
-        // --- FIX 4 (Применяем и здесь) ---
+         
         if (packet instanceof cpw.mods.fml.common.network.internal.FMLProxyPacket && isIncoming) {
             try {
                 ((cpw.mods.fml.common.network.internal.FMLProxyPacket) packet).setTarget(cpw.mods.fml.relauncher.Side.CLIENT);
             } catch (Exception ignored) {}
         }
-        // --------------------------------
+         
 
         if (isIncoming) {
             if (mc.getNetHandler() != null) {
@@ -180,7 +177,7 @@ public class GuiFavoritePackets extends GuiScreen {
         CustomFontRenderer titleFont = FuctorizeClient.INSTANCE.fontManager.bold_22;
         titleFont.drawString("Favorite Packets", panelX + 10, panelY + 10, Theme.ORANGE.getRGB());
 
-        // Добавляем подсказку мелким шрифтом справа
+         
         CustomFontRenderer smallFont = FuctorizeClient.INSTANCE.fontManager.regular_18;
         String hint = "LMB: Send | RMB: Edit Hex";
         float hintW = smallFont.getStringWidth(hint);
@@ -205,7 +202,7 @@ public class GuiFavoritePackets extends GuiScreen {
             RenderUtils.drawRect(panelX + 10, currentY, panelX + panelWidth - 10, currentY + 20, color);
 
             String display = data.name;
-            // Добавляем визуальную метку направления
+             
             String dirTag = (data.direction != null) ? (data.direction.equals("SENT") ? " §a[->] " : " §b[<-] ") : " §7[?] ";
             String meta = EnumChatFormatting.GRAY + " (" + data.className.substring(data.className.lastIndexOf('.')+1) + ")";
 

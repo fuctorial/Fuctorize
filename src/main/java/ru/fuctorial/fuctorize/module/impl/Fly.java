@@ -55,7 +55,7 @@ public class Fly extends Module {
         if (mc.thePlayer == null) {
             return;
         }
-        // Only change capabilities for Vanilla mode
+         
         if (mode.isMode(Lang.get("module.fly.mode.vanilla"))) {
             previousAllowFlying = mc.thePlayer.capabilities.allowFlying;
             previousIsFlying = mc.thePlayer.capabilities.isFlying;
@@ -106,7 +106,7 @@ public class Fly extends Module {
             applyHorizontal(h);
             applyVerticalHold(v);
             if (tick % 8 == 0 && !mc.thePlayer.movementInput.jump) {
-                mc.thePlayer.motionY -= 0.04D; // small anti-kick nudge
+                mc.thePlayer.motionY -= 0.04D;  
             }
             mc.thePlayer.fallDistance = 0.0F;
             return;

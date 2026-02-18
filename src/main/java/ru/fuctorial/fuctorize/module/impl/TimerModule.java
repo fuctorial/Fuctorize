@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\TimerModule.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
@@ -7,7 +7,7 @@ import ru.fuctorial.fuctorize.module.Category;
 import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.BindSetting;
 import ru.fuctorial.fuctorize.module.settings.SliderSetting;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Timer;
 import org.lwjgl.input.Keyboard;

@@ -17,12 +17,12 @@ import ru.fuctorial.fuctorize.utils.Lang;
 
 public class NoRender extends Module {
 
-    public BooleanSetting items; // Сделали public для доступа
+    public BooleanSetting items;  
     private BooleanSetting particles;
     private BooleanSetting explosions;
     private BooleanSetting fallingBlocks;
 
-    // Статическая переменная для хранения количества удаленных предметов за последний тик
+     
     public static int removedItemsCount = 0;
 
     public NoRender(FuctorizeClient client) {
@@ -54,14 +54,14 @@ public class NoRender extends Module {
     public void onUpdate() {
         if (mc.theWorld == null) return;
 
-        // Сбрасываем счетчик каждый тик перед пересчетом
+         
         int currentTickItems = 0;
 
-        // Очистка сущностей и подсчет
+         
         if (items.enabled || fallingBlocks.enabled || explosions.enabled) {
             for (Object obj : mc.theWorld.loadedEntityList) {
 
-                // Удаляем и считаем предметы
+                 
                 if (items.enabled && obj instanceof EntityItem) {
                     EntityItem item = (EntityItem) obj;
                     if (!item.isDead) {
@@ -78,7 +78,7 @@ public class NoRender extends Module {
             }
         }
 
-        // Обновляем глобальный счетчик
+         
         removedItemsCount = currentTickItems;
     }
 
@@ -97,16 +97,16 @@ public class NoRender extends Module {
         if (event.getPacket() instanceof S0EPacketSpawnObject) {
             S0EPacketSpawnObject packet = (S0EPacketSpawnObject) event.getPacket();
 
-            // ВАЖНО: Мы БОЛЬШЕ НЕ ОТМЕНЯЕМ спавн предметов (Type 2).
-            // Мы даем им заспавниться, чтобы в onUpdate мы могли их посчитать и удалить.
-            // Это не вызывает лагов, так как они живут < 1 тика и не рендерятся.
+             
+             
+             
 
-            // Type 70 = FallingBlock
+             
             if (fallingBlocks.enabled && packet.func_149001_c() == 70) {
                 event.setCanceled(true);
             }
 
-            // Type 50 = TNT
+             
             if (explosions.enabled && packet.func_149001_c() == 50) {
                 event.setCanceled(true);
             }

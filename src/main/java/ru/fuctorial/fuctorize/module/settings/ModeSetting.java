@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-// ru.fuctorial/fuctorize/module/settings/ModeSetting.java
+ 
 
 
 

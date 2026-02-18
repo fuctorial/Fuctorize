@@ -83,8 +83,8 @@ public class GuiPacketSender extends GuiScreen {
         try {
             byte[] payload = hexStringToByteArray(hexData);
             
-            // Создаем FMLProxyPacket
-            // В 1.7.10 FMLProxyPacket принимает ByteBuf и String channel
+             
+             
             FMLProxyPacket packet = new FMLProxyPacket(Unpooled.wrappedBuffer(payload), channel);
             
             if (mc.getNetHandler() != null) {
@@ -109,7 +109,7 @@ public class GuiPacketSender extends GuiScreen {
     }
 
     public static byte[] hexStringToByteArray(String s) {
-        s = s.replace(" ", ""); // Удаляем пробелы
+        s = s.replace(" ", "");  
         int len = s.length();
         if (len % 2 != 0) {
             throw new IllegalArgumentException("Hex string must have even length");
@@ -149,7 +149,7 @@ public class GuiPacketSender extends GuiScreen {
         drawDefaultBackground();
         if (FuctorizeClient.INSTANCE.fontManager == null || !FuctorizeClient.INSTANCE.fontManager.isReady()) return;
 
-        // Отрисовка фона
+         
         RenderUtils.drawRect(x, y, x + panelWidth, y + panelHeight, Theme.CATEGORY_BG.getRGB());
         RenderUtils.drawRect(x - 1, y - 1, x + panelWidth + 1, y, Theme.BORDER.getRGB());
         RenderUtils.drawRect(x - 1, y - 1, x, y + panelHeight + 1, Theme.BORDER.getRGB());
@@ -168,7 +168,7 @@ public class GuiPacketSender extends GuiScreen {
         font.drawString("Hex Data (e.g. 00 0A FF):", x + 20, y + 85, -1);
         dataField.drawTextBox();
 
-        // Status message
+         
         if (!statusMessage.isEmpty() && System.currentTimeMillis() - statusTime < 3000) {
             font.drawString(statusMessage, x + (panelWidth - font.getStringWidth(statusMessage)) / 2f, y + 130, statusColor);
         }

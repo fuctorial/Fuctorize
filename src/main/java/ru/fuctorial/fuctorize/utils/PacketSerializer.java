@@ -89,7 +89,7 @@ public class PacketSerializer {
                 return;
             }
 
-            // --- СПЕЦИАЛЬНЫЕ ТИПЫ MINECRAFT И FORGE ---
+             
             if (formatMinecraftTypes(obj, sb)) {
                 return;
             }
@@ -119,7 +119,7 @@ public class PacketSerializer {
         }
     }
 
-    // --- Format Helpers ---
+     
 
     private static boolean isSimpleType(Object obj) {
         return obj instanceof String || obj instanceof Number || obj instanceof Boolean || obj instanceof Enum || obj instanceof UUID;
@@ -140,17 +140,17 @@ public class PacketSerializer {
     }
 
     private static boolean formatMinecraftTypes(Object obj, StringBuilder sb) {
-        // --- ИСПРАВЛЕНИЕ: Явное отображение FMLProxyPacket ---
+         
         if (obj instanceof FMLProxyPacket) {
             FMLProxyPacket pkt = (FMLProxyPacket) obj;
             sb.append("FMLProxyPacket {\n");
             sb.append("    channel: \"").append(pkt.channel()).append("\"\n");
             sb.append("    payload: ");
-            formatByteBuf(pkt.payload(), sb); // Используем нашу умную логику для буфера
+            formatByteBuf(pkt.payload(), sb);  
             sb.append("\n  }");
             return true;
         }
-        // ----------------------------------------------------
+         
 
         if (obj instanceof ItemStack) {
             formatItemStack((ItemStack) obj, sb);
@@ -424,8 +424,8 @@ public class PacketSerializer {
     private static Object deepCloneValue(Object value) {
         if (value == null) return null;
 
-        // 1. Minecraft Mutable Types (ItemStack, NBT)
-        // Они имеют встроенные методы копирования
+         
+         
         if (value instanceof ItemStack) {
             return ((ItemStack) value).copy();
         }
@@ -433,8 +433,8 @@ public class PacketSerializer {
             return ((NBTBase) value).copy();
         }
 
-        // 2. Collections (List, Map, Set)
-        // Создаем новые коллекции и рекурсивно клонируем их содержимое
+         
+         
         if (value instanceof List) {
             List<Object> originalList = (List<Object>) value;
             List<Object> newList = new ArrayList<>(originalList.size());
@@ -462,9 +462,9 @@ public class PacketSerializer {
             return newSet;
         }
 
-        // 3. Arrays
+         
         if (value.getClass().isArray()) {
-            // 3.1 Массивы Объектов (Object[]) - рекурсивное клонирование элементов
+             
             if (value instanceof Object[]) {
                 Object[] originalArr = (Object[]) value;
                 Object[] newArr = (Object[]) Array.newInstance(value.getClass().getComponentType(), originalArr.length);
@@ -474,7 +474,7 @@ public class PacketSerializer {
                 return newArr;
             }
 
-            // 3.2 Массивы Примитивов - метод clone() создает полную копию данных (deep copy) для примитивов
+             
             if (value instanceof byte[]) return ((byte[]) value).clone();
             if (value instanceof int[]) return ((int[]) value).clone();
             if (value instanceof double[]) return ((double[]) value).clone();
@@ -485,8 +485,8 @@ public class PacketSerializer {
             if (value instanceof char[]) return ((char[]) value).clone();
         }
 
-        // 4. Immutables (String, Integer, UUID, Enum и т.д.)
-        // Их клонировать не нужно, возвращаем как есть.
+         
+         
         return value;
     }
 }

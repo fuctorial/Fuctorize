@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\clickgui\Theme.java
+ 
 package ru.fuctorial.fuctorize.client.gui.clickgui;
 
 import java.awt.Color;
@@ -21,11 +21,11 @@ public class Theme {
     public static final Color TEXT_WHITE = Color.WHITE;
     public static final Color TEXT_GRAY = new Color(150, 150, 150);
 
-    // --- ADD THESE COLORS ---
+     
     public static final Color NBT_COMPOUND = new Color(220, 100, 0);
     public static final Color NBT_LIST = new Color(100, 180, 255);
     public static final Color NBT_STRING = new Color(100, 220, 100);
     public static final Color NBT_NUMBER = new Color(255, 200, 100);
     public static final Color NBT_ARRAY = new Color(0, 200, 200);
-    // --- END OF ADDITION ---
+     
 }

@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\GuiInspector.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -6,7 +6,7 @@ import ru.fuctorial.fuctorize.client.gui.widgets.GuiObjectInspector;
 import ru.fuctorial.fuctorize.module.Category;
 import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.BindSetting;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import org.lwjgl.input.Keyboard;
 
 public class GuiInspector extends Module {
@@ -30,10 +30,10 @@ public class GuiInspector extends Module {
     @Override
     public void onEnable() {
         if (mc.currentScreen != null) {
-            // Open our inspector, passing the current screen to it for analysis.
+             
             mc.displayGuiScreen(new GuiObjectInspector(mc.currentScreen));
         } else {
-            // Notify user that a screen needs to be open.
+             
             client.notificationManager.show(new ru.fuctorial.fuctorize.client.hud.Notification(
                     Lang.get("notification.guiinspector.title"),
                     Lang.get("notification.guiinspector.message"),
@@ -41,7 +41,7 @@ public class GuiInspector extends Module {
                     2500L
             ));
         }
-        // This is a SINGLE action module, so it disables itself immediately.
+         
         toggle();
     }
 }

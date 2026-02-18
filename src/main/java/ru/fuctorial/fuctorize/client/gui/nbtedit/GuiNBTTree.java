@@ -13,7 +13,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import org.lwjgl.opengl.GL11; // <-- Важный импорт
+import org.lwjgl.opengl.GL11;  
 
 public class GuiNBTTree extends Gui {
 
@@ -148,14 +148,14 @@ public class GuiNBTTree extends Gui {
         }
     }
 
-    // --- Метод draw рисует ТОЛЬКО дерево ---
+     
     public void draw(int mx, int my) {
         if (isDraggingScrollbar) {
             mouseDragged(mx, my);
         }
         if (!isTreeBuilt) return;
 
-        // Мышиные координаты для дерева (если окно открыто, дерево не реагирует на ховер)
+         
         int cmx = window != null ? -1 : mx;
         int cmy = window != null ? -1 : my;
 
@@ -172,17 +172,17 @@ public class GuiNBTTree extends Gui {
         drawScrollBar();
     }
 
-    // --- НОВЫЙ МЕТОД: Рисует окна поверх всего остального ---
+     
     public void drawOverlays(int mx, int my) {
         GL11.glPushMatrix();
-        GL11.glTranslatef(0, 0, 200f); // Поднимаем Z-уровень
+        GL11.glTranslatef(0, 0, 200f);  
 
         if (this.contextMenu != null) {
             this.contextMenu.draw(mx, my);
         }
 
         if (this.window != null) {
-            Gui.drawRect(0, 0, width, height, 0x80000000); // Затемнение фона
+            Gui.drawRect(0, 0, width, height, 0x80000000);  
             this.window.draw(mx, my);
         }
 
@@ -257,14 +257,14 @@ public class GuiNBTTree extends Gui {
         }
     }
 
-    // --- НОВЫЕ МЕТОДЫ ДЛЯ ПЕРЕДАЧИ СОБЫТИЙ В ОКНО ---
+     
 
     public void handleMouseInput() {
         if (this.window != null) {
             this.window.handleMouseInput();
-            return; // Если окно открыто, скроллим его, а не дерево
+            return;  
         }
-        // Иначе ничего не делаем, скролл дерева обрабатывается в GuiNBTEdit
+         
     }
 
     public void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
@@ -272,8 +272,8 @@ public class GuiNBTTree extends Gui {
             this.window.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
             return;
         }
-        // Драг скроллбара дерева обрабатывается через mouseDragged, вызываемый из draw()
-        // но можно добавить и сюда для надежности
+         
+         
         if (isDraggingScrollbar) {
             mouseDragged(mouseX, mouseY);
         }
@@ -285,7 +285,7 @@ public class GuiNBTTree extends Gui {
         }
         this.isDraggingScrollbar = false;
     }
-    // ------------------------------------------------
+     
 
     private List<ContextMenu.ContextAction> buildContextMenuActions() {
         List<ContextMenu.ContextAction> actions = new ArrayList<>();

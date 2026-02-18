@@ -22,10 +22,7 @@ public class NBTTree {
         }
     }
 
-    /**
-     * Rebuilds the entire tree from a new NBTTagCompound.
-     * @param newTag The new compound to build the tree from.
-     */
+     
     public void fromNBTTagCompound(NBTTagCompound newTag) {
         this.baseTag = newTag;
         this.construct();

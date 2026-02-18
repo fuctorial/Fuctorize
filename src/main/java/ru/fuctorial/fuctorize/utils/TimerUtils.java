@@ -1,7 +1,7 @@
 package ru.fuctorial.fuctorize.utils;
 
 
-// ru.fuctorial/fuctorize/utils/TimerUtils.java
+ 
 
 
 

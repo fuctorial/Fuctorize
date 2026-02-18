@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\smartmoving\GuiSmartMovingEditor.java
+ 
 package ru.fuctorial.fuctorize.client.gui.smartmoving;
 
 import ru.fuctorial.fuctorize.client.gui.clickgui.components.CategoryComponent;
@@ -96,22 +96,22 @@ public class GuiSmartMovingEditor extends GuiScreen {
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         if (this.mainFrame != null) {
-            // Check for clicks within the category panel area first.
+             
             if (mouseX >= mainFrame.x && mouseX < mainFrame.x + mainFrame.categoryPanelWidth &&
                     mouseY >= mainFrame.y + mainFrame.titleBarHeight && mouseY < mainFrame.y + mainFrame.height) {
 
-                // Adjust mouse Y for category scrolling
+                 
                 int adjustedMouseY = mouseY - mainFrame.getCategoryScrollY();
                 for (CategoryComponent c : mainFrame.categoryButtons) {
                     if (c.isMouseOver(mouseX, adjustedMouseY)) {
-                        // If a category is clicked, call our own method to handle the logic.
+                         
                         setCurrentCategory((String) c.getCategory());
-                        return; // Consume the click event.
+                        return;  
                     }
                 }
             }
 
-            // If the click was not on a category, delegate it to the frame for other components.
+             
             this.mainFrame.mouseClicked(mouseX, mouseY, mouseButton);
         }
     }

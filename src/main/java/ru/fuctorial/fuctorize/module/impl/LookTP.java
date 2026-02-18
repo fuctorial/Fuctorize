@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\LookTP.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -7,7 +7,7 @@ import ru.fuctorial.fuctorize.module.Category;
 import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.BindSetting;
 import ru.fuctorial.fuctorize.module.settings.SliderSetting;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import ru.fuctorial.fuctorize.utils.NetUtils;
 import ru.fuctorial.fuctorize.utils.PlayerUtils;
 import net.minecraft.block.BlockAir;

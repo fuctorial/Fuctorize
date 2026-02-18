@@ -10,8 +10,8 @@ public class TagData {
 
     public final Vector4f screenCoords;
     public final float distance;
-    public final String key; // stable identity for smoothing/cache
-    public final float scaleMul; // global size multiplier (1.0 = default)
+    public final String key;  
+    public final float scaleMul;  
 
     public TagData(String nameLine, String infoLine, int mainColor, float healthPercent, Vector4f screenCoords, float distance) {
         this(nameLine, infoLine, mainColor, healthPercent, screenCoords, distance, nameLine, 1.0f);

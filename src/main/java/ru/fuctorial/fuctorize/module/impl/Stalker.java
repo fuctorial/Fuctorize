@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\Stalker.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -11,7 +11,7 @@ import ru.fuctorial.fuctorize.module.settings.BindSetting;
 import ru.fuctorial.fuctorize.module.settings.BooleanSetting;
 import ru.fuctorial.fuctorize.module.settings.SliderSetting;
 import ru.fuctorial.fuctorize.module.settings.TextSetting;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import net.minecraft.entity.player.EntityPlayer;
 import ru.fuctorial.fuctorize.utils.RenderUtils;
 import ru.fuctorial.fuctorize.utils.RotationUtils;

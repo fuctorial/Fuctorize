@@ -1,4 +1,4 @@
-// 115. C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\PacketSpammer.java
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import io.netty.buffer.Unpooled;
@@ -47,7 +47,7 @@ public class PacketSpammer extends Module {
     public String customHex = "";
 
     public final Map<String, List<String>> bannedCombinations = new HashMap<>();
-    // --- НОВОЕ: Карта разрешенных комбинаций ---
+     
     public final Map<String, List<String>> allowedCombinations = new HashMap<>();
 
     public PacketPersistence.SavedPacketData selectedFavorite = null;
@@ -175,7 +175,7 @@ public class PacketSpammer extends Module {
             }
 
             try {
-                // Передаем и разрешенные комбинации
+                 
                 task = new BruteforceTask(customHex, bannedCombinations, allowedCombinations);
             } catch (Exception e) {
                 client.notificationManager.show(new Notification("Bruteforce Init Error", e.getMessage(), Notification.NotificationType.ERROR, 4000L));
@@ -301,12 +301,12 @@ public class PacketSpammer extends Module {
         return raw.replaceAll("[^0-9A-Fa-f]", "");
     }
 
-    // ============================================================
-    //                 UPGRADED BRUTEFORCE TASK
-    // ============================================================
+     
+     
+     
 
     private static class BruteforceTask {
-        // Вспомогательный класс для диапазона
+         
         private static class Range {
             final long min;
             final long max;
@@ -321,7 +321,7 @@ public class PacketSpammer extends Module {
             long currentValue;
             Set<String> bannedValues;
 
-            // Список разрешенных диапазонов. Если пуст, значит разрешено всё (0..max)
+             
             List<Range> allowedRanges;
             int currentRangeIndex = 0;
 
@@ -337,10 +337,10 @@ public class PacketSpammer extends Module {
 
                 long absoluteMax;
                 if (byteCount > 8) throw new IllegalArgumentException("Dynamic part too large (>8 bytes)");
-                if (byteCount == 8) absoluteMax = Long.MAX_VALUE; // Ограничение Java long (беззнаковость сложна, но ок)
+                if (byteCount == 8) absoluteMax = Long.MAX_VALUE;  
                 else absoluteMax = (1L << (byteCount * 8)) - 1;
 
-                // --- Обработка Banned ---
+                 
                 if (bans != null && !bans.isEmpty()) {
                     this.bannedValues = new HashSet<>();
                     for (String ban : bans) {
@@ -351,7 +351,7 @@ public class PacketSpammer extends Module {
                     }
                 }
 
-                // --- Обработка Allowed (Ranges) ---
+                 
                 this.allowedRanges = new ArrayList<>();
                 if (allows != null && !allows.isEmpty()) {
                     for (String allow : allows) {
@@ -366,7 +366,7 @@ public class PacketSpammer extends Module {
                                 start = Long.parseUnsignedLong(cleanHex(parts[0]), 16);
                                 end = start;
                             }
-                            // Обрезаем по макс значению
+                             
                             if (start > absoluteMax) continue;
                             if (end > absoluteMax) end = absoluteMax;
                             if (start <= end) {
@@ -374,14 +374,14 @@ public class PacketSpammer extends Module {
                             }
                         } catch (Exception ignored) {}
                     }
-                    // Сортируем диапазоны
+                     
                     this.allowedRanges.sort(Comparator.comparingLong(r -> r.min));
                 } else {
-                    // Если список пуст, добавляем дефолтный полный диапазон
+                     
                     this.allowedRanges.add(new Range(0, absoluteMax));
                 }
 
-                // Инициализируем начальное значение первым валидным диапазоном
+                 
                 resetToStart();
             }
 
@@ -430,15 +430,15 @@ public class PacketSpammer extends Module {
                 int byteCount = cleanContent.length() / 2;
                 if (byteCount == 0) byteCount = 1;
 
-                // Создаем сегмент с банами И разрешенными
+                 
                 Segment dynSeg = new Segment(byteCount,
                         bannedMap != null ? bannedMap.get(fullPlaceholder) : null,
                         allowedMap != null ? allowedMap.get(fullPlaceholder) : null
                 );
 
-                // Если в плейсхолдере было число, пытаемся выставить его как старт (если оно попадает в allowed)
-                // Но проще начать с начала диапазона allowed.
-                // Если нужно стартовать с конкретного числа, пользователь добавит range X-END
+                 
+                 
+                 
 
                 segments.add(dynSeg);
                 lastEnd = matcher.end();
@@ -455,12 +455,12 @@ public class PacketSpammer extends Module {
         private void validateStartValues() {
             for (Segment s : segments) {
                 if (s.isDynamic) {
-                    // Проверяем, не забанено ли текущее значение (которое start первого диапазона)
-                    // Если забанено - инкрементируем до валидного внутри диапазонов
+                     
+                     
                     while (s.isCurrentBanned()) {
                         if (advanceValue(s)) {
-                            // Если advance вернул true, значит диапазоны кончились (переполнение сегмента)
-                            // Но при старте это странно. Оставим как есть, increment() потом разберется.
+                             
+                             
                             break;
                         }
                     }
@@ -518,23 +518,20 @@ public class PacketSpammer extends Module {
             return payload;
         }
 
-        /**
-         * Увеличивает значение сегмента, соблюдая Ranges.
-         * @return true если произошло переполнение (сегмент прошел все диапазоны)
-         */
+         
         private boolean advanceValue(Segment s) {
             s.currentValue++;
             Range currentRange = s.allowedRanges.get(s.currentRangeIndex);
 
-            // Если вышли за пределы текущего диапазона
+             
             if (s.currentValue > currentRange.max) {
                 s.currentRangeIndex++;
-                // Если диапазоны кончились
+                 
                 if (s.currentRangeIndex >= s.allowedRanges.size()) {
-                    s.resetToStart(); // Сброс в начало для следующего цикла (как перенос разряда)
-                    return true; // Переполнение
+                    s.resetToStart();  
+                    return true;  
                 } else {
-                    // Прыгаем в начало следующего диапазона
+                     
                     s.currentValue = s.allowedRanges.get(s.currentRangeIndex).min;
                 }
             }
@@ -549,26 +546,26 @@ public class PacketSpammer extends Module {
                     boolean overflow;
                     do {
                         overflow = advanceValue(s);
-                        // Если переполнение, выходим из цикла проверки банов для этого сегмента,
-                        // чтобы инкрементировать следующий сегмент.
-                        // Но перед этим проверяем баны для *нового* значения (которое стало start первого range).
+                         
+                         
+                         
                         if (overflow) break;
                     } while (s.isCurrentBanned());
 
                     if (!overflow) {
-                        // Успешно увеличили текущий сегмент без переполнения и бана.
+                         
                         return;
                     }
-                    // Если переполнение (overflow == true), идем к следующему сегменту (i--)
-                    // При этом текущий сегмент (s) уже сброшен в resetToStart() внутри advanceValue.
-                    // Но надо проверить, не забанено ли стартовое значение.
+                     
+                     
+                     
                     while (s.isCurrentBanned()) {
-                        if (advanceValue(s)) break; // Если опять переполнился при поиске небаненого старта - просто идем дальше
+                        if (advanceValue(s)) break;  
                     }
                 }
                 i--;
             }
-            // Если цикл завершился (i < 0), значит все сегменты переполнились.
+             
             finished = true;
         }
     }

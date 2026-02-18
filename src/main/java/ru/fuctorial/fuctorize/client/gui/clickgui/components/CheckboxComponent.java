@@ -9,7 +9,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
 
 
-// Файл: C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\clickgui\components\CheckboxComponent.java
+ 
 
 
 
@@ -22,14 +22,14 @@ public class CheckboxComponent extends Component {
         super(parent, x, y, width, height);
         this.setting = setting;
 
-        // --- ИЗМЕНЕНИЕ: Компонент сам определяет свою высоту ---
-        // Если шрифт еще не загружен, ставим значение по умолчанию
+         
+         
         if (getFont() != null) {
             this.height = getFont().getHeight() + VERTICAL_PADDING * 2;
         } else {
-            this.height = 16; // Запасное значение
+            this.height = 16;  
         }
-        // --- КОНЕЦ ИЗМЕНЕНИЯ ---
+         
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CheckboxComponent extends Component {
         if (getFont() == null) return;
 
         int animatedBgColor = animateColor(Theme.SETTING_BG.getRGB(), animFactor);
-        //Gui.drawRect(parent.x + x, parent.y + y, parent.x + x + width, parent.y + y + height, animatedBgColor);
+         
 
         float textY = (parent.y + this.y) + (this.height / 2f) - (getFont().getHeight() / 2f);
         int animatedTextColor = animateColor(Theme.TEXT_WHITE.getRGB(), animFactor);

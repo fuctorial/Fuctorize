@@ -21,9 +21,9 @@ public class RenderUtils {
     private static final Minecraft mc = FMLClientHandler.instance().getClient();
     private static final RenderItem itemRenderer = new RenderItem();
 
-    // =================================================================================
-    // Core 2D/3D Rendering State Management
-    // =================================================================================
+     
+     
+     
 
     public static Vector4f projectTo2D(double x, double y, double z) {
         try {
@@ -102,26 +102,22 @@ public class RenderUtils {
         GL11.glPopAttrib();
     }
 
-    /**
-     * Начинает рендеринг в 3D-мире с учетом глубины (объекты будут за стенами).
-     */
+     
     public static void beginWorld3DRender() {
         GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_LIGHTING);
-        // --- КЛЮЧЕВОЕ ИЗМЕНЕНИЕ ---
-        GL11.glEnable(GL11.GL_DEPTH_TEST); // ВКЛЮЧАЕМ тест глубины
-        // -------------------------
+         
+        GL11.glEnable(GL11.GL_DEPTH_TEST);  
+         
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
-        GL11.glDepthMask(false); // Отключаем запись в буфер глубины, чтобы избежать Z-файтинга
+        GL11.glDepthMask(false);  
     }
 
-    /**
-     * Завершает рендеринг в 3D-мире и восстанавливает стандартные настройки.
-     */
+     
     public static void endWorld3DRender() {
         GL11.glDepthMask(true);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -142,9 +138,9 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
     }
 
-    // =================================================================================
-    // Color Utilities
-    // =================================================================================
+     
+     
+     
 
     public static void setColor(int hexColor, float alpha) {
         float r = (float) (hexColor >> 16 & 255) / 255.0F;
@@ -168,9 +164,9 @@ public class RenderUtils {
         return a << 24 | r << 16 | g << 8 | b;
     }
 
-    // =================================================================================
-    // 2D Primitive Drawing
-    // =================================================================================
+     
+     
+     
 
     public static void drawRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, int paramColor) {
         float alpha = (paramColor >> 24 & 255) / 255.0f;
@@ -195,30 +191,19 @@ public class RenderUtils {
         GL11.glDisable(GL11.GL_BLEND);
     }
 
-    // =================================================================================
-    // 3D Primitive Drawing
-    // =================================================================================
+     
+     
+     
 
-    /**
-     * Рисует 3D линию между двумя точками.
-     * @param x1 Координата X начальной точки
-     * @param y1 Координата Y начальной точки
-     * @param z1 Координата Z начальной точки
-     * @param x2 Координата X конечной точки
-     * @param y2 Координата Y конечной точки
-     * @param z2 Координата Z конечной точки
-     * @param color Цвет линии
-     * @param alpha Прозрачность линии (от 0.0 до 1.0)
-     * @param lineWidth Ширина линии
-     */
+     
     public static void drawLine(double x1, double y1, double z1, double x2, double y2, double z2, Color color, float alpha, float lineWidth) {
-        // Устанавливаем ширину линии
+         
         GL11.glLineWidth(lineWidth);
 
-        // Устанавливаем цвет
+         
         setColor(color, alpha);
 
-        // Получаем смещенные координаты относительно камеры
+         
         double renderX1 = x1 - RenderManager.renderPosX;
         double renderY1 = y1 - RenderManager.renderPosY;
         double renderZ1 = z1 - RenderManager.renderPosZ;
@@ -226,7 +211,7 @@ public class RenderUtils {
         double renderY2 = y2 - RenderManager.renderPosY;
         double renderZ2 = z2 - RenderManager.renderPosZ;
 
-        // Рисуем линию с помощью Tessellator
+         
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawing(GL11.GL_LINES);
         tessellator.addVertex(renderX1, renderY1, renderZ1);
@@ -234,22 +219,12 @@ public class RenderUtils {
         tessellator.draw();
     }
 
-    /**
-     * Рисует закрашенный 3D-бокс между двумя точками.
-     * @param x1 Координата X первой угловой точки
-     * @param y1 Координата Y первой угловой точки
-     * @param z1 Координата Z первой угловой точки
-     * @param x2 Координата X второй угловой точки
-     * @param y2 Координата Y второй угловой точки
-     * @param z2 Координата Z второй угловой точки
-     * @param color Цвет бокса
-     * @param alpha Прозрачность бокса (от 0.0 до 1.0)
-     */
+     
     public static void drawBox(double x1, double y1, double z1, double x2, double y2, double z2, Color color, float alpha) {
-        // Устанавливаем цвет
+         
         setColor(color, alpha);
 
-        // Получаем смещенные координаты относительно камеры
+         
         double rX1 = x1 - RenderManager.renderPosX;
         double rY1 = y1 - RenderManager.renderPosY;
         double rZ1 = z1 - RenderManager.renderPosZ;
@@ -260,37 +235,37 @@ public class RenderUtils {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
 
-        // Нижняя грань (Y-min)
+         
         tessellator.addVertex(rX1, rY1, rZ1);
         tessellator.addVertex(rX1, rY1, rZ2);
         tessellator.addVertex(rX2, rY1, rZ2);
         tessellator.addVertex(rX2, rY1, rZ1);
 
-        // Верхняя грань (Y-max)
+         
         tessellator.addVertex(rX1, rY2, rZ1);
         tessellator.addVertex(rX2, rY2, rZ1);
         tessellator.addVertex(rX2, rY2, rZ2);
         tessellator.addVertex(rX1, rY2, rZ2);
 
-        // Передняя грань (Z-min)
+         
         tessellator.addVertex(rX1, rY1, rZ1);
         tessellator.addVertex(rX2, rY1, rZ1);
         tessellator.addVertex(rX2, rY2, rZ1);
         tessellator.addVertex(rX1, rY2, rZ1);
 
-        // Задняя грань (Z-max)
+         
         tessellator.addVertex(rX1, rY1, rZ2);
         tessellator.addVertex(rX1, rY2, rZ2);
         tessellator.addVertex(rX2, rY2, rZ2);
         tessellator.addVertex(rX2, rY1, rZ2);
 
-        // Левая грань (X-min)
+         
         tessellator.addVertex(rX1, rY1, rZ1);
         tessellator.addVertex(rX1, rY2, rZ1);
         tessellator.addVertex(rX1, rY2, rZ2);
         tessellator.addVertex(rX1, rY1, rZ2);
 
-        // Правая грань (X-max)
+         
         tessellator.addVertex(rX2, rY1, rZ1);
         tessellator.addVertex(rX2, rY1, rZ2);
         tessellator.addVertex(rX2, rY2, rZ2);
@@ -391,9 +366,9 @@ public class RenderUtils {
         tessellator.draw();
     }
 
-    // =================================================================================
-    // Specialized GUI Drawing (from MinecraftGuiUtils & GuiIconUtils)
-    // =================================================================================
+     
+     
+     
 
     public static void drawItem(int x, int y, ItemStack stack) {
         itemRenderer.renderItemIntoGUI(mc.fontRenderer, mc.renderEngine, stack, x, y);

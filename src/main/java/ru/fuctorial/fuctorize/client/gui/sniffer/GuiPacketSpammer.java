@@ -1,4 +1,4 @@
-// 38. C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\client\gui\sniffer\GuiPacketSpammer.java
+ 
 package ru.fuctorial.fuctorize.client.gui.sniffer;
 
 import net.minecraft.client.gui.GuiButton;
@@ -28,21 +28,21 @@ public class GuiPacketSpammer extends GuiScreen {
     private final PacketSpammer module;
     private int panelX, panelY, panelWidth, panelHeight;
 
-    // Сохранение состояния
+     
     private static int savedX = -1, savedY = -1, savedW = -1, savedH = -1;
 
-    // Ресайз
+     
     private boolean dragging = false;
     private int dragOffsetX, dragOffsetY;
     private boolean isResizing = false;
-    private int resizeEdge = 0; // 1=right, 2=bottom, 3=corner
+    private int resizeEdge = 0;  
     private final int resizeBorder = 6;
 
-    // --- ДОБАВЛЕНО НОВОЕ СОСТОЯНИЕ ALLOWED_EDIT ---
+     
     private enum State { MAIN, PLACEHOLDERS, BANNED_EDIT, ALLOWED_EDIT }
     private State currentState = State.MAIN;
 
-    // Компоненты
+     
     private GuiTextField channelField;
     private GuiTextArea hexArea;
     private int mainScrollOffset = 0;
@@ -54,7 +54,7 @@ public class GuiPacketSpammer extends GuiScreen {
     private GuiTextArea banInputArea;
     private int bannedListScrollOffset = 0;
 
-    // --- Компоненты для Allowed List ---
+     
     private GuiTextArea allowInputArea;
     private int allowedListScrollOffset = 0;
 
@@ -115,7 +115,7 @@ public class GuiPacketSpammer extends GuiScreen {
         int availableW = panelWidth - 40;
         int actionBtnW = availableW / 3;
 
-        updateStartButton(actionBtnW, footerY); // ID 2
+        updateStartButton(actionBtnW, footerY);  
 
         StyledButton logicBtn = new StyledButton(5, panelX + 20 + actionBtnW + 5, footerY, actionBtnW - 5, 20, "Logic...");
         logicBtn.enabled = module.mode.isMode("Bruteforce");
@@ -260,37 +260,37 @@ public class GuiPacketSpammer extends GuiScreen {
             currentState = State.MAIN;
             rebuildUiForState();
         }
-        else if (button.id == 9) { // Edit Bans
+        else if (button.id == 9) {  
             currentState = State.BANNED_EDIT;
             rebuildUiForState();
         }
-        else if (button.id == 10) { // Edit Allowed
+        else if (button.id == 10) {  
             currentState = State.ALLOWED_EDIT;
             rebuildUiForState();
         }
-        else if (button.id == 7) { // Add Ban
+        else if (button.id == 7) {  
             String toBan = banInputArea.getText().trim();
             processAddToList(toBan, module.bannedCombinations);
             banInputArea.setText("");
         }
-        else if (button.id == 11) { // Add Allow
+        else if (button.id == 11) {  
             String toAllow = allowInputArea.getText().trim();
             processAddToList(toAllow, module.allowedCombinations);
             allowInputArea.setText("");
         }
-        else if (button.id == 8) { // Back from edit
+        else if (button.id == 8) {  
             currentState = State.PLACEHOLDERS;
             rebuildUiForState();
         }
     }
 
-    // Универсальный метод добавления (для банов и разрешений) с поддержкой диапазонов
+     
     private void processAddToList(String input, Map<String, List<String>> map) {
         if (input.isEmpty() || selectedPlaceholderKey == null) return;
 
         List<String> list = map.computeIfAbsent(selectedPlaceholderKey, k -> new ArrayList<>());
 
-        // Получаем ожидаемую длину
+         
         String content = selectedPlaceholderKey.substring(1, selectedPlaceholderKey.length()-1).replaceAll("\\s+", "");
         int targetLength = content.length();
 
@@ -299,7 +299,7 @@ public class GuiPacketSpammer extends GuiScreen {
             if (parts.length == 2) {
                 String startHex = PacketSpammer.cleanHex(parts[0]);
                 String endHex = PacketSpammer.cleanHex(parts[1]);
-                // Форматируем диапазон для отображения в списке
+                 
                 String rangeStr = formatHex(startHex, targetLength) + "-" + formatHex(endHex, targetLength);
                 if (!list.contains(rangeStr)) list.add(rangeStr);
             }
@@ -320,7 +320,7 @@ public class GuiPacketSpammer extends GuiScreen {
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
-            // Resize logic... (skipped for brevity, same as before)
+             
             boolean onRight = mouseX >= panelX + panelWidth - resizeBorder && mouseX <= panelX + panelWidth + resizeBorder;
             boolean onBottom = mouseY >= panelY + panelHeight - resizeBorder && mouseY <= panelY + panelHeight + resizeBorder;
             if (onRight || onBottom) {
@@ -380,7 +380,7 @@ public class GuiPacketSpammer extends GuiScreen {
             int idx = (mouseY - top + placeholderScrollOffset) / 20;
             if (idx >= 0 && idx < foundPlaceholders.size()) {
                 selectedPlaceholderKey = foundPlaceholders.get(idx);
-                rebuildUiForState(); // Refresh to enable buttons
+                rebuildUiForState();  
             }
         }
     }
@@ -401,7 +401,7 @@ public class GuiPacketSpammer extends GuiScreen {
         }
     }
 
-    // ... handleFavoritesClick ... (без изменений)
+     
     private void handleFavoritesClick(int mouseX, int mouseY) {
         int top = panelY + 60;
         int viewH = panelHeight - 100;
@@ -524,7 +524,7 @@ public class GuiPacketSpammer extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    // ... drawMain is same ...
+     
     private void drawMain(int mouseX, int mouseY, CustomFontRenderer titleFont, CustomFontRenderer font) {
         titleFont.drawString("Packet Spammer", panelX + 10, panelY + 10, Theme.ORANGE.getRGB());
 

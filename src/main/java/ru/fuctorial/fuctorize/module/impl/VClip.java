@@ -31,7 +31,7 @@ public class VClip extends Module {
     @Override
     public void onEnable() {
         if (mc.thePlayer != null) {
-            // Только перемещение сущности. NoFall подхватит изменения в пакете движения.
+             
             mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + height.value, mc.thePlayer.posZ);
         }
         toggle();

@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\ExcaliburBypass.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -9,7 +9,7 @@ import ru.fuctorial.fuctorize.module.Category;
 import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.BindSetting;
 import ru.fuctorial.fuctorize.module.settings.BooleanSetting;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.Packet;
 import org.lwjgl.input.Keyboard;
@@ -80,12 +80,12 @@ public class ExcaliburBypass extends Module {
 
         if (messageId == 0 || messageId == 2) {
             violationType = (messageId == 0) ? Lang.get("notification.excaliburbypass.type.violation_packet") : Lang.get("notification.excaliburbypass.type.out_of_bounds_packet");
-            cancel = true; // Mark for cancellation
+            cancel = true;  
         } else if (fixTimer.enabled && messageId == 3 && lastHandshakeRequestTime != 0) {
             long timeSinceRequest = System.currentTimeMillis() - lastHandshakeRequestTime;
             if (timeSinceRequest < 950) {
                 long delay = 1000 - timeSinceRequest;
-                cancel = true; // Cancel the immediate send
+                cancel = true;  
 
                 new java.util.Timer().schedule(new java.util.TimerTask() {
                     @Override
@@ -109,10 +109,10 @@ public class ExcaliburBypass extends Module {
             client.notificationManager.showReplacing(new Notification(Lang.get("notification.excaliburbypass.title.ac_bypass"), Lang.get("notification.excaliburbypass.message.packet_blocked") + violationType, Notification.NotificationType.INFO, 2000L));
         }
 
-        return cancel; // Return true to cancel, false to allow
+        return cancel;  
     }
 
-    // onPacketSend is now empty because cancellation logic is in onPacketSendPre
+     
     @Override
     public void onPacketSend(PacketEvent.Send event) {
     }

@@ -1,4 +1,4 @@
-// 19. C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\client\gui\nbtedit\GuiNBTEdit.java
+ 
 package ru.fuctorial.fuctorize.client.gui.nbtedit;
 
 import net.minecraft.client.gui.Gui;
@@ -161,10 +161,10 @@ public class GuiNBTEdit extends GuiScreen {
         }
         this.drawDefaultBackground();
 
-        // 1. Рисуем дерево (список тегов)
+         
         this.guiTree.draw(mouseX, mouseY);
 
-        // 2. Рисуем верхний заголовок (Хедер)
+         
         Gui.drawRect(0, 0, this.width, HEADER_HEIGHT, Theme.CATEGORY_BG.getRGB());
         Gui.drawRect(0, HEADER_HEIGHT, this.width, HEADER_HEIGHT + 1, Theme.BORDER.getRGB());
         if (FuctorizeClient.INSTANCE != null && FuctorizeClient.INSTANCE.fontManager != null && FuctorizeClient.INSTANCE.fontManager.isReady()) {
@@ -175,14 +175,14 @@ public class GuiNBTEdit extends GuiScreen {
             titleFont.drawString(title, titleX, titleY, Theme.TEXT_WHITE.getRGB());
         }
 
-        // 3. Рисуем нижнюю панель (Футер)
+         
         int footerY = this.height - FOOTER_HEIGHT;
         Gui.drawRect(0, footerY, this.width, this.height, Theme.CATEGORY_BG.getRGB());
         Gui.drawRect(0, footerY, this.width, footerY + 1, Theme.BORDER.getRGB());
 
-        // 4. Рисуем кнопки (они рендерятся супер-классом) и текстовое поле (если нужно)
-        // Важно: если открыто окно редактирования, мы не даем взаимодействовать с элементами родителя, но рисовать их можно.
-        // Однако, чтобы не перекрывать окно редактирования, лучше скрыть текстовое поле.
+         
+         
+         
         if (this.guiTree.getWindow() == null) {
             if (this.nbtString != null && (isEditingInViewMode || !isViewOnly)) {
                 this.nbtString.drawTextBox();
@@ -190,7 +190,7 @@ public class GuiNBTEdit extends GuiScreen {
         }
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        // 5. ИСПРАВЛЕНИЕ: Рисуем оверлеи (окно редактирования/меню) ПОВЕРХ ВСЕГО ОСТАЛЬНОГО
+         
         this.guiTree.drawOverlays(mouseX, mouseY);
     }
 
@@ -199,8 +199,8 @@ public class GuiNBTEdit extends GuiScreen {
         Keyboard.enableRepeatEvents(false);
     }
 
-    // ... Остальные методы (doesGuiPauseGame, updateScreen, keyTyped, mouseClickMove, mouseMovedOrUp, mouseClicked, handleMouseInput, quitWithoutSaving, applyNbtAndQuit, actionPerformed, sendNbtToServer) ...
-    // Они не менялись, просто убедись, что они на месте.
+     
+     
 
     @Override
     public boolean doesGuiPauseGame() {
@@ -249,14 +249,14 @@ public class GuiNBTEdit extends GuiScreen {
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
         super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
-        // Передаем событие перетаскивания в дерево (а оно передаст в окно, если оно открыто)
+         
         this.guiTree.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
     }
 
     @Override
     protected void mouseMovedOrUp(int mouseX, int mouseY, int state) {
         super.mouseMovedOrUp(mouseX, mouseY, state);
-        // Передаем событие отпускания кнопки
+         
         this.guiTree.mouseReleased(mouseX, mouseY, state);
     }
 
@@ -273,13 +273,13 @@ public class GuiNBTEdit extends GuiScreen {
     public void handleMouseInput() {
         super.handleMouseInput();
 
-        // Если открыто модальное окно внутри дерева, скролл должен идти туда
+         
         if (this.guiTree.getWindow() != null) {
             this.guiTree.handleMouseInput();
             return;
         }
 
-        // Старая логика скролла самого дерева
+         
         int scroll = Mouse.getEventDWheel();
         if (scroll != 0) {
             this.guiTree.shift(scroll > 0 ? 16 : -16);

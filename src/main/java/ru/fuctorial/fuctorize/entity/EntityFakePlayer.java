@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\entity\EntityFakePlayer.java
+ 
 package ru.fuctorial.fuctorize.entity;
 
 import com.mojang.authlib.GameProfile;
@@ -13,9 +13,9 @@ public class EntityFakePlayer extends EntityOtherPlayerMP {
 
     public EntityFakePlayer(World world, GameProfile gameProfile) {
         super(world, gameProfile);
-        // Убираем смещение модели, чтобы камера была на правильной высоте
+         
         this.yOffset = 0.0F;
-        // Включаем noclip для свободного прохода сквозь стены
+         
         this.noClip = true;
     }
 
@@ -30,12 +30,12 @@ public class EntityFakePlayer extends EntityOtherPlayerMP {
     }
 
     public void updateMovement(float speed) {
-        // Сбрасываем физику
+         
         this.motionX = 0;
         this.motionY = 0;
         this.motionZ = 0;
 
-        // 1. Считываем нажатия клавиш НАПРЯМУЮ, игнорируя состояние реального игрока
+         
         float forward = 0.0F;
         float strafe = 0.0F;
 
@@ -44,7 +44,7 @@ public class EntityFakePlayer extends EntityOtherPlayerMP {
         if (mc.gameSettings.keyBindLeft.getIsKeyPressed()) strafe++;
         if (mc.gameSettings.keyBindRight.getIsKeyPressed()) strafe--;
 
-        // 2. Вертикальное движение (Space / Shift)
+         
         if (mc.gameSettings.keyBindJump.getIsKeyPressed()) {
             this.motionY += speed;
         }
@@ -52,8 +52,8 @@ public class EntityFakePlayer extends EntityOtherPlayerMP {
             this.motionY -= speed;
         }
 
-        // 3. Расчет вектора движения
-        // Используем yaw самого фейка, а не игрока
+         
+         
         float yaw = this.rotationYaw;
 
         if (forward != 0.0F || strafe != 0.0F) {
@@ -78,13 +78,13 @@ public class EntityFakePlayer extends EntityOtherPlayerMP {
             this.motionZ = forward * speed * sin - strafe * speed * cos;
         }
 
-        // 4. Применяем движение
+         
         this.setPosition(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
     }
 
     @Override
     public void onUpdate() {
-        // Отключаем ванильную интерполяцию позиции, чтобы камера не дергалась
+         
         this.lastTickPosX = this.posX;
         this.lastTickPosY = this.posY;
         this.lastTickPosZ = this.posZ;
@@ -94,6 +94,6 @@ public class EntityFakePlayer extends EntityOtherPlayerMP {
 
     @Override
     public void onLivingUpdate() {
-        // Блокируем стандартную физику EntityLivingBase (гравитацию, коллизии)
+         
     }
 }

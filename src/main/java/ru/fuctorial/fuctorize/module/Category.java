@@ -1,10 +1,10 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\module\Category.java
+ 
 package ru.fuctorial.fuctorize.module;
 
 import ru.fuctorial.fuctorize.utils.Lang;
 
 public enum Category {
-    // Functional categories
+     
     COMBAT("category.combat"),
     MOVEMENT("category.movement"),
     RENDER("category.render"),
@@ -14,8 +14,8 @@ public enum Category {
     MISC("category.misc"),
     FUN("category.fun"),
 
-    // Configuration categories
-    SETTINGS("category.settings"); // For config modules
+     
+    SETTINGS("category.settings");  
 
     private final String key;
 

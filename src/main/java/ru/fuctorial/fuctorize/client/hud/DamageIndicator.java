@@ -3,7 +3,7 @@ package ru.fuctorial.fuctorize.client.hud;
 import ru.fuctorial.fuctorize.utils.AnimationUtils;
 
 
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\hud\DamageIndicator.java
+ 
 
 
 

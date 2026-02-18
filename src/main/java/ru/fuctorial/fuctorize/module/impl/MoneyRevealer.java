@@ -30,7 +30,7 @@ public class MoneyRevealer extends Module {
     public void init() {
         setMetadata("moneyrevealer", "Money Revealer", Category.MISC);
 
-        // Настройка в миллисекундах: от 1 до 500
+         
         delay = new SliderSetting("Delay (ms)", 100.0, 1.0, 500.0, 1.0);
 
         addSetting(delay);
@@ -77,7 +77,7 @@ public class MoneyRevealer extends Module {
     public void onUpdate() {
         if (mc.thePlayer == null || reflectionFailed || balanceField == null) return;
 
-        // Теперь значение слайдера берется напрямую как миллисекунды
+         
         if (timer.hasReached((long) delay.value)) {
             printBalance();
             timer.reset();
@@ -87,7 +87,7 @@ public class MoneyRevealer extends Module {
     private void printBalance() {
         try {
             int balance = balanceField.getInt(null);
-            // Вывод только в локальный чат
+             
             ChatUtils.printMessage(EnumChatFormatting.GOLD + "[Debug] Balance: " + EnumChatFormatting.WHITE + balance);
         } catch (Exception e) {
             ChatUtils.printMessage(EnumChatFormatting.RED + "[Debug] Error reading balance.");

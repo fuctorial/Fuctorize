@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\manager\ModuleManager.java
+ 
 package ru.fuctorial.fuctorize.manager;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -20,11 +20,11 @@ public class ModuleManager {
     }
 
     private void initModules() {
-        // Combat
+         
         modules.add(new KillAura(client));
         modules.add(new AimAssist(client));
 
-        // Movement
+         
         modules.add(new Sprint(client));
         modules.add(new AntiKnockback(client));
         modules.add(new NoFall(client));
@@ -40,8 +40,8 @@ public class ModuleManager {
 
         modules.add(new MoneyRevealer(client));
 
-        // Render
-        modules.add(new Colors(client)); // Added the central Colors module
+         
+        modules.add(new Colors(client));  
         modules.add(new Fullbright(client));
         modules.add(new Tracers(client));
         modules.add(new ESP(client));
@@ -55,7 +55,7 @@ public class ModuleManager {
         modules.add(new Crosshair(client));
         modules.add(new CustomESP(client));
         modules.add(new ScreenshotHunter(client));
-        // Player
+         
         modules.add(new AntiAFK(client));
         modules.add(new FreeCam(client));
         modules.add(new ArtifactStealer(client));
@@ -64,7 +64,7 @@ public class ModuleManager {
         modules.add(new MassTrade(client));
         modules.add(new Dropper(client));
 
-        // Exploit
+         
         modules.add(new CoordTP(client));
         modules.add(new VClip(client));
         modules.add(new NBTEditor(client));
@@ -78,9 +78,9 @@ public class ModuleManager {
         modules.add(new PacketBlocker(client));
         modules.add(new PacketSender(client));
         modules.add(new SoundLuxCrash(client));
-        // Removed TheGunsDupe, AntiSpamKick, StalkerImmunity
+         
 
-        // Misc
+         
         modules.add(new AdvancedTooltip(client));
         modules.add(new CheckVanish(client));
         modules.add(new ConnectionInfo(client));
@@ -94,7 +94,7 @@ public class ModuleManager {
         modules.add(new GuiInspector(client));
         modules.add(new NbtViewer(client));
         modules.add(new ModeratorList(client));
-        // Fun
+         
         modules.add(new Spinner(client));
         modules.add(new Stalker(client));
     }
@@ -109,11 +109,7 @@ public class ModuleManager {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Находит модуль по его нелокализованному ключу.
-     * @param key Ключ модуля (например, "killaura").
-     * @return Найденный модуль или null.
-     */
+     
     public Module getModuleByKey(String key) {
         for (Module m : modules) {
             if (m.getKey().equalsIgnoreCase(key)) {

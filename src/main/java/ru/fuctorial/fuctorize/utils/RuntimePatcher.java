@@ -18,10 +18,10 @@ import net.minecraft.server.MinecraftServer;
 
 public class RuntimePatcher {
 
-    // SRG names for reflection
+     
     private static final String[] MOD_CONTROLLER_FIELD_SRG = {"modController"};
     private static final String[] EVENT_CHANNELS_FIELD_SRG = {"eventChannels"};
-    private static final String[] ACTIVE_MOD_LIST_FIELD_SRG = {"mods"}; // This field is final
+    private static final String[] ACTIVE_MOD_LIST_FIELD_SRG = {"mods"};  
     private static final String[] MOD_ID_FIELD_FMC_SRG = {"modId"};
     private static final String[] VERSION_FIELD_FMC_SRG = {"version"};
     private static final String[] METADATA_FIELD_FMC_SRG = {"modMetadata"};
@@ -33,12 +33,12 @@ public class RuntimePatcher {
 
     public static void patch(String newModId, String newVersion) {
         try {
-            // Patch client side
+             
             LoadController clientController = ReflectionHelper.getPrivateValue(Loader.class, Loader.instance(), MOD_CONTROLLER_FIELD_SRG);
             patchController(clientController, newModId, newVersion);
             System.out.println("FUCTORIZE PATCHER: Client side patched successfully.");
 
-            // Patch integrated server side
+             
             if (MinecraftServer.getServer() != null && MinecraftServer.getServer().isSnooperEnabled()) {
                 Loader serverLoader = ReflectionHelper.getPrivateValue(MinecraftServer.class, MinecraftServer.getServer(), SERVER_MOD_LOADER_FIELD_SRG);
                 if (serverLoader != null) {
@@ -59,9 +59,9 @@ public class RuntimePatcher {
             return;
         }
 
-        // ARCHITECTURAL FIX: Use the public API to get the mod list, which is safer.
+         
         List<ModContainer> activeModList = modController.getActiveModList();
-        // Create a mutable copy, as the original list might be an immutable view.
+         
         List<ModContainer> mutableModList = new ArrayList<>(activeModList);
 
         FMLModContainer originalContainer = findMyContainer(mutableModList);
@@ -70,30 +70,30 @@ public class RuntimePatcher {
             return;
         }
 
-        // Handle the event bus map
+         
         Map<String, EventBus> eventBusMap = ReflectionHelper.getPrivateValue(LoadController.class, modController, EVENT_CHANNELS_FIELD_SRG);
         HashMap<String, EventBus> mutableEventBusMap = Maps.newHashMap(eventBusMap);
         EventBus fmlEventBus = mutableEventBusMap.get(originalContainer.getModId());
 
-        // Remove our container from the mutable collections
+         
         mutableModList.remove(originalContainer);
         mutableEventBusMap.remove(originalContainer.getModId());
 
-        // Apply new metadata to our container instance
+         
         applyMetadata(originalContainer, newModId, newVersion);
 
-        // If the new modId is valid, add the container back with the new identity.
+         
         if (newModId != null && !newModId.isEmpty()) {
             mutableModList.add(originalContainer);
             mutableEventBusMap.put(newModId, fmlEventBus);
         }
 
-        // ARCHITECTURAL FIX: Write the modified list back into the controller, handling the 'final' modifier.
+         
         try {
             Field modsField = ReflectionHelper.findField(LoadController.class, ACTIVE_MOD_LIST_FIELD_SRG);
             modsField.setAccessible(true);
 
-            // Remove the 'final' modifier to allow changing the value
+             
             Field modifiersField = Field.class.getDeclaredField("modifiers");
             modifiersField.setAccessible(true);
             modifiersField.setInt(modsField, modsField.getModifiers() & ~Modifier.FINAL);
@@ -104,7 +104,7 @@ public class RuntimePatcher {
             throw e;
         }
 
-        // Write the modified event bus map back
+         
         ReflectionHelper.setPrivateValue(LoadController.class, modController, ImmutableMap.copyOf(mutableEventBusMap), EVENT_CHANNELS_FIELD_SRG);
     }
 

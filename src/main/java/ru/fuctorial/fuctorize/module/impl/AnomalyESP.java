@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\AnomalyESP.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -6,7 +6,7 @@ import ru.fuctorial.fuctorize.client.render.TagData;
 import ru.fuctorial.fuctorize.module.Category;
 import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.*;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import ru.fuctorial.fuctorize.utils.RenderUtils;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.tileentity.TileEntity;
@@ -116,7 +116,7 @@ public class AnomalyESP extends Module {
                     AxisAlignedBB worldBB = bb.getOffsetBoundingBox(x, y, z);
 
                     if (showAnomalies.enabled) {
-                        renderESPBox(worldBB, Colors.anomalyColor.getColor()); // Use centralized color
+                        renderESPBox(worldBB, Colors.anomalyColor.getColor());  
                     }
                     if (showTags.enabled) {
                         calculateAndStoreTagData(anomalyTile, anomalyInstance, scale);

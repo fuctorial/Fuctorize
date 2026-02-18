@@ -17,11 +17,11 @@ public class NBTHelper {
 
     private static Field NBTTagCompound_tagMapField;
     private static Field NBTTagList_tagListField;
-    private static Field NBTTagList_tagTypeField; // NEW: Field for tagType
+    private static Field NBTTagList_tagTypeField;  
 
     static {
         try {
-            // Find field using both MCP and SRG names for environment compatibility.
+             
             NBTTagCompound_tagMapField = ReflectionHelper.findField(NBTTagCompound.class, "tagMap", "field_74784_a");
             NBTTagCompound_tagMapField.setAccessible(true);
             System.out.println("Fuctorize/NBTHelper: Successfully reflected NBTTagCompound.tagMap field!");
@@ -30,7 +30,7 @@ public class NBTHelper {
             NBTTagList_tagListField.setAccessible(true);
             System.out.println("Fuctorize/NBTHelper: Successfully reflected NBTTagList.tagList field!");
 
-            // FIX: Use both MCP name 'tagType' and SRG name 'field_74748_b' to find the field.
+             
             NBTTagList_tagTypeField = ReflectionHelper.findField(NBTTagList.class, "tagType", "field_74748_b");
             NBTTagList_tagTypeField.setAccessible(true);
             System.out.println("Fuctorize/NBTHelper: Successfully reflected NBTTagList.tagType field!");
@@ -75,12 +75,7 @@ public class NBTHelper {
         }
     }
 
-    /**
-     * NEW: Forcefully sets the tagType of an NBTTagList using reflection.
-     * This is crucial for correctly reconstructing lists.
-     * @param tagList The list to modify.
-     * @param type The NBT tag ID (e.g., 10 for Compound, 8 for String).
-     */
+     
     public static void setListTagType(NBTTagList tagList, byte type) {
         if (NBTTagList_tagTypeField == null) return;
         try {

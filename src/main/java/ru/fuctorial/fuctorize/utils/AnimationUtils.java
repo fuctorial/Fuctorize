@@ -3,7 +3,7 @@ package ru.fuctorial.fuctorize.utils;
 
 public class AnimationUtils {
     private long startTime;
-    private long duration; // <-- Изменили на не-final
+    private long duration;  
     private boolean forward;
     private Easing easing;
 
@@ -30,15 +30,12 @@ public class AnimationUtils {
         return this.forward;
     }
 
-    // --- ИСПРАВЛЕНИЕ ЗДЕСЬ: Добавляем недостающий метод ---
-    /**
-     * Позволяет динамически изменять длительность анимации.
-     * @param duration Новая длительность в миллисекундах.
-     */
+     
+     
     public void setDuration(long duration) {
         this.duration = duration;
     }
-    // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
+     
 
 
     public double getAnimationFactor() {

@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\NbtViewer.java
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import net.minecraft.entity.Entity;
@@ -48,13 +48,13 @@ public class NbtViewer extends Module {
         try {
             if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && mop.entityHit != null) {
                 Entity entity = mop.entityHit;
-                // --- ИЗМЕНЕНИЕ: Передаем саму сущность в конструктор ---
+                 
                 mc.displayGuiScreen(new GuiNBTEdit(entity));
 
             } else if (mop.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                 TileEntity tileEntity = mc.theWorld.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
                 if (tileEntity != null) {
-                    // --- ИЗМЕНЕНИЕ: Передаем саму тайл-сущность в конструктор ---
+                     
                     mc.displayGuiScreen(new GuiNBTEdit(tileEntity));
                 } else {
                     notifyNoTarget();

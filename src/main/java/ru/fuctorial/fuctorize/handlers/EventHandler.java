@@ -71,19 +71,19 @@ public class EventHandler {
             return;
         }
 
-        // --- FIX: Don't save the cached main menu ---
+         
         if (screen == cachedCustomMainMenu) {
             return;
         }
 
         synchronized(screenHistory) {
-            // Remove existing instance to move it to the top
+             
             screenHistory.removeIf(existingScreen -> existingScreen == screen);
 
-            // Add to the front
+             
             screenHistory.addFirst(screen);
 
-            // Trim to max size
+             
             while (screenHistory.size() > ScreenHistory.getHistoryLimit()) {
                 screenHistory.removeLast();
             }
@@ -98,21 +98,21 @@ public class EventHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onGuiOpen(GuiOpenEvent event) {
-        // --- FIX: Replace main menu first, BEFORE saving history ---
-        // This ensures we know the final screen that will be displayed
+         
+         
         if (cachedCustomMainMenu == null) {
             cachedCustomMainMenu = new GuiCustomMainMenu();
         }
 
-        // Replace vanilla main menu with custom one
+         
         if (event.gui == null && mc.theWorld == null) {
             event.gui = cachedCustomMainMenu;
         } else if (event.gui instanceof GuiMainMenu && !(event.gui instanceof GuiCustomMainMenu)) {
             event.gui = cachedCustomMainMenu;
         }
 
-        // --- FIX: Save the CLOSING screen (mc.currentScreen) to history ---
-        // But only if we're not restoring from history and the new screen is different
+         
+         
         if (!isRestoringScreen && mc.currentScreen != null && mc.currentScreen != event.gui) {
             pushScreenSnapshot(mc.currentScreen);
         }
@@ -124,7 +124,7 @@ public class EventHandler {
 
         if (client != null) client.runScheduledTasks();
 
-        // ========== НОВОЕ: ВЫЗЫВАЕМ ТИК НАВИГАТОРА ==========
+         
         if (client != null && client.botNavigator != null) {
             try {
                 client.botNavigator.tick();
@@ -133,9 +133,9 @@ public class EventHandler {
                 e.printStackTrace();
             }
         }
-        // ====================================================
+         
 
-        // Watchdog: ensure custom main menu stays active
+         
         if (mc.theWorld == null && mc.currentScreen instanceof GuiMainMenu && !(mc.currentScreen instanceof GuiCustomMainMenu)) {
             if (cachedCustomMainMenu == null) {
                 cachedCustomMainMenu = new GuiCustomMainMenu();

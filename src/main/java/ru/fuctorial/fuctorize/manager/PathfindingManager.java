@@ -21,10 +21,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Менеджер, отвечающий за инициализацию и вызовы PathFinder.
- * Поддерживает асинхронный поиск и хранит последний рассчитанный маршрут для последующей визуализации.
- */
+ 
 public class PathfindingManager {
 
     private static final Minecraft mc = FMLClientHandler.instance().getClient();
@@ -33,7 +30,7 @@ public class PathfindingManager {
     private final ExecutorService executorService;
 
     private PathFinder pathFinder;
-    // ИЗМЕНЕНИЕ: Добавлен 'volatile' для потокобезопасности
+     
     private volatile PathResult lastResult;
     private volatile List<PathNode> lastPath;
     private Future<?> currentTask;
@@ -74,9 +71,7 @@ public class PathfindingManager {
         rebuildPathFinder();
     }
 
-    /**
-     * Расширенная инициализация с таймаутами и весом эвристики.
-     */
+     
     public void initialize(double maxClimbHeight,
                            int maxSearchNodes,
                            boolean allowDiagonal,
@@ -133,7 +128,7 @@ public class PathfindingManager {
         }
 
         if (currentTask != null && !currentTask.isDone()) {
-            cancelSearch(); // Отменяем предыдущую задачу
+            cancelSearch();  
         }
 
         final PathFinder finderSnapshot = pathFinder;
@@ -141,7 +136,7 @@ public class PathfindingManager {
         final double tx = targetX, ty = targetY, tz = targetZ;
 
         CompletableFuture<PathResult> future = CompletableFuture.supplyAsync(() -> {
-            // Передаем флаг в метод поиска
+             
             PathResult result = finderSnapshot.findPath(sx, sy, sz, tx, ty, tz, this::isCancelled);
             cacheResult(result);
             return result;
@@ -151,9 +146,7 @@ public class PathfindingManager {
         return future;
     }
 
-    /**
-     * Асинхронный поиск пути к ближайшей доступной позиции вокруг цели в заданном радиусе.
-     */
+     
     public CompletableFuture<PathResult> findPathToNearestAsync(double startX, double startY, double startZ,
                                                                 double targetX, double targetY, double targetZ,
                                                                 int searchRadius) {
@@ -188,9 +181,9 @@ public class PathfindingManager {
     }
 
     public void cancelSearch() {
-        isCancelled = true; // <-- УСТАНАВЛИВАЕМ НАШ ФЛАГ
+        isCancelled = true;  
         if (currentTask != null && !currentTask.isDone()) {
-            currentTask.cancel(true); // Стандартный механизм прерывания тоже оставляем
+            currentTask.cancel(true);  
         }
     }
 
@@ -227,23 +220,20 @@ public class PathfindingManager {
 
 
 
-    // НОВЫЙ МЕТОД: Добавляет штраф для конкретного узла (блока)
+     
     public void addTemporaryPenalty(PathNode node, double penaltyCost) {
         temporaryPenalties.put(node, penaltyCost);
         System.out.println("Added penalty for node: " + node.x + "," + node.y + "," + node.z);
     }
 
-    // НОВЫЙ МЕТОД: Очищает все временные штрафы
+     
     public void clearTemporaryPenalties() {
         temporaryPenalties.clear();
     }
 
 
 
-    /**
-     * ИЗМЕНЕНИЕ: Этот метод теперь итеративно ищет ДОСТИЖИМУЮ промежуточную точку.
-     * Находит промежуточную точку в направлении цели, находящуюся в загруженных чанках.
-     */
+     
     public PathResult findPathTowardUnloadedTarget(double startX, double startY, double startZ,
                                                    double targetX, double targetY, double targetZ) {
         return PathPlanner.findPathTowardUnloadedTarget(
@@ -256,10 +246,7 @@ public class PathfindingManager {
         );
     }
 
-    /**
-     * Асинхронная обёртка для findPathTowardUnloadedTarget.
-     * Необходима для исправления ошибки компиляции в BotNavigator.
-     */
+     
     public CompletableFuture<PathResult> findPathTowardUnloadedTargetAsync(double startX, double startY, double startZ,
                                                                            double targetX, double targetY, double targetZ) {
         updateWorld();
@@ -273,7 +260,7 @@ public class PathfindingManager {
             cancelSearch();
         }
 
-        isCancelled = false; // <-- СБРАСЫВАЕМ ФЛАГ
+        isCancelled = false;  
 
         return CompletableFuture.supplyAsync(() ->
                         findPathTowardUnloadedTarget(startX, startY, startZ, targetX, targetY, targetZ),
@@ -320,20 +307,20 @@ public class PathfindingManager {
         double safeDrop = PathPlanner.computeSafeDropHeight(player);
         this.lastComputedDropHeight = safeDrop;
 
-        // Внимательно сверяем этот вызов
+         
         this.pathFinder = new PathFinder(
-                world,                       // 1. World world
-                player,                      // 2. EntityPlayer player
-                configuredClimbHeight,       // 3. double maxClimbHeight
-                safeDrop,                    // 4. double maxDropHeight
-                configuredMaxNodes,          // 5. int maxSearchNodes
-                configuredAllowDiagonal,     // 6. boolean allowDiagonal
-                configuredUseEuclidean,      // 7. boolean useEuclideanHeuristic
-                configuredPrimaryTimeoutMs,  // 8. int primaryTimeoutMs
-                configuredFailureTimeoutMs,  // 9. int failureTimeoutMs
-                PathingConfig.EDGE_COUNTER_THRESHOLD, // 10. int edgeCounterThreshold
-                configuredHeuristicWeight,   // 11. double heuristicWeight
-                temporaryPenalties           // 12. Map<PathNode, Double> temporaryPenalties
+                world,                        
+                player,                       
+                configuredClimbHeight,        
+                safeDrop,                     
+                configuredMaxNodes,           
+                configuredAllowDiagonal,      
+                configuredUseEuclidean,       
+                configuredPrimaryTimeoutMs,   
+                configuredFailureTimeoutMs,   
+                PathingConfig.EDGE_COUNTER_THRESHOLD,  
+                configuredHeuristicWeight,    
+                temporaryPenalties            
         );
     }
 

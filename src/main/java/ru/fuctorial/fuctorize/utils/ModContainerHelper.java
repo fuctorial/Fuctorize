@@ -5,10 +5,7 @@ import cpw.mods.fml.common.ModContainer;
 
 import java.lang.reflect.Field;
 
-/**
- * Utility to temporarily swap FML's active ModContainer so that runtime event registrations
- * (e.g., toggling a module) don't crash with "Unable to determine registrant mod".
- */
+ 
 public final class ModContainerHelper {
 
     private static LoadController loadController;

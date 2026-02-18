@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\font\CustomFontRenderer.java
+ 
 package ru.fuctorial.fuctorize.client.font;
 
 import java.awt.*;
@@ -32,7 +32,7 @@ public class CustomFontRenderer {
 
     private static final int ATLAS_WIDTH = 2048;
     private static final int ATLAS_HEIGHT = 2048;
-    // --- ИЗМЕНЕНИЕ ЗДЕСЬ: Добавлены все русские буквы и другие символы ---
+     
     private static final String glyph_string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя.,:;'\"!?/\\|-_+*@#$€%^&(){}[]<>~`§ ★☆";
     private final Font font;
     private final Map<Character, Glyph> glyphs = new HashMap<>();
@@ -44,9 +44,9 @@ public class CustomFontRenderer {
         generateAtlas();
     }
 
-    // ... остальной код файла остается без изменений ...
-// ... (весь остальной код файла CustomFontRenderer.java, который вы мне предоставили, остается здесь)
-// ...
+     
+ 
+ 
     public void destroy() {
         if (this.textureId != 0) {
             GL11.glDeleteTextures(this.textureId);
@@ -111,15 +111,15 @@ public class CustomFontRenderer {
         int currentColor = defaultColor;
         boolean bold = false;
 
-        // --- ИСПРАВЛЕНИЕ ЗДЕСЬ ---
-        // Корректно определяем альфа-канал, который будет использоваться для всей строки.
-        // Если цвет был задан без альфа-канала (например, 0xFFFFFF), мы предполагаем, что он полностью непрозрачный.
+         
+         
+         
         int initialAlpha = (defaultColor >> 24) & 0xFF;
         if (initialAlpha == 0 && (defaultColor & 0x00FFFFFF) != 0) {
             initialAlpha = 255;
         }
         float a = (float) initialAlpha / 255.0F;
-        // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
+         
 
         for (int i = 0; i < text.length(); ++i) {
             char ch = text.charAt(i);
@@ -148,14 +148,14 @@ public class CustomFontRenderer {
                     float sr = (float) (shadowColor >> 16 & 255) / 255.0F;
                     float sg = (float) (shadowColor >> 8 & 255) / 255.0F;
                     float sb = (float) (shadowColor & 255) / 255.0F;
-                    // Используем исправленный альфа-канал и для тени
+                     
                     GL11.glColor4f(sr, sg, sb, a);
                     GL11.glBegin(GL11.GL_QUADS);
                     drawGlyph(glyph, x + 2.0, y + 2.0);
                     GL11.glEnd();
                 }
 
-                // Используем исправленный альфа-канал для основного текста
+                 
                 GL11.glColor4f(r, g, b, a);
                 GL11.glBegin(GL11.GL_QUADS);
                 drawGlyph(glyph, x, y);
@@ -365,23 +365,12 @@ public class CustomFontRenderer {
         return text.length();
     }
 
-    /**
-     * Trims a string to a specified width.
-     * @param text The text to trim.
-     * @param width The maximum width in screen coordinates.
-     * @return The trimmed string.
-     */
+     
     public String trimStringToWidth(String text, int width) {
         return this.trimStringToWidth(text, width, false);
     }
 
-    /**
-     * Trims a string to a specified width, optionally from the end.
-     * @param text The text to trim.
-     * @param width The maximum width in screen coordinates.
-     * @param reverse If true, trims from the end of the string.
-     * @return The trimmed string.
-     */
+     
     public String trimStringToWidth(String text, int width, boolean reverse) {
         int scaledWidth = width * 4;
         if (getStringWidthInternal(text) <= scaledWidth) {
@@ -393,7 +382,7 @@ public class CustomFontRenderer {
             int i = text.length() - 1;
             for (; i >= 0; --i) {
                 char c = text.charAt(i);
-                // Note: Simplified logic for reverse, ignores formatting codes for performance.
+                 
                 Glyph glyph = glyphs.get(c);
                 if (glyph != null) {
                     currentWidth += glyph.width;

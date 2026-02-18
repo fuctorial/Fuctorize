@@ -6,7 +6,7 @@ import ru.fuctorial.fuctorize.module.settings.SeparatorSetting;
 import net.minecraft.client.gui.Gui;
 
 
-// Файл: C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\clickgui\components\SeparatorComponent.java
+ 
 
 
 
@@ -19,7 +19,7 @@ public class SeparatorComponent extends Component {
         super(parent, x, y, width, height);
         this.setting = setting;
 
-        // --- ДОБАВИТЬ ЭТУ СТРОКУ ---
+         
         this.height = 8;
     }
 

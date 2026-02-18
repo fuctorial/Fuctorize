@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\spammer\GuiPlaceholderInfo.java
+ 
 package ru.fuctorial.fuctorize.client.gui.spammer;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -21,13 +21,13 @@ public class GuiPlaceholderInfo extends GuiScreen {
     @Override
     public void initGui() {
         this.panelWidth = 400;
-        // FIX: Increased the panel height to provide more space for the text.
+         
         this.panelHeight = 235;
         this.panelX = (this.width - this.panelWidth) / 2;
         this.panelY = (this.height - this.panelHeight) / 2;
 
         this.buttonList.clear();
-        // The button position is now calculated based on the new panel height.
+         
         this.buttonList.add(new StyledButton(0, panelX + (panelWidth / 2) - 50, panelY + panelHeight - 30, 100, 20, "Назад"));
     }
 
@@ -48,7 +48,7 @@ public class GuiPlaceholderInfo extends GuiScreen {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
-        RenderUtils.drawRect(0, 0, this.width, this.height, 0x90000000); // Darken
+        RenderUtils.drawRect(0, 0, this.width, this.height, 0x90000000);  
 
         RenderUtils.drawRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight, Theme.CATEGORY_BG.getRGB());
         RenderUtils.drawRect(panelX - 1, panelY - 1, panelX + panelWidth + 1, panelY, Theme.BORDER.getRGB());
@@ -78,7 +78,7 @@ public class GuiPlaceholderInfo extends GuiScreen {
                         "§7  - Путь должен быть в кавычках и указывать на\n" +
                         "    .txt или .csv файл в кодировке UTF-8.";
 
-        // The text rendering itself does not change, but it now has enough space.
+         
         font.drawSplitString(infoText, panelX + 15, panelY + 35, panelWidth - 30, -1);
 
         super.drawScreen(mouseX, mouseY, partialTicks);

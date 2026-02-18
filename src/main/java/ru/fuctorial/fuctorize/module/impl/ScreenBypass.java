@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\ScreenBypass.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -12,7 +12,7 @@ import ru.fuctorial.fuctorize.module.settings.BindSetting;
 import ru.fuctorial.fuctorize.module.settings.BooleanSetting;
 import ru.fuctorial.fuctorize.module.settings.SliderSetting;
 import ru.fuctorial.fuctorize.module.settings.TextSetting;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import ru.fuctorial.fuctorize.utils.http.HttpSniffer;
 import io.netty.buffer.ByteBuf;
 import com.google.gson.Gson;
@@ -166,7 +166,7 @@ public class ScreenBypass extends Module {
             obj.addProperty("body", body);
         }
 
-        // Always include payload HEX (trimmed)
+         
         String hex = byteBufToHexString(buf);
         if (hex != null && !hex.isEmpty()) {
             int max = Math.min(hex.length(), 4096);

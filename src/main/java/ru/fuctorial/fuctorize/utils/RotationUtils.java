@@ -8,11 +8,7 @@ public class RotationUtils {
 
     private static final Minecraft mc = Minecraft.getMinecraft();
 
-    /**
-     * Вычисляет необходимые углы (yaw, pitch) для того, чтобы посмотреть на сущность.
-     * @param entity Целевая сущность.
-     * @return Массив [yaw, pitch].
-     */
+     
     public static float[] getRotations(EntityLivingBase entity) {
         if (entity == null) {
             return null;
@@ -30,11 +26,7 @@ public class RotationUtils {
         return new float[]{yaw, pitch};
     }
 
-    /**
-     * Плавно поворачивает игрока к цели.
-     * @param target Целевая сущность.
-     * @param smoothness Фактор сглаживания (чем выше, тем медленнее поворот).
-     */
+     
     public static void faceEntity(EntityLivingBase target, float smoothness) {
         float[] rotations = getRotations(target);
         if (rotations != null) {
@@ -43,9 +35,7 @@ public class RotationUtils {
         }
     }
 
-    /**
-     * Вспомогательный метод для плавного изменения угла.
-     */
+     
     private static float smoothRotation(float current, float target, float speed) {
         float diff = MathHelper.wrapAngleTo180_float(target - current);
         if (diff > speed) {

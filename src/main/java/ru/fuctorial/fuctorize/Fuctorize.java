@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\Fuctorize.java
+ 
 package ru.fuctorial.fuctorize;
 
 import cpw.mods.fml.common.Mod;
@@ -26,9 +26,9 @@ public class Fuctorize {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        // Load the desired identity first.
+         
         ModHiderConfig.load();
-        // Then, patch FML's internal state. This must happen early.
+         
         RuntimePatcher.patch(modId, modVersion);
     }
 
@@ -43,11 +43,11 @@ public class Fuctorize {
             return;
         }
 
-        // --- ИСПРАВЛЕНИЕ ЗДЕСЬ ---
-        // Вызываем загрузку конфига вручную, так как preInit пропускается при инжекте.
-        // Это заполнит статические поля modId и modVersion.
+         
+         
+         
         ModHiderConfig.load();
-        // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
+         
 
         fuctorizeClient = new FuctorizeClient();
         fuctorizeClient.start();
@@ -64,16 +64,16 @@ public class Fuctorize {
         fuctorizeClient.stop();
         fuctorizeClient = null;
 
-        // --- ИСПРАВЛЕНИЕ: Очищаем статическое состояние ---
+         
         systemsInitialized = false;
         ru.fuctorial.fuctorize.utils.Lang.reset();
-        // Если JavaInjector.shutdown вызывается, мы должны очистить статические ссылки
-        // на загрузчики и другие ресурсы, которые могут помешать повторной загрузке.
-        // Это особенно важно для статических полей в модулях.
-        // Здесь можно добавить вызов метода очистки для каждого модуля, если необходимо.
-        // Пример (добавьте аналогичные методы в ваши модули, если они хранят статическое состояние):
-        // TheGunsDupe.resetStaticState();
-        // PacketSniffer.resetStaticState();
-        // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
+         
+         
+         
+         
+         
+         
+         
+         
     }
 }

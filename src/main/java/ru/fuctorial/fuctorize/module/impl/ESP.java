@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\module\impl\ESP.java
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -6,7 +6,7 @@ import ru.fuctorial.fuctorize.client.render.TagData;
 import ru.fuctorial.fuctorize.module.Category;
 import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.*;
-import ru.fuctorial.fuctorize.utils.Lang; // Импорт Lang
+import ru.fuctorial.fuctorize.utils.Lang;  
 import ru.fuctorial.fuctorize.utils.RenderUtils;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.gui.ScaledResolution;
@@ -78,7 +78,7 @@ public class ESP extends Module {
         try {
             npcClass = Class.forName("noppes.npcs.entity.EntityCustomNpc");
         } catch (ClassNotFoundException e) {
-            // Ignored
+             
         }
     }
 
@@ -86,17 +86,17 @@ public class ESP extends Module {
     public void init() {
         setMetadata("esp", Lang.get("module.esp.name"), Category.RENDER);
 
-        // --- ESP Boxes ---
+         
         players = new BooleanSetting(Lang.get("module.esp.setting.players"), true);
         mobs = new BooleanSetting(Lang.get("module.esp.setting.hostile_mobs"), true);
         animals = new BooleanSetting(Lang.get("module.esp.setting.friendly_mobs"), false);
         items = new BooleanSetting(Lang.get("module.esp.setting.items"), false);
-        customNpcs = new BooleanSetting(Lang.get("module.esp.setting.custom_npcs"), true); // Локализовано
+        customNpcs = new BooleanSetting(Lang.get("module.esp.setting.custom_npcs"), true);  
         chests = new BooleanSetting(Lang.get("module.esp.setting.chests"), true);
         enderChests = new BooleanSetting(Lang.get("module.esp.setting.ender_chests"), true);
 
-        // --- NameTags ---
-        // Используем ключи для локализации
+         
+         
         ntPlayers = new BooleanSetting(Lang.get("module.esp.setting.nt_players"), true);
         ntMobs = new BooleanSetting(Lang.get("module.esp.setting.nt_mobs"), false);
         ntAnimals = new BooleanSetting(Lang.get("module.esp.setting.nt_animals"), false);

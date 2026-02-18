@@ -8,15 +8,12 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.settings.GameSettings;
 
 
-// ru.fuctorial/fuctorize/utils/Wrapper.java
+ 
 
 
 
 
-/**
- * Утилитарный класс для быстрого доступа к основным объектам Minecraft.
- * Это упрощает код модулей и делает его более читаемым.
- */
+ 
 public class Wrapper {
 
     public static final Wrapper INSTANCE = new Wrapper();

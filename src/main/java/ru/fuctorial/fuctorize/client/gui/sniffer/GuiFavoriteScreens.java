@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\sniffer\GuiFavoriteScreens.java
+ 
 package ru.fuctorial.fuctorize.client.gui.sniffer;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -76,13 +76,13 @@ public class GuiFavoriteScreens extends GuiScreen {
         String customName = favoriteEntry.getKey();
         String uniqueKey = favoriteEntry.getValue();
 
-        // --- NEW UNIFIED LOGIC ---
+         
         GuiScreen screenToOpen = null;
 
-        // 1. Try to find the best matching live instance
+         
         screenToOpen = FavoriteScreenManager.findBestLiveInstance(uniqueKey);
 
-        // 2. If not found, try to instantiate it
+         
         if (screenToOpen == null) {
             String className = FavoriteScreenManager.classNameFromUnique(uniqueKey);
             screenToOpen = FavoriteScreenManager.instantiateScreen(className);
@@ -90,7 +90,7 @@ public class GuiFavoriteScreens extends GuiScreen {
 
         if (screenToOpen != null) {
             EventHandler.isRestoringScreen = true;
-            this.mc.displayGuiScreen(screenToOpen); // No wrapper needed here, favorites are assumed to be safe
+            this.mc.displayGuiScreen(screenToOpen);  
             EventHandler.isRestoringScreen = false;
         } else {
             FuctorizeClient.INSTANCE.notificationManager.show(new ru.fuctorial.fuctorize.client.hud.Notification(

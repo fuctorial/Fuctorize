@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\Module.java
+ 
 package ru.fuctorial.fuctorize.module;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -109,14 +109,10 @@ public abstract class Module implements IRenderable {
     @Override
     public void onRender2D(RenderGameOverlayEvent.Text event) {}
 
-    // Optional: modules can render at Post/ALL stage
+     
     public void onRender2DPost(RenderGameOverlayEvent.Post event) {}
 
-    /**
-     * Called BEFORE an event is posted. Allows a module to cancel the packet directly.
-     * @param packet The packet being sent.
-     * @return true to cancel the packet, false to allow it.
-     */
+     
     public boolean onPacketSendPre(Packet packet) { return false; }
 
     public void onPacketSend(PacketEvent.Send event) {}

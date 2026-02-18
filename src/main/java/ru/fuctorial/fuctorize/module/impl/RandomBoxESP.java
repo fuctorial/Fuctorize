@@ -68,7 +68,7 @@ public class RandomBoxESP extends Module {
     private void initializeReflection() {
         if (reflectionSuccessful) return;
         try {
-            // Целевой класс блока из ТЗ
+             
             targetBlockClass = Class.forName("org.rhino.stalker.core.side.client.block.CBlockRandomBox");
             reflectionSuccessful = true;
             System.out.println("Fuctorize/RandomBoxESP: Successfully reflected CBlockRandomBox!");
@@ -86,17 +86,17 @@ public class RandomBoxESP extends Module {
         RenderUtils.begin3DRendering();
         GL11.glLineWidth(1.5F);
 
-        // Мы итерируем TileEntity, так как "Ящики" (Boxes), как правило, имеют TileEntity для хранения лута.
-        // Это более производительно, чем сканировать все блоки в радиусе.
-        // Если у блока нет TileEntity, этот метод не сработает, и придется делать сканирование чанков.
+         
+         
+         
         for (Object o : mc.theWorld.loadedTileEntityList) {
             if (o instanceof TileEntity) {
                 TileEntity tile = (TileEntity) o;
 
-                // Проверяем дистанцию
+                 
                 if (mc.thePlayer.getDistanceSq(tile.xCoord, tile.yCoord, tile.zCoord) > distance.value * distance.value) continue;
 
-                // Получаем блок по координатам TileEntity
+                 
                 Block block = mc.theWorld.getBlock(tile.xCoord, tile.yCoord, tile.zCoord);
 
                 if (block != null && targetBlockClass.isInstance(block)) {
@@ -119,7 +119,7 @@ public class RandomBoxESP extends Module {
     }
 
     private void calculateAndStoreTagData(TileEntity tile) {
-        // Проекция координат на 2D экран
+         
         Vector4f coords = RenderUtils.projectTo2D(tile.xCoord + 0.5, tile.yCoord + 1.2, tile.zCoord + 0.5);
 
         if (coords != null && coords.z < 1.0f) {
@@ -138,7 +138,7 @@ public class RandomBoxESP extends Module {
         double x = te.xCoord - RenderManager.instance.renderPosX;
         double y = te.yCoord - RenderManager.instance.renderPosY;
         double z = te.zCoord - RenderManager.instance.renderPosZ;
-        // Стандартный размер блока 1x1x1
+         
         AxisAlignedBB bb = AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1);
 
         RenderUtils.setColor(color, 0.15f);

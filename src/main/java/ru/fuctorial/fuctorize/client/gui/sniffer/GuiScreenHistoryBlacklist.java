@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\sniffer\GuiScreenHistoryBlacklist.java
+ 
 package ru.fuctorial.fuctorize.client.gui.sniffer;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -67,7 +67,7 @@ public class GuiScreenHistoryBlacklist extends GuiScreen {
 
         if (mouseButton == 0 && mouseX >= panelX + 10 && mouseX <= panelX + panelWidth - 10 && mouseY >= currentY && mouseY <= currentY + rowHeight) {
             GuiScreenHistory historyGui = new GuiScreenHistory();
-            historyGui.setSelectionMode(this, false); // false indicates selection for blacklist
+            historyGui.setSelectionMode(this, false);  
             this.mc.displayGuiScreen(historyGui);
         }
     }

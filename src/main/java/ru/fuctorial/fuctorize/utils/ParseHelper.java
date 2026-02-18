@@ -50,7 +50,7 @@ public class ParseHelper {
         }
     }
 
-    // --- ИЗМЕНЕНИЕ: Используем HexUtils ---
+     
     public static byte[] parseByteArray(String s) throws IllegalArgumentException {
         try {
             return HexUtils.hexToBytes(s);
@@ -61,7 +61,7 @@ public class ParseHelper {
 
     public static int[] parseIntArray(String s) throws NumberFormatException {
         try {
-            String[] input = s.trim().split("\\s+"); // Сплит по любым пробелам
+            String[] input = s.trim().split("\\s+");  
             int[] arr = new int[input.length];
             for (int i = 0; i < input.length; ++i) {
                 arr[i] = ParseHelper.parseInt(input[i]);

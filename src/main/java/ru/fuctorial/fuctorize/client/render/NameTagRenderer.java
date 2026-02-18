@@ -13,14 +13,14 @@ import java.util.Set;
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 
-// Файл: C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\render\NameTagRenderer.java
+ 
 
 
 
 
 public class NameTagRenderer {
 
-    // Smoothing storage for vertical offsets to avoid abrupt jumps
+     
     private final Map<String, Float> yOffsetLerp = new HashMap<>();
     private final Map<String, Long> yOffsetSeen = new HashMap<>();
     private static final long ENTRY_TTL_MS = 1500L;
@@ -31,19 +31,19 @@ public class NameTagRenderer {
             return;
         }
 
-        // Nearer first, so closer tags win when capping density
+         
         tags.sort(Comparator.comparingDouble(t -> t.distance));
 
         ru.fuctorial.fuctorize.client.font.CustomFontRenderer font = FuctorizeClient.INSTANCE.fontManager.regular_18;
 
-        // Layout plan: compute small downward offsets for farther tags to reduce overlap.
-        // Near first for planning so near tags stay at base position, far ones adapt.
+         
+         
         plannedOffsetY.clear();
         List<TagData> planList = new ArrayList<>(tags);
-        planList.sort(Comparator.comparingDouble(t -> t.distance)); // near → far
+        planList.sort(Comparator.comparingDouble(t -> t.distance));  
 
-        // Accumulate occupied rects in screen space
-        List<float[]> occupied = new ArrayList<>(); // [x0,y0,x1,y1]
+         
+        List<float[]> occupied = new ArrayList<>();  
         for (TagData d : planList) {
             String nameLine = d.nameLine;
             String infoLine = d.infoLine;
@@ -51,7 +51,7 @@ public class NameTagRenderer {
                 infoLine = getHealthColor(d.healthPercent) + d.infoLine;
             }
 
-            // Same scale and metrics as in renderSingleTag
+             
             float scale = 1.0f - (Math.max(0.0f, Math.min(d.distance, 64.0f)) / 128.0f);
             scale = Math.max(0.7f, scale);
             scale = (float) Math.round(scale * 20f) / 20f;
@@ -71,7 +71,7 @@ public class NameTagRenderer {
             float baseX = d.screenCoords.x - scaledW / 2f;
             float baseY = d.screenCoords.y - scaledH;
 
-            // Snap center to pixels like in rendering
+             
             float tx = baseX + scaledW / 2f;
             float ty = baseY + scaledH;
             float snappedTX = (float) Math.round(tx);
@@ -80,7 +80,7 @@ public class NameTagRenderer {
             float y0 = snappedTY - scaledH;
 
             float dy = findFreeYOffset(x0, y0, scaledW, scaledH, occupied);
-            // Clamp excessive movement but never skip; near will cover if still overlapping
+             
             float maxShift = Math.min(36f, Math.max(12f, scaledH * 0.6f));
             if (dy > maxShift) dy = maxShift;
 
@@ -92,10 +92,10 @@ public class NameTagRenderer {
             plannedOffsetY.put(buildKey(d), dy);
         }
 
-        // Painter order: draw far → near so nearer tags cover those behind
+         
         tags.sort(Comparator.comparingDouble(t -> -t.distance));
 
-        // Ensure font texture uses linear filtering to reduce shimmering
+         
         int texId = font.textureId;
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, texId);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
@@ -109,7 +109,7 @@ public class NameTagRenderer {
 
         RenderUtils.end2DRendering();
 
-        // Keep default linear filtering (explicit)
+         
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, texId);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
@@ -118,10 +118,10 @@ public class NameTagRenderer {
     private void renderSingleTag(TagData data) {
         ru.fuctorial.fuctorize.client.font.CustomFontRenderer font = FuctorizeClient.INSTANCE.fontManager.regular_18;
 
-        // Distance-based scale with a higher floor to reduce blur
+         
         float scale = 1.0f - (Math.max(0.0f, Math.min(data.distance, 64.0f)) / 128.0f);
         scale = Math.max(0.7f, scale);
-        // Snap scale to 0.05 steps to reduce micro jitter on subpixel boundaries
+         
         scale = (float) Math.round(scale * 20f) / 20f;
         if (data.scaleMul > 0f) {
             scale *= data.scaleMul;
@@ -141,12 +141,12 @@ public class NameTagRenderer {
         float boxWidth = totalWidth + padding * 2;
         float boxHeight = font.getHeight() + (infoLine.isEmpty() ? 0 : font.getHeight()) + padding;
 
-        // Compute scaled screen-space rect and resolve simple overlaps by vertical offset
+         
         float scaledW = boxWidth * scale;
         float scaledH = boxHeight * scale;
 
         float baseX = data.screenCoords.x - scaledW / 2f;
-        float baseY = data.screenCoords.y - scaledH; // strictly above anchor
+        float baseY = data.screenCoords.y - scaledH;  
 
         float finalX = baseX;
         float planned = 0f;
@@ -155,7 +155,7 @@ public class NameTagRenderer {
         float finalY = baseY + planned;
 
         GL11.glPushMatrix();
-        // Pixel snapping: align translation to integer pixels to avoid texture shimmering
+         
         float tx = finalX + scaledW / 2f;
         float ty = finalY + scaledH;
         float snappedTX = (float) Math.round(tx);
@@ -166,7 +166,7 @@ public class NameTagRenderer {
         float x0 = -boxWidth / 2f;
         float y0 = -boxHeight;
 
-        // Background with slight outline for readability
+         
         int bg = new Color(10, 10, 10, 170).getRGB();
         int outline = new Color(0, 0, 0, 200).getRGB();
         RenderUtils.drawRect(x0 - 0.5f, y0 - 0.5f, x0 + boxWidth + 0.5f, y0 + boxHeight + 0.5f, outline);
@@ -186,7 +186,7 @@ public class NameTagRenderer {
     }
 
     private float findFreeYOffset(float x, float y, float w, float h, List<float[]> occupied) {
-        // Monotonic push-down layout: never move upward, only stack below previous targets
+         
         float dy = 0f;
         final float gap = Math.max(2f, h * 0.08f);
         boolean changed;
@@ -196,12 +196,12 @@ public class NameTagRenderer {
             float x1 = x + w, y0 = y + dy, y1 = y0 + h;
             for (float[] r : occupied) {
                 if (x < r[2] && x1 > r[0] && y0 < r[3] && y1 > r[1]) {
-                    // push just below r
+                     
                     float needed = (r[3] + gap) - y;
                     if (needed > dy) {
                         dy = needed;
                         changed = true;
-                        // update y0/y1 after change in next loop iteration
+                         
                     }
                 }
             }
@@ -224,7 +224,7 @@ public class NameTagRenderer {
     }
 
     private String buildKey(TagData data) {
-        // Prefer provided stable key when available
+         
         if (data.key != null && !data.key.isEmpty()) return data.key;
         return data.nameLine + "|" + data.mainColor;
     }

@@ -6,9 +6,7 @@ import ru.fuctorial.fuctorize.utils.RenderUtils;
 import java.awt.Color;
 import java.util.List;
 
-/**
- * Rendering utilities for path visualization extracted from BotNavigator.
- */
+ 
 public final class PathRenderer {
     private PathRenderer() {}
 
@@ -17,14 +15,14 @@ public final class PathRenderer {
                               List<PathNode> currentPath,
                               int currentNodeIndex,
                               boolean isNavigating,
-                              float globalAlpha) { // <-- ДОБАВЛЕН НОВЫЙ ПАРАМЕТР
+                              float globalAlpha) {  
 
         if (player == null || (currentPath == null || currentPath.isEmpty())) return;
 
         RenderUtils.beginWorld3DRender();
         try {
             final double yOffset = 0.1;
-            final double raise = 1.0; // поднимаем рендер на 1 блок выше уровня ног
+            final double raise = 1.0;  
 
             double playerX = player.posX;
             double playerY = player.boundingBox.minY + raise + yOffset;
@@ -137,7 +135,7 @@ public final class PathRenderer {
 
     private static void drawNodeMarker(PathNode node,
                                        Color color,
-                                       float alpha, // Эта alpha уже будет умножена на globalAlpha
+                                       float alpha,  
                                        double halfSize,
                                        double thickness,
                                        double pillarHeight) {

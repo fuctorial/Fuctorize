@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\handlers\PacketHandler.java
+ 
 package ru.fuctorial.fuctorize.handlers;
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -88,16 +88,16 @@ public class PacketHandler extends ChannelDuplexHandler {
         if (msg instanceof Packet) {
             Packet packet = (Packet) msg;
 
-            // ARCHITECTURAL FIX: Perform pre-cancellation check via direct dispatch.
+             
             if (FuctorizeClient.INSTANCE.dispatchPacketSendPre(packet)) {
-                return; // If a module cancelled the packet, stop processing it here.
+                return;  
             }
 
-            // If not cancelled, post to the event bus for listeners (read-only).
+             
             PacketEvent.Send event = new PacketEvent.Send(packet);
             if (MinecraftForge.EVENT_BUS.post(event)) {
-                // This check is now redundant but kept for safety in case other mods use it.
-                // Our own modules should not cancel here anymore.
+                 
+                 
                 return;
             }
         }

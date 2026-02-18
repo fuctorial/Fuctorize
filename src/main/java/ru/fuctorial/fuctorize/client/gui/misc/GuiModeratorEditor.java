@@ -22,7 +22,7 @@ public class GuiModeratorEditor extends GuiScreen {
     private int panelX, panelY, panelWidth, panelHeight;
     private GuiTextField inputField;
 
-    // Скроллинг
+     
     private int scrollOffset = 0;
     private int totalContentHeight = 0;
     private int viewableHeight = 0;
@@ -42,9 +42,9 @@ public class GuiModeratorEditor extends GuiScreen {
         this.panelX = (this.width - this.panelWidth) / 2;
         this.panelY = (this.height - this.panelHeight) / 2;
 
-        // Поле ввода (сверху)
+         
         int fieldY = panelY + 35;
-        // Оставляем место под кнопку Add (60px)
+         
         int inputWidth = panelWidth - 20 - 65;
 
         this.inputField = new GuiTextField(panelX + 10, fieldY, inputWidth, 20, false);
@@ -53,10 +53,10 @@ public class GuiModeratorEditor extends GuiScreen {
 
         this.buttonList.clear();
 
-        // Кнопка Add
+         
         this.buttonList.add(new StyledButton(1, panelX + 10 + inputWidth + 5, fieldY, 60, 20, "Add"));
 
-        // Кнопка Back (внизу)
+         
         this.buttonList.add(new StyledButton(0, panelX + (panelWidth - 100) / 2, panelY + panelHeight - 30, 100, 20, Lang.get("generic.button.back")));
 
         refreshList();
@@ -66,9 +66,9 @@ public class GuiModeratorEditor extends GuiScreen {
         cachedList.clear();
         cachedList.addAll(ModeratorManager.getModerators());
         Collections.sort(cachedList);
-        // Высота контента: кол-во элементов * высота строки (18)
+         
         totalContentHeight = cachedList.size() * 18;
-        // Высота области просмотра: общая высота - хедер - поле ввода - футер
+         
         viewableHeight = panelHeight - 35 - 25 - 35;
     }
 
@@ -99,18 +99,18 @@ public class GuiModeratorEditor extends GuiScreen {
         CustomFontRenderer titleFont = FuctorizeClient.INSTANCE.fontManager.bold_22;
         CustomFontRenderer font = FuctorizeClient.INSTANCE.fontManager.regular_18;
 
-        // Фон и рамка
+         
         RenderUtils.drawRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight, Theme.CATEGORY_BG.getRGB());
         drawBorder(panelX, panelY, panelWidth, panelHeight, Theme.BORDER.getRGB());
 
-        // Заголовок
+         
         String title = Lang.get("moderator.editor.title");
         titleFont.drawString(title, panelX + (panelWidth - titleFont.getStringWidth(title)) / 2f, panelY + 10, Theme.ORANGE.getRGB());
 
-        // Поле ввода
+         
         inputField.drawTextBox();
 
-        // Область списка
+         
         int listTop = panelY + 65;
         int listBottom = panelY + panelHeight - 35;
 
@@ -120,15 +120,15 @@ public class GuiModeratorEditor extends GuiScreen {
 
         for (String mod : cachedList) {
             if (currentY + 18 > listTop && currentY < listBottom) {
-                // Фон строки
+                 
                 boolean hover = isMouseOver(mouseX, mouseY, panelX + 10, currentY, panelWidth - 20, 18);
                 int color = hover ? Theme.COMPONENT_BG_HOVER.getRGB() : Theme.COMPONENT_BG.getRGB();
                 RenderUtils.drawRect(panelX + 10, currentY, panelX + panelWidth - 10, currentY + 18, color);
 
-                // Никнейм
+                 
                 font.drawString(mod, panelX + 15, currentY + 5, Theme.TEXT_WHITE.getRGB());
 
-                // Кнопка удаления [-]
+                 
                 int delX = panelX + panelWidth - 30;
                 boolean delHover = isMouseOver(mouseX, mouseY, delX, currentY + 2, 16, 14);
                 int delColor = delHover ? new Color(200, 50, 50, 200).getRGB() : new Color(200, 50, 50, 100).getRGB();
@@ -141,7 +141,7 @@ public class GuiModeratorEditor extends GuiScreen {
 
         RenderUtils.stopScissor();
 
-        // Скроллбар
+         
         if (totalContentHeight > viewableHeight) {
             int scrollbarX = panelX + panelWidth - 6;
             RenderUtils.drawRect(scrollbarX, listTop, scrollbarX + 4, listBottom, 0x55000000);
@@ -185,13 +185,13 @@ public class GuiModeratorEditor extends GuiScreen {
         int listTop = panelY + 65;
         int listBottom = panelY + panelHeight - 35;
 
-        // Клик по списку (удаление)
+         
         if (mouseX >= panelX + 5 && mouseX <= panelX + panelWidth - 5 && mouseY >= listTop && mouseY <= listBottom) {
             int relativeY = mouseY - listTop + scrollOffset;
             int idx = relativeY / 18;
 
             if (idx >= 0 && idx < cachedList.size()) {
-                // Проверка клика по кнопке удаления
+                 
                 int currentY = listTop + (idx * 18) - scrollOffset;
                 int delX = panelX + panelWidth - 30;
 
@@ -199,7 +199,7 @@ public class GuiModeratorEditor extends GuiScreen {
                     String toRemove = cachedList.get(idx);
                     ModeratorManager.remove(toRemove);
                     refreshList();
-                    // Коррекция скролла
+                     
                     if (scrollOffset > Math.max(0, totalContentHeight - viewableHeight)) {
                         scrollOffset = Math.max(0, totalContentHeight - viewableHeight);
                     }

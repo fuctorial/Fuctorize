@@ -33,25 +33,25 @@ public class GuiHexEditor extends GuiScreen {
     private final int packetIndex;
 
     private String currentDirection;
-    // Мы оставляем список, но в нем всегда будет только 1 элемент (Raw Data)
+     
     private final List<SegmentEditor> segmentEditors = new ArrayList<>();
 
-    // Geometry State
+     
     private int panelX, panelY, panelWidth, panelHeight;
     private static int savedX = -1, savedY = -1, savedWidth = 0, savedHeight = 0;
 
-    // Drag & Resize
+     
     private boolean dragging = false;
     private int dragOffsetX, dragOffsetY;
     private boolean isResizing = false;
-    private int resizeEdge = 0; // 0=none, 1=right, 2=bottom, 3=corner
+    private int resizeEdge = 0;  
     private final int resizeBorder = 6;
 
     private int scrollOffset = 0;
     private int totalContentHeight = 0;
     private int viewableHeight = 0;
 
-    // --- Scrollbar Dragging State ---
+     
     private boolean isDraggingScrollbar = false;
     private int initialClickY = 0;
     private int initialScrollY = 0;
@@ -68,7 +68,7 @@ public class GuiHexEditor extends GuiScreen {
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
 
-        // --- RESPONSIVE INIT ---
+         
         ScaledResolution sr = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
 
         if (savedWidth == 0 || savedHeight == 0) {
@@ -83,13 +83,13 @@ public class GuiHexEditor extends GuiScreen {
             this.panelHeight = savedHeight;
         }
 
-        // Clamp to screen
+         
         if (this.panelX < 0) this.panelX = 0;
         if (this.panelY < 0) this.panelY = 0;
         if (this.panelX + this.panelWidth > sr.getScaledWidth()) this.panelX = sr.getScaledWidth() - this.panelWidth;
         if (this.panelY + this.panelHeight > sr.getScaledHeight()) this.panelY = sr.getScaledHeight() - this.panelHeight;
 
-        // Data Initialization
+         
         if (segmentEditors.isEmpty()) {
             byte[] rawBytes = new byte[0];
             try {
@@ -97,7 +97,7 @@ public class GuiHexEditor extends GuiScreen {
             } catch (Exception ignored) {}
             rebuildSegments(rawBytes);
         } else {
-            // Если сегменты уже есть (например, при ресайзе), просто обновляем их ширину
+             
             updateLayout();
         }
     }
@@ -110,22 +110,22 @@ public class GuiHexEditor extends GuiScreen {
         int innerW = panelWidth - 20;
         int btnHeight = 20;
 
-        // Footer: 2 rows of buttons
+         
         int footerHeight = (btnHeight * 2) + (padding * 3);
         int row1Y = panelY + panelHeight - footerHeight + padding;
         int row2Y = row1Y + btnHeight + padding;
 
-        // Row 1: Back | Direction (Parser button removed)
+         
         int btnW_Row1 = (innerW - padding) / 2;
         this.buttonList.add(new StyledButton(3, startX, row1Y, btnW_Row1, btnHeight, "Back"));
         this.buttonList.add(new StyledButton(2, startX + btnW_Row1 + padding, row1Y, btnW_Row1, btnHeight, "Dir: " + currentDirection));
 
-        // Row 2: Save | Send
+         
         int btnW_Row2 = (innerW - padding) / 2;
         this.buttonList.add(new StyledButton(1, startX, row2Y, btnW_Row2, btnHeight, "Save"));
         this.buttonList.add(new StyledButton(0, startX + btnW_Row2 + padding, row2Y, btnW_Row2, btnHeight, "Send"));
 
-        // Scroll area calculation
+         
         int topHeaderHeight = 30;
         this.viewableHeight = panelHeight - topHeaderHeight - footerHeight;
 
@@ -136,15 +136,15 @@ public class GuiHexEditor extends GuiScreen {
         segmentEditors.clear();
         scrollOffset = 0;
 
-        // === ИСПРАВЛЕНИЕ ОТОБРАЖЕНИЯ ===
-        // Рассчитываем ширину ДО создания TextArea и ДО установки текста.
-        // Иначе символы будут переноситься по одному на строку.
+         
+         
+         
         int contentWidth = panelWidth - 35;
 
         GuiTextArea area = new GuiTextArea(0, 0, contentWidth, 0);
         area.setText(HexUtils.bytesToHex(rawBytes));
 
-        // Добавляем единственный сегмент с сырыми данными
+         
         segmentEditors.add(new SegmentEditor("Raw Data (" + rawBytes.length + " bytes)", area));
 
         updateLayout();
@@ -153,7 +153,7 @@ public class GuiHexEditor extends GuiScreen {
     private byte[] assembleBytes() throws IllegalArgumentException, java.io.IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         for (SegmentEditor seg : segmentEditors) {
-            // HexUtils.hexToBytes теперь обрабатывает пробелы и очистку внутри
+             
             byte[] chunk = HexUtils.hexToBytes(seg.textArea.getText());
             baos.write(chunk);
         }
@@ -161,20 +161,20 @@ public class GuiHexEditor extends GuiScreen {
     }
 
     private void updateEditorPositions() {
-        int contentWidth = panelWidth - 35; // margins + scrollbar space
+        int contentWidth = panelWidth - 35;  
         int startX = panelX + 15;
 
         for (SegmentEditor seg : segmentEditors) {
-            // Растягиваем единственное поле на всю высоту просмотра
+             
             int h = Math.max(50, viewableHeight - 20);
 
             seg.textArea.xPos = startX;
             seg.textArea.width = contentWidth;
             seg.textArea.height = h;
 
-            // === ВАЖНО: Если ширина изменилась (ресайз), нужно пересчитать переносы строк ===
-            // Так как в GuiTextArea нет публичного метода recalcLines,
-            // мы просто перезадаем тот же текст, что вызывает пересчет.
+             
+             
+             
             seg.textArea.setText(seg.textArea.getText());
         }
         recalcTotalHeight();
@@ -183,22 +183,22 @@ public class GuiHexEditor extends GuiScreen {
     private void recalcTotalHeight() {
         totalContentHeight = 0;
         for (SegmentEditor seg : segmentEditors) {
-            totalContentHeight += 14; // Header height
+            totalContentHeight += 14;  
             totalContentHeight += seg.textArea.height;
-            totalContentHeight += 8; // Padding
+            totalContentHeight += 8;  
         }
     }
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        if (button.id == 3) { // Back
+        if (button.id == 3) {  
             mc.displayGuiScreen(parentScreen);
         }
-        else if (button.id == 2) { // Direction Toggle
+        else if (button.id == 2) {  
             currentDirection = currentDirection.equals("SENT") ? "RCVD" : "SENT";
             button.displayString = "Dir: " + currentDirection;
         }
-        else if (button.id == 0 || button.id == 1) { // Send (0) or Save (1)
+        else if (button.id == 0 || button.id == 1) {  
             try {
                 byte[] newBytes = assembleBytes();
                 String newBase64 = Base64.getEncoder().encodeToString(newBytes);
@@ -308,9 +308,9 @@ public class GuiHexEditor extends GuiScreen {
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
-        // 1. Drag & Resize Logic
+         
         if (mouseButton == 0) {
-            // Resize detection
+             
             boolean onRight = mouseX >= this.panelX + this.panelWidth - resizeBorder && mouseX <= this.panelX + this.panelWidth + resizeBorder;
             boolean onBottom = mouseY >= this.panelY + this.panelHeight - resizeBorder && mouseY <= this.panelY + this.panelHeight + resizeBorder;
 
@@ -322,7 +322,7 @@ public class GuiHexEditor extends GuiScreen {
                 return;
             }
 
-            // Scrollbar Click Logic
+             
             int top = panelY + 30;
             int sbX = panelX + panelWidth - SCROLLBAR_WIDTH;
             if (mouseX >= sbX && mouseX <= sbX + SCROLLBAR_WIDTH && mouseY >= top && mouseY <= top + viewableHeight) {
@@ -332,7 +332,7 @@ public class GuiHexEditor extends GuiScreen {
                 return;
             }
 
-            // Header Drag
+             
             if (mouseX >= panelX && mouseX <= panelX + panelWidth && mouseY >= panelY && mouseY <= panelY + 30) {
                 dragging = true;
                 dragOffsetX = mouseX - panelX;
@@ -341,7 +341,7 @@ public class GuiHexEditor extends GuiScreen {
             }
         }
 
-        // 2. Text Area Interactions
+         
         int top = panelY + 30;
         int bottom = top + viewableHeight;
 
@@ -354,7 +354,7 @@ public class GuiHexEditor extends GuiScreen {
                 int itemH = 14 + seg.textArea.height + 8;
 
                 if (relativeY >= currentY && relativeY <= currentY + itemH) {
-                    // Pass raw mouseX/Y, textArea logic handles screen coordinates
+                     
                     seg.textArea.mouseClicked(mouseX, mouseY, mouseButton);
                     if (seg.textArea.isFocused()) anyFocused = true;
                 } else {
@@ -405,9 +405,9 @@ public class GuiHexEditor extends GuiScreen {
 
         this.drawDefaultBackground();
 
-        // Main background
+         
         RenderUtils.drawRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight, Theme.CATEGORY_BG.getRGB());
-        // Border
+         
         int border = Theme.BORDER.getRGB();
         RenderUtils.drawRect(panelX - 1, panelY - 1, panelX + panelWidth + 1, panelY, border);
         RenderUtils.drawRect(panelX - 1, panelY - 1, panelX, panelY + panelHeight + 1, border);
@@ -422,12 +422,12 @@ public class GuiHexEditor extends GuiScreen {
         CustomFontRenderer font = FuctorizeClient.INSTANCE.fontManager.bold_22;
         CustomFontRenderer regFont = FuctorizeClient.INSTANCE.fontManager.regular_18;
 
-        // Title
+         
         String title = "Hex Editor: " + packetData.name;
         if (font.getStringWidth(title) > panelWidth - 30) title = font.trimStringToWidth(title, panelWidth - 40) + "...";
         font.drawString(title, panelX + 15, panelY + 10, Theme.ORANGE.getRGB());
 
-        // Scroll Area
+         
         int top = panelY + 30;
         RenderUtils.startScissor(panelX + 5, top, panelWidth - 10, viewableHeight);
 
@@ -448,7 +448,7 @@ public class GuiHexEditor extends GuiScreen {
 
         RenderUtils.stopScissor();
 
-        // Scrollbar
+         
         if (totalContentHeight > viewableHeight) {
             int sbX = panelX + panelWidth - 6;
             RenderUtils.drawRect(sbX, top, sbX + 4, top + viewableHeight, 0x55000000);

@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\module\impl\DamagePopups.java
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;

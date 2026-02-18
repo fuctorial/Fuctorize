@@ -64,10 +64,10 @@ public class StyledButton extends GuiButton {
 
         float textX = this.xPosition + (this.width - FuctorizeClient.INSTANCE.fontManager.regular_18.getStringWidth(this.displayString)) / 2f;
 
-        // --- ИСПРАВЛЕНИЕ ЗДЕСЬ ---
-        // Убрали "+ 1" в конце. Теперь текст строго по центру.
+         
+         
         float textY = this.yPosition + (this.height - FuctorizeClient.INSTANCE.fontManager.regular_18.getHeight()) / 2.0f;
-        // -------------------------
+         
 
         FuctorizeClient.INSTANCE.fontManager.regular_18.drawString(this.displayString, textX, textY, textColor);
     }

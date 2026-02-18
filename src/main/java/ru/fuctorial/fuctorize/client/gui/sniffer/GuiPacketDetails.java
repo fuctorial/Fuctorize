@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\client\gui\sniffer\GuiPacketDetails.java
+ 
 package ru.fuctorial.fuctorize.client.gui.sniffer;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -58,7 +58,7 @@ public class GuiPacketDetails extends GuiScreen {
         super.initGui();
         this.buttonList.clear();
 
-        // --- АДАПТИВНАЯ ВЕРСТКА КНОПОК ---
+         
         int padding = 5;
         int bottomMargin = 10;
         int buttonHeight = 20;
@@ -69,7 +69,7 @@ public class GuiPacketDetails extends GuiScreen {
         String txtBack = Lang.get("details.button.back");
         String txtFav = "★ Save Favorite";
 
-        // --- ИЗМЕНЕНИЕ: Текст для кнопки бана ---
+         
         boolean isBlacklisted = false;
         if (packetInfo.rawPacket instanceof FMLProxyPacket) {
             isBlacklisted = PacketSniffer.getBlacklistedFmlChannels().contains(((FMLProxyPacket) packetInfo.rawPacket).channel());
@@ -77,11 +77,11 @@ public class GuiPacketDetails extends GuiScreen {
             isBlacklisted = PacketSniffer.getBlacklistedClassNames().contains(packetInfo.rawPacket.getClass().getName());
         }
         String txtBan = isBlacklisted ? EnumChatFormatting.GREEN + "Unban Packet" : EnumChatFormatting.RED + "Ban Packet";
-        // ---------------------------------------
+         
 
         int minBtnW = 90;
 
-        // 5 кнопок: Back, Edit, Ban, NBT, Fav
+         
         int cols = 5;
         if (availableWidth < (minBtnW * 5 + padding * 4)) cols = 3;
         if (availableWidth < (minBtnW * 3 + padding * 2)) cols = 2;
@@ -94,14 +94,14 @@ public class GuiPacketDetails extends GuiScreen {
         int startY = this.height - footerHeight + bottomMargin;
         int startX = (this.width - availableWidth) / 2;
 
-        // IDs: 0=Back, 1=Edit, 2=Ban, 3=NBT, 4=Favorites
+         
         addResponsiveButton(4, 0, cols, startX, startY, buttonW, buttonHeight, padding, txtFav);
         addResponsiveButton(3, 1, cols, startX, startY, buttonW, buttonHeight, padding, txtNbt);
-        addResponsiveButton(2, 2, cols, startX, startY, buttonW, buttonHeight, padding, txtBan); // Центральная (или около того)
+        addResponsiveButton(2, 2, cols, startX, startY, buttonW, buttonHeight, padding, txtBan);  
         addResponsiveButton(1, 3, cols, startX, startY, buttonW, buttonHeight, padding, txtEdit);
         addResponsiveButton(0, 4, cols, startX, startY, buttonW, buttonHeight, padding, txtBack);
 
-        // ... расчет размеров панели (без изменений) ...
+         
         if (FuctorizeClient.INSTANCE == null || FuctorizeClient.INSTANCE.fontManager == null || !FuctorizeClient.INSTANCE.fontManager.isReady()) {
             return;
         }
@@ -160,7 +160,7 @@ public class GuiPacketDetails extends GuiScreen {
         if (button.id == 0) this.mc.displayGuiScreen(this.parentScreen);
         if (button.id == 1) this.mc.displayGuiScreen(new GuiPacketEditor(this.packetInfo, this));
 
-        // --- ИЗМЕНЕНИЕ: Логика кнопки BAN ---
+         
         if (button.id == 2) {
             if (packetInfo.rawPacket instanceof FMLProxyPacket) {
                 String channel = ((FMLProxyPacket) packetInfo.rawPacket).channel();
@@ -177,9 +177,9 @@ public class GuiPacketDetails extends GuiScreen {
                     PacketSniffer.addBlacklistedClassName(clazz);
                 }
             }
-            this.initGui(); // Обновить текст кнопки
+            this.initGui();  
         }
-        // ------------------------------------
+         
 
         if (button.id == 3) scanAndEditNbt();
 
@@ -197,10 +197,10 @@ public class GuiPacketDetails extends GuiScreen {
         }
     }
 
-    // ... (остальные методы без изменений: scanAndEditNbt, drawScreen, etc.) ...
+     
 
     private void scanAndEditNbt() {
-        // (Код scanAndEditNbt из предыдущего ответа)
+         
         if (!(packetInfo.rawPacket instanceof C17PacketCustomPayload)) {
             FuctorizeClient.INSTANCE.notificationManager.show(new Notification(
                     Lang.get("details.error.nbt_edit_title"),
@@ -285,8 +285,8 @@ public class GuiPacketDetails extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        // (Код отрисовки с кнопками и текстом, как в предыдущем ответе, только кнопки теперь включают кнопку Ban)
-        // ... drawBackground, drawRects ...
+         
+         
 
         this.drawDefaultBackground();
         if (FuctorizeClient.INSTANCE == null || FuctorizeClient.INSTANCE.fontManager == null || !FuctorizeClient.INSTANCE.fontManager.isReady()) {

@@ -79,9 +79,9 @@ public class PathFinder {
                                Supplier<Boolean> cancellationChecker)  {
         if (world == null) return PathResult.failure("РњРёСЂ РЅРµ Р·Р°РіСЂСѓР¶РµРЅ", 0);
 
-        // ========== РќРђР§РђР›Рћ РРЎРџР РђР’Р›Р•РќРР™ ==========
+         
 
-        // 1. РћРїСЂРµРґРµР»СЏРµРј СЃС‚Р°СЂС‚РѕРІС‹Р№ РѕРїРѕСЂРЅС‹Р№ Р±Р»РѕРє РџР РћРЎРўРћ РїРѕРґ РЅРѕРіР°РјРё РёРіСЂРѕРєР°.
+         
         int sx = MathHelper.floor_double(startX);
         double startFeetY;
         if (player != null && player.boundingBox != null) {
@@ -92,26 +92,26 @@ public class PathFinder {
         int sy = MathHelper.floor_double(startFeetY - 0.01);
         int sz = MathHelper.floor_double(startZ);
 
-        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РїРѕРґ РЅРѕРіР°РјРё РІРѕРѕР±С‰Рµ РµСЃС‚СЊ РЅР° С‡РµРј СЃС‚РѕСЏС‚СЊ. Р•СЃР»Рё РЅРµС‚, РёС‰РµРј Р±Р»РёР¶Р°Р№С€СѓСЋ РѕРїРѕСЂСѓ РІРЅРёР·Сѓ.
-        // Р­С‚Рѕ РЅСѓР¶РЅРѕ РґР»СЏ СЃР»СѓС‡Р°РµРІ, РєРѕРіРґР° РёРіСЂРѕРє РЅР°С…РѕРґРёС‚СЃСЏ РІ РїРѕР»РµС‚Рµ/РїР°РґРµРЅРёРё.
+         
+         
         while(!PathfindingUtils.canStandOn(world, sx, sy, sz) && sy > 0) {
             sy--;
         }
 
-        // Р•СЃР»Рё СѓРїР°Р»Рё РґРѕ СЃР°РјРѕРіРѕ РЅРёР·Р° Рё РЅРёС‡РµРіРѕ РЅРµ РЅР°С€Р»Рё, Р·РЅР°С‡РёС‚ СЃС‚Р°СЂС‚РѕРІР°С‚СЊ РЅРµРіРґРµ.
+         
         if (sy <= 0 && !PathfindingUtils.canStandOn(world, sx, 0, sz)) {
             return PathResult.failure("РќРµ СѓРґР°Р»РѕСЃСЊ РЅР°Р№С‚Рё РѕРїРѕСЂСѓ РїРѕРґ СЃС‚Р°СЂС‚РѕРІРѕР№ С‚РѕС‡РєРѕР№", 0);
         }
 
-        // 2. Р”Р»СЏ Р¦Р•Р›Р РёСЃРїРѕР»СЊР·СѓРµРј Р±РѕР»РµРµ СЃР»РѕР¶РЅСѓСЋ Р»РѕРіРёРєСѓ, С‚Р°Рє РєР°Рє РѕРЅР° РјРѕР¶РµС‚ Р±С‹С‚СЊ РІ РІРѕР·РґСѓС…Рµ.
+         
         int tx = MathHelper.floor_double(targetX);
         int ty = MathHelper.floor_double(targetY);
         int tz = MathHelper.floor_double(targetZ);
 
-        // РС‰РµРј РІР°Р»РёРґРЅСѓСЋ С‚РѕС‡РєСѓ РґР»СЏ СЃС‚РѕСЏРЅРёСЏ Р’ Р РђР™РћРќР• С†РµР»Рё, Р° РЅРµ С‚РѕС‡РЅРѕ РІ РЅРµР№.
+         
         Integer bestTargetY = PathfindingUtils.findStandingYAllowingDown(world, tx, ty, tz, maxClimbHeight, maxDropHeight);
         if (bestTargetY == null) {
-            // Р•СЃР»Рё С‚РѕС‡РЅРѕ РІ С†РµР»Рё СЃС‚РѕСЏС‚СЊ РЅРµР»СЊР·СЏ, РјРѕР¶РЅРѕ РїРѕРїСЂРѕР±РѕРІР°С‚СЊ РЅР°Р№С‚Рё Р±Р»РёР¶Р°Р№С€СѓСЋ С‚РѕС‡РєСѓ (СЌС‚Р° Р»РѕРіРёРєР° Сѓ С‚РµР±СЏ СѓР¶Рµ РµСЃС‚СЊ РІ PathPlanner)
+             
             return PathResult.failure("Р¦РµР»РµРІР°СЏ С‚РѕС‡РєР° РЅРµРґРѕСЃС‚РёР¶РёРјР°", 0);
         }
         int desiredTargetY = ty;
@@ -121,17 +121,17 @@ public class PathFinder {
             System.out.println("[PathFinder] Target column blocked. Allowing dig-down path to Y=" + YMath.feetFromGround(ty));
         }
 
-        // 3. РЎРѕР·РґР°РµРј СѓР·Р»С‹ СЃ РєРѕСЂСЂРµРєС‚РЅРѕР№ 'y'
+         
         PathNode startPathNode = new PathNode(sx, sy, sz);
         startPathNode.moveType = MovementType.TRAVERSE;
         PathNode targetPathNode = new PathNode(tx, ty, tz);
         targetPathNode.moveType = MovementType.TRAVERSE;
 
-        System.out.println("[PathFinder] Corrected Start Node: (" + sx + ", " + YMath.feetFromGround(sy) + ", " + sz + ")"); // Р›РѕРіРёСЂСѓРµРј Y РЅРѕРі
-        System.out.println("[PathFinder] Corrected Target Node: (" + tx + ", " + YMath.feetFromGround(ty) + ", " + tz + ")"); // Р›РѕРіРёСЂСѓРµРј Y РЅРѕРі
+        System.out.println("[PathFinder] Corrected Start Node: (" + sx + ", " + YMath.feetFromGround(sy) + ", " + sz + ")");  
+        System.out.println("[PathFinder] Corrected Target Node: (" + tx + ", " + YMath.feetFromGround(ty) + ", " + tz + ")");  
 
         return findPath(startPathNode, targetPathNode, cancellationChecker);
-        // ========== РљРћРќР•Р¦ РРЎРџР РђР’Р›Р•РќРР™ ==========
+         
     }
 
     private PathResult findPath(PathNode startNode, PathNode targetNode,
@@ -173,10 +173,10 @@ public class PathFinder {
 
             final long now = System.nanoTime();
             if (now >= failureDeadline) {
-                // ВРЕМЯ ВЫШЛО: Возвращаем лучший путь, который успели найти
+                 
                 List<PathNode> partial = bestPartial(bestByCoeff);
                 return (partial != null && !partial.isEmpty())
-                        ? PathResult.partial(partial, nodesExplored) // <-- ВОЗВРАЩАЕМ PARTIAL
+                        ? PathResult.partial(partial, nodesExplored)  
                         : PathResult.failure("Time limit exceeded", nodesExplored);
             }
 
@@ -188,7 +188,7 @@ public class PathFinder {
                 if (edgeCounter > edgeCounterThreshold) {
                     List<PathNode> partial = bestPartial(bestByCoeff);
                     if (partial != null && !partial.isEmpty()) {
-                        return PathResult.partial(partial, nodesExplored); // <-- Вернуть то, что есть
+                        return PathResult.partial(partial, nodesExplored);  
                     }
 
                     return PathResult.failure("Path not found (exhausted)", nodesExplored);
@@ -255,13 +255,13 @@ public class PathFinder {
         return PathResult.failure("Р В РЎСџР РЋРЎвЂњР РЋРІР‚С™Р РЋР Р‰ Р В Р вЂ¦Р В Р’Вµ Р В Р вЂ¦Р В Р’В°Р В РІвЂћвЂ“Р В РўвЂР В Р’ВµР В Р вЂ¦ (Р В Р’В»Р В РЎвЂР В РЎВР В РЎвЂР РЋРІР‚С™ Р РЋРЎвЂњР В Р’В·Р В Р’В»Р В РЎвЂўР В Р вЂ /Р РЋРІР‚С™Р В Р’В°Р В РІвЂћвЂ“Р В РЎВР В Р’В°Р РЋРЎвЂњР РЋРІР‚С™/Р В РЎвЂ”Р РЋР вЂљР В Р’ВµР В РЎвЂ”Р РЋР РЏР РЋРІР‚С™Р РЋР С“Р РЋРІР‚С™Р В Р вЂ Р В РЎвЂР РЋР РЏ)", nodesExplored);
     }
 
-    // Angle helpers and limits moved to NeighborGenerator
+     
 
     private List<PathNode> generateNeighbors(PathNode node) {
         return neighborGenerator.generateNeighbors(node);
     }
 
-    // Angle helpers retained for legacy private methods still present below.
+     
     private static double yawDeg(int dx, int dz) {
         if (dx == 0 && dz == 0) return Double.NaN;
         return Math.toDegrees(Math.atan2(dz, dx));
@@ -461,24 +461,24 @@ public class PathFinder {
         
         System.out.println("[Pillar] Attempting pillar from Y=" + cur.y + " to Y=" + upY);
         
-        // РќР• Р‘Р›РћРљРР РЈР•Рњ Pillar! РџСЂРѕСЃС‚Рѕ СЃРѕР·РґР°С‘Рј СѓР·РµР», СЃС‚РѕРёРјРѕСЃС‚СЊ Р±СѓРґРµС‚ РІ movementCost()
-        // PathFinder СЃР°Рј СЂРµС€РёС‚ РІС‹РіРѕРґРЅРѕ Р»Рё СЌС‚Рѕ
+         
+         
         
         if (!world.blockExists(x, upY, z)) {
             System.out.println("[Pillar] World doesn't exist at Y=" + upY);
             return;
         }
 
-        // РќР• Р‘Р›РћРљРР РЈР•Рњ Pillar РґР°Р¶Рµ РµСЃР»Рё СѓР¶Рµ РЅР° РїРѕРІРµСЂС…РЅРѕСЃС‚Рё!
-        // РџСЂРѕСЃС‚Рѕ РґРѕР±Р°РІРёРј С€С‚СЂР°С„ РІ movementCost() РµСЃР»Рё СѓР¶Рµ РґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РІС‹СЃРѕРєРѕ
-        // PathFinder СЃР°Рј СЂРµС€РёС‚ РїРµСЂРµРєР»СЋС‡РёС‚СЊСЃСЏ РЅР° ASCEND/TRAVERSE
+         
+         
+         
 
-        // РљР РРўРР§Р•РЎРљРћР• РРЎРџР РђР’Р›Р•РќРР•: Pillar РЎРћР—Р”РђР•Рў Р±Р»РѕРє РїРѕРґ РЅРѕРІРѕР№ РїРѕР·РёС†РёРµР№!
-        // РќРµ РЅСѓР¶РЅРѕ РїСЂРѕРІРµСЂСЏС‚СЊ canStandAt(upY), РїРѕС‚РѕРјСѓ С‡С‚Рѕ:
-        // 1. РњС‹ РїРѕСЃС‚Р°РІРёРј Р±Р»РѕРє РЅР° cur.y (РїРѕРґ РЅРѕРіР°РјРё С‚РµРєСѓС‰РµР№ РїРѕР·РёС†РёРё)
-        // 2. РџРѕСЃР»Рµ СЌС‚РѕРіРѕ РјРѕР¶РµРј СЃС‚РѕСЏС‚СЊ РЅР° upY СЃ Р±Р»РѕРєРѕРј cur.y РїРѕРґ РЅРѕРіР°РјРё
+         
+         
+         
+         
         
-        // РџСЂРѕРІРµСЂСЏРµРј С‚РѕР»СЊРєРѕ С‡С‚Рѕ РµСЃС‚СЊ РјРµСЃС‚Рѕ РґР»СЏ РЅРѕРі Рё РіРѕР»РѕРІС‹ РЅР° РЅРѕРІРѕР№ РІС‹СЃРѕС‚Рµ
+         
         boolean feetClear = PathfindingUtils.isBlockPassable(world, x, YMath.feetFromGround(upY), z);
         boolean headClear = PathfindingUtils.isBlockPassable(world, x, YMath.headFromGround(upY), z);
         
@@ -492,8 +492,8 @@ public class PathFinder {
             return;
         }
         
-        // РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ РЅР° С‚РµРєСѓС‰РµР№ РїРѕР·РёС†РёРё (cur.y) РјРѕР¶РЅРѕ РїРѕСЃС‚Р°РІРёС‚СЊ Р±Р»РѕРє
-        // РўРµРєСѓС‰Р°СЏ РїРѕР·РёС†РёСЏ РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РїСЂРѕС…РѕРґРёРјРѕР№ (РІРѕР·РґСѓС… РёР»Рё replaceable)
+         
+         
         if (!PathfindingUtils.isBlockPassable(world, x, cur.y, z)) {
             System.out.println("[Pillar] Cannot place block at current Y=" + cur.y + ": " + world.getBlock(x, cur.y, z));
             return;
@@ -501,15 +501,15 @@ public class PathFinder {
         
         PathNode next = new PathNode(x, upY, z);
         next.moveType = MovementType.PILLAR;
-        next.placeBlocks = 1;  // РЎС‚Р°РІРёРј Р±Р»РѕРє РЅР° cur.y
+        next.placeBlocks = 1;   
         next.breakBlocks = 0;
-        next.needsJump = true;  // РќСѓР¶РЅРѕ РїСЂС‹РіР°С‚СЊ С‡С‚РѕР±С‹ РїРѕРґРЅСЏС‚СЊСЃСЏ
+        next.needsJump = true;   
         out.add(next);
         System.out.println("[Pillar] CREATED from Y=" + cur.y + " to Y=" + upY);
     }
 
     private void addNeighborsBridge(PathNode cur, List<PathNode> out) {
-        // РќР• Р‘Р›РћРљРР РЈР•Рњ Bridge! РЎС‚РѕРёРјРѕСЃС‚СЊ Р±СѓРґРµС‚ РІ movementCost()
+         
         
         for (int[] d : CARDINAL) {
             int nx = cur.x + d[0];
@@ -552,16 +552,16 @@ public class PathFinder {
     }
 
     private void addNeighborsDig(PathNode cur, List<PathNode> out) {
-        // РќРћР’РђРЇ Р›РћР“РРљРђ: РљРѕРїР°РµРј Р›Р•РЎРўРќРР¦РЈ (РІР±РѕРє + РІРІРµСЂС…) РґР»СЏ РІС‹С…РѕРґР° РёР· СЏРј!
-        // Р’Р°СЂРёР°РЅС‚ 1: РљРѕРїР°С‚СЊ РІРµСЂС‚РёРєР°Р»СЊРЅРѕ РІРІРµСЂС… (РµСЃР»Рё РµСЃС‚СЊ С‚РІРµСЂРґС‹Р№ РїРѕР»)
-        // Р’Р°СЂРёР°РЅС‚ 2: РљРѕРїР°С‚СЊ РІР±РѕРє РЅР° СѓСЂРѕРІРµРЅСЊ РІС‹С€Рµ (Р›Р•РЎРўРќРР¦Рђ!)
+         
+         
+         
         
-        addDigVertical(cur, out);    // РљРѕРїР°С‚СЊ РїСЂСЏРјРѕ РІРІРµСЂС…
-        addDigStaircase(cur, out);   // РљРѕРїР°С‚СЊ Р»РµСЃС‚РЅРёС†Сѓ РІ 4 РЅР°РїСЂР°РІР»РµРЅРёСЏС…
+        addDigVertical(cur, out);     
+        addDigStaircase(cur, out);    
     }
     
     private void addDigVertical(PathNode cur, List<PathNode> out) {
-        // РљРѕРїР°РµРј РїСЂСЏРјРѕ Р’Р’Р•Р РҐ (СЃС‚Р°СЂР°СЏ Р»РѕРіРёРєР°)
+         
         final int x = cur.x;
         final int z = cur.z;
         final int upY = cur.y + 1;
@@ -573,11 +573,11 @@ public class PathFinder {
             return;
         }
         
-        // РљР РРўРР§Р•РЎРљРћР• РРЎРџР РђР’Р›Р•РќРР•: РџСЂРё РєРѕРїР°РЅРёРё РІРІРµСЂС… РїСЂРѕРІРµСЂСЏРµРј РЅРµ canStandAt РґР»СЏ upY,
-        // Р° РїСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ:
-        // 1. РњС‹ РјРѕР¶РµРј СЃС‚РѕСЏС‚СЊ РЅР° РўР•РљРЈР©Р•Рњ СѓСЂРѕРІРЅРµ (cur.y) 
-        // 2. Р‘Р»РѕРєРё РЅР°Рґ РіРѕР»РѕРІРѕР№ (upY Рё upY+1) РјРѕР¶РЅРѕ СЃР»РѕРјР°С‚СЊ
-        // 3. РџРѕСЃР»Рµ РёС… СѓРґР°Р»РµРЅРёСЏ РІ upY Рё upY+1 Р±СѓРґРµС‚ РІРѕР·РґСѓС…
+         
+         
+         
+         
+         
         
         System.out.println("[Dig] Checking blocks: current_ground=" + world.getBlock(x, YMath.groundBelow(cur.y), z) + 
                           ", current_feet=" + world.getBlock(x, YMath.feetFromGround(cur.y), z) +
@@ -585,15 +585,15 @@ public class PathFinder {
                           ", target_feet=" + world.getBlock(x, YMath.feetFromGround(upY), z) + 
                           ", target_head=" + world.getBlock(x, YMath.headFromGround(upY), z));
         
-        // РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ РјС‹ РјРѕР¶РµРј СЃС‚РѕСЏС‚СЊ РЅР° С‚РµРєСѓС‰РµРј РјРµСЃС‚Рµ
+         
         if (!PathfindingUtils.canStandAt(world, x + 0.5, YMath.feetFromGround(cur.y) + 0.01, z + 0.5)) {
             System.out.println("[Dig] Can't stand at current position " + x + "," + cur.y + "," + z);
             return;
         }
         
-        // РџРѕСЃР»Рµ РєРѕРїР°РЅРёСЏ РЅР° СѓСЂРѕРІРЅРµ upY Сѓ РЅР°СЃ Р±СѓРґРµС‚ РїРѕР» РёР· С‚РµРєСѓС‰РµР№ РїРѕР·РёС†РёРё
-        // РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ С‚РµРєСѓС‰Р°СЏ РїРѕР·РёС†РёСЏ СЃС‚Р°РЅРµС‚ С‚РІРµСЂРґС‹Рј РїРѕР»РѕРј (С‚.Рµ. cur.y РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСЂРѕС…РѕРґРёРј РёР»Рё РјС‹ РЅР° РЅРµРј СЃС‚РѕРёРј)
-        // РќР° СЃР°РјРѕРј РґРµР»Рµ РїСЂРё РєРѕРїР°РЅРёРё РІРІРµСЂС… РјС‹ РїРѕРґРЅРёРјР°РµРјСЃСЏ РїСЂС‹Р¶РєРѕРј, РїРѕСЌС‚РѕРјСѓ РЅСѓР¶РµРЅ solid block РЅР° cur.y-1
+         
+         
+         
         if (!PathfindingUtils.canStandOn(world, x, YMath.groundBelow(cur.y), z)) {
             System.out.println("[Dig] No solid ground at Y=" + YMath.groundBelow(cur.y) + " to support upward climb");
             return;
@@ -602,11 +602,11 @@ public class PathFinder {
         int breakCount = 0;
         boolean blocked = false;
         
-        // Р‘Р»РѕРєРё РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ СЃР»РѕРјР°С‚СЊ: РЅР° СѓСЂРѕРІРЅРµ РЅРѕРі РЅРѕРІРѕРіРѕ Y (upY) Рё РіРѕР»РѕРІС‹ (upY+1)
+         
         if (!PathfindingUtils.isBlockPassable(world, x, YMath.feetFromGround(upY), z)) {
             Block b = world.getBlock(x, YMath.feetFromGround(upY), z);
             if (b == null || b.getBlockHardness(world, x, YMath.feetFromGround(upY), z) < 0) {
-                blocked = true; // РќРµСЂР°Р·СЂСѓС€Р°РµРјС‹Р№
+                blocked = true;  
             } else {
                 breakCount++;
             }
@@ -631,90 +631,90 @@ public class PathFinder {
             return;
         }
         
-        // РЎРѕР·РґР°РµРј СѓР·РµР» РєРѕРїР°РЅРёСЏ Р’Р’Р•Р РҐ
+         
         PathNode next = new PathNode(x, upY, z);
         next.moveType = MovementType.DIG;
         next.breakBlocks = breakCount;
         next.placeBlocks = 0;
-        next.needsJump = true; // РќСѓР¶РЅРѕ РїСЂС‹РіР°С‚СЊ С‡С‚РѕР±С‹ РїРѕРґРЅСЏС‚СЊСЃСЏ
+        next.needsJump = true;  
         out.add(next);
         System.out.println("[DigVertical] CREATED at " + x + "," + upY + "," + z + " with breakCount=" + breakCount);
     }
     
     private void addDigStaircase(PathNode cur, List<PathNode> out) {
-        // Р›Р•РЎРўРќРР¦Рђ: РљРѕРїР°РµРј РІ СЃС‚РѕСЂРѕРЅСѓ + РЅР° СѓСЂРѕРІРµРЅСЊ Р’Р«РЁР•
-        // Р­С‚Рѕ СЂРµС€РµРЅРёРµ РґР»СЏ РІС‹С…РѕРґР° РёР· СЏРј Р±РµР· Р±Р»РѕРєРѕРІ!
-        // РџСЂРёРјРµСЂ: РІ СЏРјРµ РЅР° Y=2, РєРѕРїР°РµРј Р±Р»РѕРє РЅР° Y=3 РІ РЅР°РїСЂР°РІР»РµРЅРёРё X+1
-        //         РЎРѕР·РґР°С‘С‚СЃСЏ РїСЂРѕС…РѕРґ Рё РјРѕР¶РµРј ASCEND РЅР° Y=3
+         
+         
+         
+         
         
         for (int[] d : CARDINAL) {
             int nx = cur.x + d[0];
             int nz = cur.z + d[1];
-            int targetY = cur.y + 1; // РќР° СѓСЂРѕРІРµРЅСЊ РІС‹С€Рµ!
+            int targetY = cur.y + 1;  
             
             if (!world.blockExists(nx, targetY, nz)) {
                 continue;
             }
             
-            // РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ С†РµР»РµРІР°СЏ РїРѕР·РёС†РёСЏ Р—РђР‘Р›РћРљРР РћР’РђРќРђ (РЅСѓР¶РЅРѕ РєРѕРїР°С‚СЊ)
+             
             Block targetFeet = world.getBlock(nx, YMath.feetFromGround(targetY), nz);
             if (PathfindingUtils.isBlockPassable(world, nx, YMath.feetFromGround(targetY), nz)) {
-                // РЈР¶Рµ РїСЂРѕС…РѕРґРёРјРѕ - РЅРµ РЅСѓР¶РЅРѕ РєРѕРїР°С‚СЊ
+                 
                 continue;
             }
             
-            // РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ РјРѕР¶РµРј СЃР»РѕРјР°С‚СЊ
+             
             if (targetFeet == null || targetFeet.getBlockHardness(world, nx, YMath.feetFromGround(targetY), nz) < 0) {
-                continue; // РќРµСЂР°Р·СЂСѓС€Р°РµРјС‹Р№
+                continue;  
             }
             
-            int breakCount = 1; // РњРёРЅРёРјСѓРј 1 Р±Р»РѕРє (РЅРѕРіРё РЅР° targetY)
+            int breakCount = 1;  
             
-            // РџСЂРѕРІРµСЂСЏРµРј РіРѕР»РѕРІСѓ
+             
             Block targetHead = world.getBlock(nx, YMath.headFromGround(targetY), nz);
             if (!PathfindingUtils.isBlockPassable(world, nx, YMath.headFromGround(targetY), nz)) {
                 if (targetHead == null || targetHead.getBlockHardness(world, nx, YMath.headFromGround(targetY), nz) < 0) {
-                    continue; // Р“РѕР»РѕРІР° Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅР° РЅРµСЂР°Р·СЂСѓС€Р°РµРјС‹Рј
+                    continue;  
                 }
                 breakCount++;
             }
             
-            // РџРѕСЃР»Рµ РєРѕРїР°РЅРёСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РјРѕР¶РЅРѕ СЃС‚РѕСЏС‚СЊ
-            // РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ РїРѕРґ С†РµР»РµРІРѕР№ РїРѕР·РёС†РёРµР№ Р±СѓРґРµС‚ С‚РІРµСЂРґС‹Р№ Р±Р»РѕРє
+             
+             
             if (!PathfindingUtils.canStandOn(world, nx, YMath.groundBelow(targetY), nz)) {
                 continue;
             }
             
-            // РЎРѕР·РґР°С‘Рј СѓР·РµР» - РїРѕСЃР»Рµ РєРѕРїР°РЅРёСЏ С‚Р°Рј Р±СѓРґРµС‚ ASCEND РїСѓС‚СЊ!
+             
             PathNode next = new PathNode(nx, targetY, nz);
             next.moveType = MovementType.DIG;
             next.breakBlocks = breakCount;
             next.placeBlocks = 0;
-            next.needsJump = false; // РћР±С‹С‡РЅС‹Р№ ASCEND РїРѕСЃР»Рµ РєРѕРїР°РЅРёСЏ
+            next.needsJump = false;  
             out.add(next);
             System.out.println("[DigStaircase] CREATED stair to " + nx + "," + targetY + "," + nz + " breakCount=" + breakCount);
         }
     }
     
     private void addNeighborsFall(PathNode cur, List<PathNode> out) {
-        // РџРђР”Р•РќРР•: Р•СЃР»Рё РІРЅРёР·Сѓ Р±РµР·РѕРїР°СЃРЅРѕ РїСЂРёР·РµРјР»РёС‚СЊСЃСЏ - СЃРѕР·РґР°С‘Рј FALL СѓР·РµР»
-        // РЎС‚РѕРёРјРѕСЃС‚СЊ = СѓСЂРѕРЅ РѕС‚ РїР°РґРµРЅРёСЏ + РІСЂРµРјСЏ РїР°РґРµРЅРёСЏ
-        // Р’РЎРЃ Р§Р•Р Р•Р— Р’Р•РЎРђ! Р”Р°Р¶Рµ РµСЃР»Рё СѓСЂРѕРЅ Р±РѕР»СЊС€РѕР№, PathFinder РјРѕР¶РµС‚ РІС‹Р±СЂР°С‚СЊ РїР°РґРµРЅРёРµ
+         
+         
+         
         
-        int maxFallCheck = 20; // РџСЂРѕРІРµСЂСЏРµРј РґРѕ 20 Р±Р»РѕРєРѕРІ РІРЅРёР·
+        int maxFallCheck = 20;  
         
         for (int fallDist = 1; fallDist <= maxFallCheck; fallDist++) {
             int landY = cur.y - fallDist;
             
-            if (landY < 1) break; // Р”РЅРѕ РјРёСЂР°
+            if (landY < 1) break;  
             if (!world.blockExists(cur.x, landY, cur.z)) break;
             
-            // РџСЂРѕРІРµСЂСЏРµРј РјРѕР¶РЅРѕ Р»Рё РїСЂРёР·РµРјР»РёС‚СЊСЃСЏ РЅР° СЌС‚РѕР№ РІС‹СЃРѕС‚Рµ
+             
             if (!PathfindingUtils.canStandAt(world, cur.x + 0.5, YMath.feetFromGround(landY) + 0.01, cur.z + 0.5)) {
-                continue; // РќРµР»СЊР·СЏ СЃС‚РѕСЏС‚СЊ, РїСЂРѕРїСѓСЃРєР°РµРј
+                continue;  
             }
             
-            // РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ РєРѕР»РѕРЅРЅР° РјРµР¶РґСѓ cur.y Рё landY СЃРІРѕР±РѕРґРЅР°
+             
             boolean pathClear = true;
             for (int checkY = cur.y; checkY > landY; checkY--) {
                 if (!PathfindingUtils.isBlockPassable(world, cur.x, checkY, cur.z) ||
@@ -726,13 +726,13 @@ public class PathFinder {
             
             if (!pathClear) continue;
             
-            // РџСЂРѕРІРµСЂСЏРµРј Р±РµР·РѕРїР°СЃРЅРѕСЃС‚СЊ РїСЂРёР·РµРјР»РµРЅРёСЏ: РѕРїР°СЃРЅРѕСЃС‚СЊ РѕС†РµРЅРёРІР°РµРј РЅР° СѓСЂРѕРІРЅРµ РЅРѕРі (landY + 1)
+             
             if (PathfindingUtils.isDangerousToStand(world, cur.x, YMath.feetFromGround(landY), cur.z)) {
-                continue; // Р›Р°РІР°/РѕРіРѕРЅСЊ/РєР°РєС‚СѓСЃ
+                continue;  
             }
             
-            // РЎРѕР·РґР°С‘Рј FALL СѓР·РµР» РґР°Р¶Рµ РµСЃР»Рё СѓСЂРѕРЅ Р±СѓРґРµС‚!
-            // РЎС‚РѕРёРјРѕСЃС‚СЊ СЂР°СЃСЃС‡РёС‚Р°РµС‚СЃСЏ РІ movementCost()
+             
+             
             PathNode next = new PathNode(cur.x, landY, cur.z);
             next.moveType = MovementType.FALL;
             next.breakBlocks = 0;
@@ -740,7 +740,7 @@ public class PathFinder {
             next.needsJump = false;
             out.add(next);
             
-            // РќР°С€Р»Рё РїРµСЂРІРѕРµ РјРµСЃС‚Рѕ РґР»СЏ РїСЂРёР·РµРјР»РµРЅРёСЏ - РѕСЃС‚Р°Р»СЊРЅС‹Рµ РЅРµ РЅСѓР¶РЅС‹
+             
             break;
         }
     }
@@ -759,7 +759,7 @@ public class PathFinder {
         boolean fastTraverseOk =
                 PathfindingUtils.canStandOn(world, nx, YMath.groundBelow(baseY), nz)
                         && PathfindingUtils.isSpaceFree(world, nx + 0.5, YMath.feetFromGround(baseY) + 0.01, nz + 0.5)
-                        // РћРїР°СЃРЅРѕСЃС‚СЊ РїСЂРѕРІРµСЂСЏРµРј РЅР° СѓСЂРѕРІРЅРµ РЅРѕРі РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РѕРїРѕСЂС‹
+                         
                         && !PathfindingUtils.isDangerousToStand(world, nx, YMath.feetFromGround(baseY), nz);
 
         if (isStandSafe(nx, baseY, nz) || fastTraverseOk) {
@@ -800,7 +800,7 @@ public class PathFinder {
                         if (this.player != null) {
                             double dmg = PathfindingUtils.estimateFallDamage(drop);
                             if (dmg >= this.player.getHealth()) {
-                                continue; // avoid lethal drop
+                                continue;  
                             }
                         }
                         chosenY = candY;
@@ -817,9 +817,9 @@ public class PathFinder {
 
         if (chosenY == null) return null;
 
-        // Forbid cutting corners on diagonal moves (without impacting parkour).
-        // Require at least one adjacent cardinal cell to be clear at feet+head level
-        // for the target Y. This reduces oscillation between diagonal and parkour paths.
+         
+         
+         
         if (dx != 0 && dz != 0 && type != MovementType.PARKOUR) {
             int adj1x = current.x + dx, adj1z = current.z;
             int adj2x = current.x, adj2z = current.z + dz;
@@ -854,10 +854,10 @@ public class PathFinder {
 
     private boolean isStandSafe(int x, int y, int z) {
         if (y < 1 || y > world.getHeight() + 1) return false;
-        // РћРїР°СЃРЅРѕСЃС‚СЊ РїСЂРѕРІРµСЂСЏРµРј РЅР° СѓСЂРѕРІРЅРµ РЅРѕРі РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РѕРїРѕСЂС‹
+         
         if (PathfindingUtils.isDangerousToStand(world, x, YMath.feetFromGround(y), z)) return false;
-        // РџСЂРѕРІРµСЂСЏРµРј СЃС‚РѕСЏРЅРёРµ СЃ РјРёСЂРѕРІРѕР№ РєРѕРѕСЂРґРёРЅР°С‚РѕР№ РЅРѕРі (y + 0.01),
-        // С‡С‚РѕР±С‹ canStandAt РєРѕСЂСЂРµРєС‚РЅРѕ РѕРїСЂРµРґРµР»СЏР» РѕРїРѕСЂРЅС‹Р№ Р±Р»РѕРє Рё СЃРІРѕР±РѕРґРЅС‹Р№ РѕР±СЉС‘Рј.
+         
+         
         return PathfindingUtils.canStandAt(world, x + 0.5, YMath.feetFromGround(y) + 0.01, z + 0.5);
     }
 
@@ -870,7 +870,7 @@ public class PathFinder {
         final boolean diagonal = (to.x != from.x) && (to.z != from.z);
         double baseTicks;
 
-        // РћС†РµРЅРёРІР°РµРј СЃСЂРµРґСѓ РЅР° СѓСЂРѕРІРЅРµ РЅРѕРі РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РѕРїРѕСЂС‹
+         
         PathfindingUtils.BlockClass feet = blockCache.get(to.x, YMath.feetFromGround(to.y), to.z);
         if (to.moveType == MovementType.SWIM_SURFACE) {
             baseTicks = PathingConfig.TICKS_SWIM_SURFACE;
@@ -901,41 +901,41 @@ public class PathFinder {
             baseTicks *= PathingConfig.DIAGONAL_COST_FACTOR;
         }
 
-        // PILLAR С€С‚СЂР°С„С‹ С‡РµСЂРµР· Р’Р•РЎРђ
+         
         if (to.moveType == MovementType.PILLAR) {
-            // Р•СЃР»Рё СѓР¶Рµ СЂСЏРґРѕРј СЃ С‚РІРµСЂРґРѕР№ РїРѕРІРµСЂС…РЅРѕСЃС‚СЊСЋ - РѕРіСЂРѕРјРЅС‹Р№ С€С‚СЂР°С„ Р·Р° Pillar
-            // PathFinder РІС‹Р±РµСЂРµС‚ ASCEND/TRAVERSE РІРјРµСЃС‚Рѕ СЌС‚РѕРіРѕ
+             
+             
             if (PathfindingUtils.canStandOn(world, to.x, to.y, to.z)) {
-                baseTicks += 10000.0; // РЈР¶Рµ РјРѕР¶РЅРѕ РїСЂС‹РіРЅСѓС‚СЊ РЅР° РїРѕРІРµСЂС…РЅРѕСЃС‚СЊ!
+                baseTicks += 10000.0;  
             }
         }
         
-        // FALL С€С‚СЂР°С„ = СѓСЂРѕРЅ РѕС‚ РїР°РґРµРЅРёСЏ
+         
         if (to.moveType == MovementType.FALL) {
             int fallDistance = from.y - to.y;
             double fallDamage = PathfindingUtils.estimateFallDamage(fallDistance);
             
-            // РџСЂРѕРІРµСЂСЏРµРј Р·РґРѕСЂРѕРІСЊРµ РёРіСЂРѕРєР°
+             
             double playerHealth = player != null ? player.getHealth() : 20.0;
             
             if (fallDamage >= playerHealth) {
-                // РЎРјРµСЂС‚РµР»СЊРЅРѕРµ РїР°РґРµРЅРёРµ - РћР“Р РћРњРќР«Р™ С€С‚СЂР°С„, РЅРѕ РЅРµ infinity
+                 
                 baseTicks += 100000.0 + fallDamage * 1000.0;
             } else {
-                // РЈСЂРѕРЅ РїСЂРёРµРјР»РµРјС‹Р№ - С€С‚СЂР°С„ = СѓСЂРѕРЅ * РєРѕСЌС„С„РёС†РёРµРЅС‚
-                baseTicks += fallDamage * 100.0; // 1 СѓСЂРѕРЅ = 100 С‚РёРєРѕРІ С€С‚СЂР°С„Р°
-                baseTicks += fallDistance * 2.0; // Р’СЂРµРјСЏ РїР°РґРµРЅРёСЏ
+                 
+                baseTicks += fallDamage * 100.0;  
+                baseTicks += fallDistance * 2.0;  
             }
         }
         
         if (to.placeBlocks > 0) {
             baseTicks += PathingConfig.BLOCK_PLACEMENT_PENALTY_TICKS;
             
-            // РЎРРЎРўР•РњРђ Р’Р•РЎРћР’: Р•СЃР»Рё РЅСѓР¶РЅРѕ СЃС‚Р°РІРёС‚СЊ Р±Р»РѕРєРё, РЅРѕ РёС… РќР•Рў - РѕРіСЂРѕРјРЅС‹Р№ С€С‚СЂР°С„
-            // РќРћ РќР• Р‘Р›РћРљРР РЈР•Рњ! PathFinder РјРѕР¶РµС‚ РІС‹Р±СЂР°С‚СЊ СЌС‚Рѕ РµСЃР»Рё РЅРµС‚ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІ
+             
+             
             if (player != null && !hasBlocksInInventory(player)) {
-                baseTicks += 50000.0; // РћРіСЂРѕРјРЅС‹Р№ С€С‚СЂР°С„, РЅРѕ РЅРµ infinity
-                // PathFinder РЅР°Р№РґС‘С‚ DIG Р»РµСЃС‚РЅРёС†Сѓ РµСЃР»Рё РѕРЅР° РґРµС€РµРІР»Рµ
+                baseTicks += 50000.0;  
+                 
             }
         }
         if (to.breakBlocks > 0) {
@@ -990,23 +990,21 @@ public class PathFinder {
         return path;
     }
     
-    /**
-     * РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ Р±Р»РѕРєРѕРІ РІ РёРЅРІРµРЅС‚Р°СЂРµ РёРіСЂРѕРєР° РґР»СЏ СЂР°Р·РјРµС‰РµРЅРёСЏ (Pillar/Bridge)
-     */
+     
     private boolean hasBlocksInInventory(net.minecraft.entity.player.EntityPlayer player) {
         if (player == null || player.inventory == null) {
             return false;
         }
         
-        // РџСЂРѕРІРµСЂСЏРµРј РІСЃРµ СЃР»РѕС‚С‹ РёРЅРІРµРЅС‚Р°СЂСЏ
+         
         for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
             net.minecraft.item.ItemStack stack = player.inventory.getStackInSlot(i);
             if (stack != null && stack.getItem() instanceof net.minecraft.item.ItemBlock) {
-                // РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ СЌС‚Рѕ РѕР±С‹С‡РЅС‹Р№ Р±Р»РѕРє (РЅРµ С„Р°РєРµР», РЅРµ С†РІРµС‚РѕРє Рё С‚.Рґ.)
+                 
                 net.minecraft.item.ItemBlock itemBlock = (net.minecraft.item.ItemBlock) stack.getItem();
-                net.minecraft.block.Block block = itemBlock.field_150939_a; // Block from ItemBlock
+                net.minecraft.block.Block block = itemBlock.field_150939_a;  
                 
-                // РџСЂРѕРІРµСЂСЏРµРј С‡С‚Рѕ Р±Р»РѕРє С‚РІРµСЂРґС‹Р№ Рё РјРѕР¶РЅРѕ РЅР° РЅС‘Рј СЃС‚РѕСЏС‚СЊ
+                 
                 if (block != null && block.isOpaqueCube() && stack.stackSize > 0) {
                     return true;
                 }

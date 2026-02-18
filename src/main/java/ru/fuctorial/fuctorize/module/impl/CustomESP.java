@@ -1,4 +1,4 @@
-// 101. C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\CustomESP.java
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -42,14 +42,14 @@ public class CustomESP extends Module {
     private BooleanSetting filterSettingsButton;
     private BooleanSetting resetButton;
 
-    // Включает проверку NBT. Если выключено - ищет просто по ID/Class.
+     
     private BooleanSetting useFilters;
 
     private SliderSetting range;
     private SliderSetting limit;
     private SliderSetting updateDelay;
 
-    // --- НАСТРОЙКИ НЕЙМТЕГОВ ---
+     
     private BooleanSetting showTags;
     private BooleanSetting tagDistance;
 
@@ -60,13 +60,13 @@ public class CustomESP extends Module {
 
     private enum TargetType { NONE, BLOCK, ENTITY }
 
-    // Карта фильтров (Key -> Value). Только NBT.
+     
     private final Map<String, String> nbtFilterMap = new ConcurrentHashMap<>();
 
     private final List<int[]> cachedBlocks = new CopyOnWriteArrayList<>();
     private long lastBlockUpdate = 0;
 
-    // Список тегов для рендера
+     
     private final List<TagData> espTags = new ArrayList<>();
     private final DecimalFormat df = new DecimalFormat("0.0");
 
@@ -114,7 +114,7 @@ public class CustomESP extends Module {
         limit = new SliderSetting(Lang.get("module.customesp.setting.limit"), 100.0, 10.0, 2000.0, 10.0);
         updateDelay = new SliderSetting("Block Scan Delay (ms)", 500.0, 100.0, 2000.0, 100.0);
 
-        // Settings for Nametags
+         
         showTags = new BooleanSetting(Lang.get("module.customesp.setting.show_tags"), true);
         tagDistance = new BooleanSetting("Tag Distance", true);
 
@@ -176,7 +176,7 @@ public class CustomESP extends Module {
             targetEntityClass = target.getClass();
             currentType = TargetType.ENTITY;
 
-            // Захватываем NBT сущности
+             
             NBTTagCompound nbt = new NBTTagCompound();
             target.writeToNBT(nbt);
             cleanEntityNbt(nbt);
@@ -201,7 +201,7 @@ public class CustomESP extends Module {
             targetBlock = block;
             currentType = TargetType.BLOCK;
 
-            // Если есть TileEntity - берем его NBT
+             
             TileEntity te = mc.theWorld.getTileEntity(mop.blockX, mop.blockY, mop.blockZ);
             if (te != null) {
                 NBTTagCompound nbt = new NBTTagCompound();
@@ -422,7 +422,7 @@ public class CustomESP extends Module {
         client.nameTagRenderer.renderTagList(espTags);
     }
 
-    // --- ЛОГИКА РАСЧЕТА ТЕГОВ ---
+     
 
     private void calculateEntityTag(Entity entity, float partialTicks, int color) {
         double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks;

@@ -4,10 +4,7 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Простой in-memory кэш классификации блоков (AIR/SOLID/WATER/AVOID).
- * Ключ: x,y,z упакованы в long.
- */
+ 
 class SimpleBlockCache {
     private final Map<Long, PathfindingUtils.BlockClass> cache = new HashMap<Long, PathfindingUtils.BlockClass>(8192);
     private final World world;

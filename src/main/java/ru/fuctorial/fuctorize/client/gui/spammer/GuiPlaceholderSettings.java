@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\spammer\GuiPlaceholderSettings.java
+ 
 package ru.fuctorial.fuctorize.client.gui.spammer;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -30,7 +30,7 @@ public class GuiPlaceholderSettings extends GuiScreen {
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
         this.panelWidth = 350;
-        this.panelHeight = 185; // Increased height for the new button
+        this.panelHeight = 185;  
         this.panelX = (this.width - this.panelWidth) / 2;
         this.panelY = (this.height - this.panelHeight) / 2;
 
@@ -47,7 +47,7 @@ public class GuiPlaceholderSettings extends GuiScreen {
         sequenceListField.setText(module.sequenceList.text);
         sequenceListField.setMaxStringLength(1000);
 
-        // --- NEW "Check Files" button ---
+         
         this.buttonList.add(new StyledButton(2, panelX + 10, panelY + 125, fieldWidth, 20, "Проверить файлы"));
 
         int buttonWidth = (panelWidth - 25) / 2;
@@ -62,15 +62,15 @@ public class GuiPlaceholderSettings extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        if (button.id == 0) { // Save
+        if (button.id == 0) {  
             module.randCharset.text = randCharsetField.getText();
             module.sequenceList.text = sequenceListField.getText();
             mc.displayGuiScreen(this.parentScreen);
-        } else if (button.id == 1) { // Back
+        } else if (button.id == 1) {  
             mc.displayGuiScreen(this.parentScreen);
-        } else if (button.id == 2) { // Check Files
-            // This is safe to call from the GUI thread
-            // FIX: Call the method directly on the module instance we already have.
+        } else if (button.id == 2) {  
+             
+             
             this.module.checkFilesAndNotify();
         }
     }
@@ -102,9 +102,9 @@ public class GuiPlaceholderSettings extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        // --- VISUAL BUG FIX: Draw a neutral background instead of the parent GUI ---
+         
         this.drawDefaultBackground();
-        RenderUtils.drawRect(0, 0, this.width, this.height, 0x90000000); // Darken
+        RenderUtils.drawRect(0, 0, this.width, this.height, 0x90000000);  
 
         RenderUtils.drawRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight, Theme.CATEGORY_BG.getRGB());
         RenderUtils.drawRect(panelX - 1, panelY - 1, panelX + panelWidth + 1, panelY, Theme.BORDER.getRGB());

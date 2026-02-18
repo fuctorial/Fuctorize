@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\TeleportSpeed.java
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import net.minecraft.network.play.client.C03PacketPlayer;

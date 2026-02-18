@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\ScreenshotHunter.java
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import net.minecraft.network.play.server.S38PacketPlayerListItem;
@@ -21,7 +21,7 @@ import java.util.TimeZone;
 
 public class ScreenshotHunter extends Module {
 
-    private final long DELAY_MS = 210_000L; // 3.5 минуты
+    private final long DELAY_MS = 210_000L;  
     private long timeOffset = 0;
     private boolean isTimeSynced = false;
 
@@ -69,29 +69,29 @@ public class ScreenshotHunter extends Module {
         if (!(event.getPacket() instanceof S38PacketPlayerListItem)) return;
         S38PacketPlayerListItem packet = (S38PacketPlayerListItem) event.getPacket();
 
-        if (packet.func_149121_d()) { // Player Added
+        if (packet.func_149121_d()) {  
             String name = packet.func_149122_c();
             int ping = packet.func_149120_e();
 
             if (name != null && !name.equals(mc.thePlayer.getCommandSenderName())) {
 
-                // 1. Считаем ТОЧНОЕ время захода на сервер
+                 
                 long now = System.currentTimeMillis();
                 long exactServerTime = isTimeSynced ? (now + timeOffset) : now;
                 int estimatedPing = ping == 0 ? 50 : ping;
                 long joinTime = exactServerTime - (estimatedPing / 2);
 
-                // 2. Добавляем 3.5 минуты (210000 мс)
+                 
                 long targetTime = joinTime + DELAY_MS;
 
-                // 3. Сразу выводим результат
+                 
                 printCalculations(name, targetTime);
             }
         }
     }
 
     private void printCalculations(String name, long targetTime) {
-        // Форматтеры для вывода
+         
         SimpleDateFormat sdfFolder = new SimpleDateFormat("dd-MM-yyyy");
         sdfFolder.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
 
@@ -102,25 +102,25 @@ public class ScreenshotHunter extends Module {
         String expectedTime = sdfTime.format(new Date(targetTime));
         String baseUrl = "https://eye.ex-server.ru//" + dateFolder + "/";
 
-        // === РАСЧЕТЫ ===
+         
 
-        // 1. СЕКУНДА (Hex)
+         
         long seconds = targetTime / 1000L;
         String hexSec = Long.toHexString(seconds);
 
-        // 2. 1/10 СЕКУНДЫ (UniqID Microseconds part)
-        // (millis % 1000) * 1000
+         
+         
         long micro = (targetTime % 1000L) * 1000L;
         String hexMicro = String.format("%05x", micro);
 
-        // Точная ссылка (расчетная)
+         
         String exactLink = baseUrl + hexSec + hexMicro + ".png";
 
-        // 3. ДИАПАЗОН (Range +/- 0.5s)
+         
         String rangeStartID = generateUniqId(targetTime - 500);
         String rangeEndID = generateUniqId(targetTime + 500);
 
-        // === ВЫВОД ===
+         
         ChatUtils.printMessage("§6=============================================");
         ChatUtils.printMessage("§e[Hunter] Target: §f" + name);
         ChatUtils.printMessage("§7Expected Time: §b" + expectedTime + " MSK");
@@ -136,7 +136,7 @@ public class ScreenshotHunter extends Module {
         ChatUtils.printMessage("§73. Exact Link (Prediction):");
         ChatUtils.printMessage("   §n" + exactLink);
 
-        // Авто-копирование ссылки
+         
         net.minecraft.client.gui.GuiScreen.setClipboardString(exactLink);
         ChatUtils.printMessage("§a(Copied to clipboard)");
         ChatUtils.printMessage("§6=============================================");

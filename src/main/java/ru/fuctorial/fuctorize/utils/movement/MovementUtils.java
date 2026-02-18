@@ -12,21 +12,19 @@ public final class MovementUtils {
 
     private MovementUtils() {}
 
-    /**
-     * Плавно поворачивает камеру игрока на ЦЕНТР указанного блока.
-     */
+     
     public static void lookAtBlock(int x, int y, int z) {
         EntityPlayer player = mc.thePlayer;
         if (player == null) return;
 
-        // Целимся ровно в центр блока
+         
         double targetX = x + 0.5D;
         double targetY = y + 0.5D;
         double targetZ = z + 0.5D;
 
-        // --- ФИКС ЗДЕСЬ: Используем posY вместо boundingBox.minY ---
-        // boundingBox может отставать или быть неточным в момент тика.
-        // posY + getEyeHeight() — это стандарт для определения позиции глаз.
+         
+         
+         
         double eyeX = player.posX;
         double eyeY = player.posY + player.getEyeHeight();
         double eyeZ = player.posZ;
@@ -35,19 +33,19 @@ public final class MovementUtils {
         double dy = targetY - eyeY;
         double dz = targetZ - eyeZ;
 
-        // Горизонтальная дистанция
+         
         double dist = Math.sqrt(dx * dx + dz * dz);
 
-        // === РАСЧЕТ УГЛОВ ===
+         
         float yaw = (float) (Math.toDegrees(Math.atan2(dz, dx)) - 90.0);
         float pitch = (float) -Math.toDegrees(Math.atan2(dy, dist));
 
-        // Ограничение углов
+         
         pitch = MathHelper.clamp_float(pitch, -90.0F, 90.0F);
 
-        // Применяем поворот.
-        // Убрали плавность для мгновенной и точной наводки при копании,
-        // так как задержка поворота тоже может вызвать удар "не туда".
+         
+         
+         
         player.rotationYaw = yaw;
         player.rotationYawHead = yaw;
         player.rotationPitch = pitch;
@@ -81,7 +79,7 @@ public final class MovementUtils {
 
     public static void lookAt(Vec3 target) {
         if (target == null || mc.thePlayer == null) return;
-        // Перенаправляем на корректный метод
+         
         lookAtBlock(MathHelper.floor_double(target.xCoord), MathHelper.floor_double(target.yCoord), MathHelper.floor_double(target.zCoord));
     }
 }

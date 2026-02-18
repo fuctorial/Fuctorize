@@ -19,12 +19,12 @@ public class GuiPathNavigator extends GuiScreen {
 
     private GuiTextField xField, yField, zField;
 
-    // Static fields to persist coordinates between GUI opens
+     
     private static String savedX = "0";
     private static String savedY = "64";
     private static String savedZ = "0";
 
-    // Уменьшили высоту панели, чтобы убрать пустоту снизу
+     
     private int panelWidth = 240;
     private int panelHeight = 175;
     private int panelX, panelY;
@@ -45,9 +45,9 @@ public class GuiPathNavigator extends GuiScreen {
         int fieldWidth = panelWidth - 40;
         int fieldHeight = 18;
 
-        // Подняли startY чуть выше
+         
         int startY = panelY + 35;
-        int gap = 24; // Чуть уменьшили отступ между полями
+        int gap = 24;  
 
         this.xField = new GuiTextField(fieldX, startY, fieldWidth, fieldHeight, false);
         this.yField = new GuiTextField(fieldX, startY + gap, fieldWidth, fieldHeight, false);
@@ -62,17 +62,17 @@ public class GuiPathNavigator extends GuiScreen {
         int buttonWidth = 100;
         int buttonGap = 10;
 
-        // Рассчитываем позицию кнопок.
-        // Поле Z заканчивается на (startY + gap*2 + fieldHeight).
-        // Оставляем место под статус (примерно 15px) и рисуем кнопки.
+         
+         
+         
         int row1Y = startY + gap * 2 + fieldHeight + 20;
-        int row2Y = row1Y + 24; // Отступ между рядами кнопок
+        int row2Y = row1Y + 24;  
 
-        // Row 1 (Current Pos, Clipboard)
+         
         this.buttonList.add(new StyledButton(3, panelX + 15, row1Y, buttonWidth, 20, "Current Pos"));
         this.buttonList.add(new StyledButton(4, panelX + 15 + buttonWidth + buttonGap, row1Y, buttonWidth, 20, "Clipboard"));
 
-        // Row 2 (Start/Stop, Close)
+         
         this.buttonList.add(new StyledButton(1, panelX + 15, row2Y, buttonWidth, 20, getStartStopButtonText()));
         this.buttonList.add(new StyledButton(2, panelX + 15 + buttonWidth + buttonGap, row2Y, buttonWidth, 20, "Close"));
     }
@@ -102,17 +102,17 @@ public class GuiPathNavigator extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        if (button.id == 1) { // Start/Stop
+        if (button.id == 1) {  
             handleStartStop();
-        } else if (button.id == 2) { // Close
+        } else if (button.id == 2) {  
             this.mc.displayGuiScreen(previousScreen);
-        } else if (button.id == 3) { // Current Pos
+        } else if (button.id == 3) {  
             if (mc.thePlayer != null) {
                 this.xField.setText(String.valueOf(MathHelper.floor_double(mc.thePlayer.posX)));
                 this.yField.setText(String.valueOf(MathHelper.floor_double(mc.thePlayer.boundingBox.minY)));
                 this.zField.setText(String.valueOf(MathHelper.floor_double(mc.thePlayer.posZ)));
             }
-        } else if (button.id == 4) { // Clipboard
+        } else if (button.id == 4) {  
             String clipboard = GuiScreen.getClipboardString();
             if (clipboard != null && !clipboard.isEmpty()) {
                 parseClipboard(clipboard);
@@ -138,7 +138,7 @@ public class GuiPathNavigator extends GuiScreen {
                 FuctorizeClient.INSTANCE.botNavigator.navigateTo(x, y, z);
                 this.mc.displayGuiScreen(null);
             } catch (NumberFormatException e) {
-                // Handle error
+                 
             }
         }
     }
@@ -153,12 +153,12 @@ public class GuiPathNavigator extends GuiScreen {
     }
 
     private void parseClipboard(String text) {
-        // Заменяем запятые на пробелы для универсальности и сплитим
+         
         String[] parts = text.replace(",", " ").trim().split("\\s+");
 
         try {
             if (parts.length >= 3) {
-                // Если 3 и более чисел - X Y Z
+                 
                 Double.parseDouble(parts[0]);
                 Double.parseDouble(parts[1]);
                 Double.parseDouble(parts[2]);
@@ -167,7 +167,7 @@ public class GuiPathNavigator extends GuiScreen {
                 this.yField.setText(parts[1]);
                 this.zField.setText(parts[2]);
             } else if (parts.length == 2) {
-                // --- ИЗМЕНЕНИЕ 1: Если 2 числа - X и Z, а Y ставим "~"
+                 
                 Double.parseDouble(parts[0]);
                 Double.parseDouble(parts[1]);
 
@@ -176,7 +176,7 @@ public class GuiPathNavigator extends GuiScreen {
                 this.zField.setText(parts[1]);
             }
         } catch (NumberFormatException ignored) {
-            // Если в буфере мусор - ничего не делаем
+             
         }
     }
 
@@ -227,24 +227,24 @@ public class GuiPathNavigator extends GuiScreen {
         CustomFontRenderer titleFont = FuctorizeClient.INSTANCE.fontManager.bold_22;
         CustomFontRenderer regFont = FuctorizeClient.INSTANCE.fontManager.regular_18;
 
-        // Фон
+         
         RenderUtils.drawRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight, Theme.CATEGORY_BG.getRGB());
 
-        // Рамка
+         
         RenderUtils.drawRect(panelX - 1, panelY - 1, panelX + panelWidth + 1, panelY, Theme.BORDER.getRGB());
         RenderUtils.drawRect(panelX - 1, panelY - 1, panelX, panelY + panelHeight + 1, Theme.BORDER.getRGB());
         RenderUtils.drawRect(panelX + panelWidth, panelY - 1, panelX + panelWidth + 1, panelY + panelHeight + 1, Theme.BORDER.getRGB());
         RenderUtils.drawRect(panelX - 1, panelY + panelHeight, panelX + panelWidth + 1, panelY + panelHeight + 1, Theme.BORDER.getRGB());
 
-        // Заголовок
+         
         String title = "Path Navigator";
         float titleWidth = titleFont.getStringWidth(title);
         titleFont.drawString(title, panelX + (panelWidth - titleWidth) / 2f, panelY + 10, Theme.ORANGE.getRGB());
 
-        // Разделитель
+         
         RenderUtils.drawRect(panelX + 10, panelY + 28, panelX + panelWidth - 10, panelY + 29, Theme.DIVIDER.getRGB());
 
-        // Labels X/Y/Z
+         
         float labelX = panelX + 15;
         int labelColor = Theme.TEXT_GRAY.getRGB();
 
@@ -252,28 +252,28 @@ public class GuiPathNavigator extends GuiScreen {
         regFont.drawString("Y:", labelX, yField.yPos + (yField.height - regFont.getHeight()) / 2f, labelColor);
         regFont.drawString("Z:", labelX, zField.yPos + (zField.height - regFont.getHeight()) / 2f, labelColor);
 
-        // Fields
+         
         this.xField.drawTextBox();
         this.yField.drawTextBox();
         this.zField.drawTextBox();
 
-        // --- ИЗМЕНЕНИЕ 2: Улучшенный рендер статуса ---
+         
         if (FuctorizeClient.INSTANCE.botNavigator != null && FuctorizeClient.INSTANCE.botNavigator.isNavigating()) {
             String statusLabel = "Status: ";
             String statusVal = "Navigating...";
 
             float totalW = regFont.getStringWidth(statusLabel + statusVal);
-            // Размещаем ровно между полем Z и кнопками (row1)
-            // Поле Z yPos ~ (panelY + 35 + 24*2) = panelY + 83. Высота 18 -> 101.
-            // Кнопки row1 yPos ~ (startY + 48 + 18 + 20) = panelY + 121.
-            // Середина ~ panelY + 111.
+             
+             
+             
+             
             float statusY = zField.yPos + zField.height + 6;
 
             float startTextX = panelX + (panelWidth - totalW) / 2f;
 
-            // Рисуем "Status:" серым
+             
             regFont.drawString(statusLabel, startTextX, statusY, Theme.TEXT_GRAY.getRGB());
-            // Рисуем "Navigating..." зеленым (но мягким, не кислотным)
+             
             regFont.drawString(statusVal, startTextX + regFont.getStringWidth(statusLabel), statusY, new Color(100, 220, 100).getRGB());
         }
 

@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\RaceTest.java
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -25,8 +25,8 @@ import java.util.concurrent.Executors;
 public class RaceTest extends Module {
 
     public SliderSetting threads;
-    public SliderSetting delay; // Задержка между "забегами" (если включен повтор)
-    public BooleanSetting loop; // Повторять ли тест
+    public SliderSetting delay;  
+    public BooleanSetting loop;  
     public BooleanSetting debug;
 
     private final List<PacketPersistence.SavedPacketData> packetSequence = new ArrayList<>();
@@ -65,10 +65,10 @@ public class RaceTest extends Module {
         if (mc.thePlayer != null) {
             mc.displayGuiScreen(new GuiRaceEditor(this));
         }
-        toggle(); // Модуль выключается, так как работает через GUI
+        toggle();  
     }
 
-    // Вызывается из GUI или по бинду старта
+     
     public void startRace() {
         if (packetSequence.isEmpty()) {
             client.notificationManager.show(new Notification("RaceTest", "Sequence is empty!", Notification.NotificationType.ERROR, 2000L));
@@ -106,8 +106,8 @@ public class RaceTest extends Module {
     }
 
     private void executeRaceBatch(int threadCount) {
-        // 1. Подготавливаем пакеты (преконструируем их в главном потоке или здесь, 
-        // но важно, чтобы они были готовы к отправке)
+         
+         
         List<Packet> packetsToSend = new ArrayList<>();
         for (PacketPersistence.SavedPacketData data : packetSequence) {
             Packet p = PacketPersistence.reconstruct(data);
@@ -116,26 +116,26 @@ public class RaceTest extends Module {
 
         if (packetsToSend.isEmpty()) return;
 
-        // 2. Создаем барьер. +1 для управляющего потока, если нужно, 
-        // но здесь мы просто запускаем N потоков, которые ждут друг друга.
+         
+         
         CyclicBarrier barrier = new CyclicBarrier(threadCount);
 
         for (int i = 0; i < threadCount; i++) {
             executor.submit(() -> {
                 try {
-                    // Ждем, пока все потоки будут готовы
+                     
                     barrier.await();
 
-                    // --- КРИТИЧЕСКАЯ СЕКЦИЯ: ОТПРАВКА ---
+                     
                     for (Packet p : packetsToSend) {
-                        // Клонируем пакет, если это возможно, так как один объект пакета 
-                        // в нескольких потоках может вызвать ConcurrentModificationException при записи в Netty
-                        // Но NetUtils.sendPacket просто кладет в очередь NetHandler'а, который синхронизирован.
-                        // Для настоящего Race Condition лучше бы писать напрямую в канал Netty, 
-                        // но addToSendQueue достаточно для логических рейсов.
+                         
+                         
+                         
+                         
+                         
                         NetUtils.sendPacket(p);
                     }
-                    // -------------------------------------
+                     
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -144,7 +144,7 @@ public class RaceTest extends Module {
         }
 
         if (debug.enabled && mc.thePlayer != null) {
-            // ru.fuctorial.fuctorize.utils.ChatUtils.printMessage("§7[Race] Batch sent.");
+             
         }
     }
 

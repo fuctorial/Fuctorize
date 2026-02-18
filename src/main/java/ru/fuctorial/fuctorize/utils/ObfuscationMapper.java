@@ -7,11 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A utility for converting obfuscated (SRG) field and method names
- * to human-readable (MCP) names by loading CSV mapping files.
- * This class consolidates the functionality of the previous ObfuscationMapper and PacketFieldMapper.
- */
+ 
 public class ObfuscationMapper {
 
     private static final Map<String, String> srgToMcpMap = new HashMap<>();
@@ -22,7 +18,7 @@ public class ObfuscationMapper {
             return;
         }
         System.out.println("Fuctorize/ObfuscationMapper: Loading SRG -> MCP mappings...");
-        // Load fields and methods into a single map
+         
         loadCsv("/assets/fuctorize/mappings/fields.csv");
         loadCsv("/assets/fuctorize/mappings/methods.csv");
         isLoaded = true;
@@ -36,7 +32,7 @@ public class ObfuscationMapper {
                 return;
             }
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-                reader.readLine(); // Skip header
+                reader.readLine();  
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split(",", 3);
@@ -55,11 +51,7 @@ public class ObfuscationMapper {
         }
     }
 
-    /**
-     * Gets the human-readable MCP name for a field or method.
-     * @param srgName The SRG name (e.g., "field_149567_a").
-     * @return The MCP name (e.g., "entityId") or the original SRG name if not found.
-     */
+     
     public static String getMcpName(String srgName) {
         if (!isLoaded) {
             loadMappings();

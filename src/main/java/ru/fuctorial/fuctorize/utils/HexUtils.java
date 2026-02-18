@@ -6,13 +6,13 @@ public class HexUtils {
         if (bytes == null) return "";
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
-            sb.append(String.format("%02X ", b)); // Добавляем пробел для читаемости
+            sb.append(String.format("%02X ", b));  
         }
         return sb.toString().trim();
     }
 
     public static byte[] hexToBytes(String hex) throws IllegalArgumentException {
-        // Удаляем пробелы, переносы строк и прочий мусор, оставляем только HEX символы
+         
         String clean = hex.replaceAll("[^0-9A-Fa-f]", "");
 
         if (clean.length() % 2 != 0) {

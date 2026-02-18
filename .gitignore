@@ -1,11 +1,10 @@
-# Gradle & Build output
+
 .gradle/
 build/
 out/
 bin/
 tmp/
 
-# IDEA / Eclipse (Настройки редактора не нужны в репо)
 .idea/
 *.iml
 *.iws
@@ -15,7 +14,6 @@ tmp/
 .settings/
 .factory/
 
-# Minecraft & MCP (Это всё генерируется при setupDecompWorkspace)
 mcp/
 .mcp/
 minecraft-debug/
@@ -24,23 +22,21 @@ reobf/
 .reobf/
 eclipse/
 
-# Logs & Crash Reports
 logs/
 *.log
 crash-reports/
 screenshots/
 
-# System
 .DS_Store
 Thumbs.db
 
-# Compiled Java files & Jars
 *.class
 *.jar
 *.war
 *.zip
 *.exe
 
-# НО! Оставляем Gradle Wrapper (чтобы другие могли собрать проект)
 !gradle/wrapper/gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.properties
+
+remove_comments.py

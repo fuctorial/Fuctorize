@@ -23,7 +23,7 @@ public class ReflectionUtils {
     private static Field currentGameTypeField;
 
     static {
-        // --- Initialization for Movement/Render ---
+         
         try {
             landMovementFactorField = ReflectionHelper.findField(EntityLivingBase.class, "landMovementFactor", "field_70741_aB");
             landMovementFactorField.setAccessible(true);
@@ -37,7 +37,7 @@ public class ReflectionUtils {
             System.err.println("Fuctorize/Reflection: Failed to find 'jumpMovementFactor' field!");
         }
 
-        // --- Initialization for NoWeb ---
+         
         try {
             isInWebField = ReflectionHelper.findField(Entity.class, "isInWeb", "field_70134_J");
             isInWebField.setAccessible(true);
@@ -45,7 +45,7 @@ public class ReflectionUtils {
             System.err.println("Fuctorize/Reflection: Failed to find 'isInWeb' field!");
         }
 
-        // --- Initialization for CustomNPCs ---
+         
         try {
             serverClass = Class.forName("noppes.npcs.Server");
             fillBufferMethod = serverClass.getDeclaredMethod("fillBuffer", ByteBuf.class, Enum.class, Object[].class);
@@ -57,7 +57,7 @@ public class ReflectionUtils {
             fillBufferMethod = null;
         }
 
-        // --- Initialization for manual packet processing ---
+         
         try {
             channelRead0Method = NetworkManager.class.getDeclaredMethod("channelRead0", ChannelHandlerContext.class, Packet.class);
             channelRead0Method.setAccessible(true);
@@ -66,9 +66,9 @@ public class ReflectionUtils {
             System.err.println("Fuctorize/Reflection: CRITICAL - Could not find 'channelRead0' in NetworkManager. Receiving packets manually will not work.");
         }
 
-        // NEW: Initialization for PlayerControllerMP.currentGameType
+         
         try {
-            // SRG name for currentGameType is 'field_78779_k'. MCP name is 'currentGameType'.
+             
             currentGameTypeField = ReflectionHelper.findField(net.minecraft.client.multiplayer.PlayerControllerMP.class, "currentGameType", "field_78779_k");
             currentGameTypeField.setAccessible(true);
             System.out.println("Fuctorize/Reflection: Successfully reflected PlayerControllerMP.currentGameType field!");
@@ -81,24 +81,20 @@ public class ReflectionUtils {
         if (landMovementFactorField != null) {
             try {
                 landMovementFactorField.setFloat(entity, value);
-            } catch (IllegalAccessException e) { /* ignore */ }
+            } catch (IllegalAccessException e) {   }
         }
     }
 
-    /**
-     * Safely gets the current GameType from PlayerControllerMP using reflection.
-     * @param controller The PlayerControllerMP instance.
-     * @return The current GameType, or SURVIVAL as a fallback on failure.
-     */
+     
     public static net.minecraft.world.WorldSettings.GameType getCurrentGameType(net.minecraft.client.multiplayer.PlayerControllerMP controller) {
         if (currentGameTypeField != null) {
             try {
                 return (net.minecraft.world.WorldSettings.GameType) currentGameTypeField.get(controller);
             } catch (Exception e) {
-                // Fallback in case of a reflection error
+                 
             }
         }
-        // A reasonable default if reflection fails
+         
         return net.minecraft.world.WorldSettings.GameType.SURVIVAL;
     }
 
@@ -106,21 +102,17 @@ public class ReflectionUtils {
         if (jumpMovementFactorField != null) {
             try {
                 jumpMovementFactorField.setFloat(entity, value);
-            } catch (IllegalAccessException e) { /* ignore */ }
+            } catch (IllegalAccessException e) {   }
         }
     }
 
-    /**
-     * Safely sets the value of the 'isInWeb' flag for any entity via reflection.
-     * @param entity The entity for which to change the flag.
-     * @param value The new value of the flag (true or false).
-     */
+     
     public static void setInWeb(Entity entity, boolean value) {
         if (isInWebField != null) {
             try {
                 isInWebField.setBoolean(entity, value);
             } catch (IllegalAccessException e) {
-                // This error is unlikely since we use setAccessible(true)
+                 
             }
         }
     }

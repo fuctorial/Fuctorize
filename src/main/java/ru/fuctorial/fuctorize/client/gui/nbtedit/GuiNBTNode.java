@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\nbtedit\GuiNBTNode.java
+ 
 package ru.fuctorial.fuctorize.client.gui.nbtedit;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -51,17 +51,17 @@ public class GuiNBTNode extends Gui {
 
         drawTagMarker(this.x + 5, currentY);
 
-        // FUNDAMENTAL FIX: The GUI node now intelligently formats the display string.
-        // It separates the name and value for clarity.
+         
+         
         String name = node.getObject().getName();
         String valueStr = NBTStringHelper.toString(node.getObject().getNBT());
 
         String displayString;
         if (name == null || name.isEmpty()) {
-            // Element in a list (no name), just show the value.
+             
             displayString = EnumChatFormatting.WHITE + valueStr;
         } else {
-            // Element in a compound (has a name), show name: value.
+             
             displayString = name + ": " + EnumChatFormatting.WHITE + valueStr;
         }
 

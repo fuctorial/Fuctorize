@@ -1,4 +1,4 @@
-// Файл: C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\clickgui\Frame.java
+ 
 package ru.fuctorial.fuctorize.client.gui.clickgui;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -21,7 +21,7 @@ public class Frame extends AbstractFrame {
     private ModuleComponent bindingComponent = null;
     private ModuleComponent hoveredComponent = null;
 
-    // --- ИСПРАВЛЕНИЕ: Выносим константы отступов в поля класса для удобства ---
+     
     private static final int CONTENT_PADDING_X = 10;
     private static final int CONTENT_PADDING_Y = 4;
     private static final int COMPONENT_SPACING_Y = 2;
@@ -32,9 +32,9 @@ public class Frame extends AbstractFrame {
 
     @Override
     public void setup() {
-        // --- ИСПРАВЛЕНИЕ: Вся логика расчета размеров и создания кнопок теперь находится ЗДЕСЬ, и выполняется ОДИН РАЗ ---
+         
         if (FuctorizeClient.INSTANCE.fontManager == null || !FuctorizeClient.INSTANCE.fontManager.isReady()) {
-            return; // Не можем ничего рассчитать без шрифтов
+            return;  
         }
 
         if (categoryButtons.isEmpty()) {
@@ -43,10 +43,10 @@ public class Frame extends AbstractFrame {
             final int PADDING_VERTICAL = 4;
             final int PADDING_HORIZONTAL = 10;
 
-            // 1. Рассчитываем высоту заголовка
+             
             this.titleBarHeight = titleFont.getHeight() + PADDING_VERTICAL * 2;
 
-            // 2. Рассчитываем ширину панели категорий
+             
             int maxCategoryWidth = 0;
             for (Category cat : Category.values()) {
                 int currentWidth = categoryFont.getStringWidth(cat.getDisplayName());
@@ -56,16 +56,16 @@ public class Frame extends AbstractFrame {
             }
             this.categoryPanelWidth = maxCategoryWidth + PADDING_HORIZONTAL * 2;
 
-            // 3. Создаем кнопки категорий с адаптивной высотой и рассчитанной шириной
+             
             int categoryButtonHeight = categoryFont.getHeight() + PADDING_VERTICAL * 2;
             for (Category cat : Category.values()) {
-                // Y-координата будет установлена динамически в drawScreen, здесь можно оставить 0
+                 
                 CategoryComponent comp = new CategoryComponent(cat, this, 0, 0, categoryPanelWidth, categoryButtonHeight);
                 categoryButtons.add(comp);
             }
         }
 
-        // Эта логика остается без изменений
+         
         if (this.currentCategory == null) {
             setCurrentCategory(Category.COMBAT);
         } else {
@@ -79,7 +79,7 @@ public class Frame extends AbstractFrame {
     public void setCurrentCategory(Object category) {
         if (category instanceof Category) {
             this.currentCategory = category;
-            // Reset scroll only when user explicitly changes category
+             
             this.scrollY = 0;
             setupComponentsForCategory((Category) category);
         }
@@ -87,18 +87,18 @@ public class Frame extends AbstractFrame {
 
     public void setupComponentsForCategory(Category category) {
         this.components.clear();
-        // --- ИЗМЕНЕНИЕ 1: Определяем отступы как константы ---
+         
         int modX = categoryPanelWidth + CONTENT_PADDING_X;
         int modWidth = width - categoryPanelWidth - (CONTENT_PADDING_X * 2);
 
-        // --- ИЗМЕНЕНИЕ 2: Удаляем жестко заданные высоты ---
-        // int compHeight = 16;
-        // int settingHeight = 15;
-        // int separatorHeight = 8;
-        // int colorPickerHeight = 80;
+         
+         
+         
+         
+         
 
         for (Module module : FuctorizeClient.INSTANCE.moduleManager.getModulesInCategory(category)) {
-            // Передаем 0 в качестве высоты, компонент определит ее сам
+             
             components.add(new ModuleComponent(module, this, modX, 0, modWidth, 0));
             for (Setting setting : module.getSettings()) {
                 if (setting instanceof SeparatorSetting)
@@ -114,7 +114,7 @@ public class Frame extends AbstractFrame {
                 else if (setting instanceof ColorSetting) {
                     ColorSetting cs = (ColorSetting) setting;
                     components.add(new ColorComponent(cs, this, modX, 0, modWidth, 0));
-                    // Для сложных компонентов, как ColorPicker, можно оставить высоту или сделать ее адаптивной
+                     
                     components.add(new ColorPickerComponent(cs, this, modX, 0, modWidth, 80));
                 }
             }
@@ -135,7 +135,7 @@ public class Frame extends AbstractFrame {
     public void drawScreen(int mouseX, int mouseY) {
         hoveredComponent = null;
         if (FuctorizeClient.INSTANCE.fontManager == null || !FuctorizeClient.INSTANCE.fontManager.isReady()) {
-            // Базовая отрисовка, если шрифты еще не загружены
+             
             Gui.drawRect(x, y, x + width, y + height, Theme.CATEGORY_BG.getRGB());
             Gui.drawRect(x + categoryPanelWidth + 1, y + titleBarHeight, x + width, y + height, Theme.MAIN_BG.getRGB());
             return;
@@ -146,22 +146,22 @@ public class Frame extends AbstractFrame {
             y = mouseY - dragY;
         }
 
-        // Clamp scroll to new bounds in case resolution changed while GUI is open
+         
         clampScrollToBounds();
 
-        // --- ОТРИСОВКА ФОНОВ ---
+         
         Gui.drawRect(x, y, x + width, y + titleBarHeight, Theme.CATEGORY_BG.getRGB());
         Gui.drawRect(x, y + titleBarHeight, x + categoryPanelWidth, y + height, Theme.CATEGORY_BG.getRGB());
         Gui.drawRect(x + categoryPanelWidth, y + titleBarHeight, x + width, y + height, Theme.MAIN_BG.getRGB());
 
-        // --- ОТРИСОВКА ЗАГОЛОВКА ---
+         
         CustomFontRenderer titleFont = FuctorizeClient.INSTANCE.fontManager.bold_22;
         float titleWidth = titleFont.getStringWidth(this.title);
         float titleX = this.x + (this.width - titleWidth) / 2f;
         float titleY = this.y + (titleBarHeight / 2f) - (titleFont.getHeight() / 2f);
         titleFont.drawString(this.title, titleX, titleY + 1, Theme.TEXT_WHITE.getRGB());
 
-        // --- ИСПРАВЛЕНИЕ: Динамически устанавливаем Y для кнопок категорий и рисуем их ---
+         
         int categoryY = titleBarHeight;
         for (CategoryComponent c : categoryButtons) {
             c.y = categoryY;
@@ -169,16 +169,16 @@ public class Frame extends AbstractFrame {
             categoryY += c.height;
         }
 
-        // --- Рендер основной панели с модулями и настройками ---
+         
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         setupScissorBox();
         GL11.glTranslatef(0, scrollY, 0);
 
-        // --- ИЗМЕНЕНИЕ ЗДЕСЬ ---
-        // Было: int layoutY = titleBarHeight + CONTENT_PADDING_Y;
-        // Стало:
-        int layoutY = titleBarHeight; // Убрали отступ, чтобы 1-й модуль был на уровне 1-й категории
+         
+         
+         
+        int layoutY = titleBarHeight;  
         for (Component component : components) {
             component.y = layoutY;
 
@@ -197,7 +197,7 @@ public class Frame extends AbstractFrame {
                     hoveredComponent = (ModuleComponent) component;
                 }
 
-                // Используем адаптивную высоту компонента и константу отступа
+                 
                 if (component.getSetting() != null && !(component instanceof ModuleComponent)) {
                     layoutY += (int) ((component.height + COMPONENT_SPACING_Y) * animFactor);
                 } else {
@@ -209,7 +209,7 @@ public class Frame extends AbstractFrame {
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
         GL11.glPopMatrix();
 
-        // --- Рендер рамки и подсказок ---
+         
         Gui.drawRect(x - 1, y - 1, x + width + 1, y, Theme.BORDER.getRGB());
         Gui.drawRect(x - 1, y, x, y + height + 1, Theme.BORDER.getRGB());
         Gui.drawRect(x + width, y, x + width + 1, y + height + 1, Theme.BORDER.getRGB());
@@ -219,10 +219,7 @@ public class Frame extends AbstractFrame {
         }
     }
 
-    /**
-     * Adjust scroll to valid range based on current content size.
-     * Call this after any size/scale change.
-     */
+     
     private void clampScrollToBounds() {
         int contentHeight = height - titleBarHeight;
         int totalComponentHeight = getTotalContentHeight();
@@ -232,15 +229,12 @@ public class Frame extends AbstractFrame {
         if (scrollY < -maxScroll) scrollY = -maxScroll;
     }
 
-    /**
-     * Called when the frame is resized (e.g., user changes resolution while GUI is open).
-     * Tries to preserve the viewport by compensating scroll for the change in visible content height.
-     */
+     
     public void onResized(int oldWidth, int oldHeight, int newWidth, int newHeight) {
         int oldContent = oldHeight - titleBarHeight;
         int newContent = newHeight - titleBarHeight;
         int delta = newContent - oldContent;
-        // Shift scroll by the increase in visible area to keep content aligned
+         
         this.scrollY += delta;
         clampScrollToBounds();
     }
@@ -441,7 +435,7 @@ public class Frame extends AbstractFrame {
                     if (c instanceof ColorPickerComponent)
                         animFactor = ((ColorSetting) c.getSetting()).animation.getAnimationFactor();
                 }
-                h += (int) ((c.height + COMPONENT_SPACING_Y) * animFactor); // Используем константу
+                h += (int) ((c.height + COMPONENT_SPACING_Y) * animFactor);  
             }
         }
         return h;

@@ -59,7 +59,7 @@ public class PlayerUtils {
             if (world.blockExists(x, y, z)) {
                 Block block = world.getBlock(x, y, z);
                 if (block != null && !(block instanceof BlockAir)) {
-                    // Возвращаем точный MOP до этой точки
+                     
                     return mc.theWorld.rayTraceBlocks(playerPos, currentPos, false);
                 }
             }
@@ -79,11 +79,7 @@ public class PlayerUtils {
         if (mc.theWorld == null) return null;
         return mc.theWorld.getBlock(x, y, z);
     }
-    /**
-     * Выполняет трассировку луча для поиска сущности на заданной дистанции.
-     * @param range Дистанция поиска.
-     * @return Найденная сущность (EntityLivingBase) или null.
-     */
+     
     public static EntityLivingBase getTarget(double range) {
         if (mc.theWorld == null || mc.renderViewEntity == null) {
             return null;
@@ -97,7 +93,7 @@ public class PlayerUtils {
         }
         EntityLivingBase livingViewer = (EntityLivingBase) viewer;
 
-        // FIX: Calculate eye position correctly by adding eye height to the entity's Y position.
+         
         Vec3 eyesPos = Vec3.createVectorHelper(livingViewer.posX, livingViewer.posY + livingViewer.getEyeHeight(), livingViewer.posZ);
 
         Vec3 lookVec = livingViewer.getLook(1.0F);
@@ -126,18 +122,14 @@ public class PlayerUtils {
         return target;
     }
 
-    /**
-     * Проверяет, сфокусировано ли в данный момент какое-либо поле ввода на экране.
-     * Работает как для стандартных GuiTextField, так и для кастомных полей ввода Fuctorize.
-     * @return true, если игрок печатает в текстовом поле.
-     */
+     
     public static boolean isAnyTextFieldFocused() {
         GuiScreen currentScreen = mc.currentScreen;
         if (currentScreen == null) {
             return false;
         }
 
-        // Проверяем поля текущего экрана и всех его родительских классов
+         
         Class<?> screenClass = currentScreen.getClass();
         while (screenClass != null && screenClass != Object.class) {
             for (Field field : screenClass.getDeclaredFields()) {
@@ -145,20 +137,20 @@ public class PlayerUtils {
                     field.setAccessible(true);
                     Object fieldValue = field.get(currentScreen);
 
-                    // Проверка на ванильный GuiTextField
+                     
                     if (fieldValue instanceof net.minecraft.client.gui.GuiTextField) {
                         if (((net.minecraft.client.gui.GuiTextField) fieldValue).isFocused()) {
                             return true;
                         }
                     }
-                    // Проверка на наш кастомный GuiTextField
+                     
                     if (fieldValue instanceof ru.fuctorial.fuctorize.client.gui.nbtedit.GuiTextField) {
                         if (((ru.fuctorial.fuctorize.client.gui.nbtedit.GuiTextField) fieldValue).isFocused()) {
                             return true;
                         }
                     }
                 } catch (Exception e) {
-                    // Игнорируем ошибки доступа
+                     
                 }
             }
             screenClass = screenClass.getSuperclass();

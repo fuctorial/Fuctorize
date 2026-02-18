@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\smartmoving\EditorFrame.java
+ 
 package ru.fuctorial.fuctorize.client.gui.smartmoving;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -24,7 +24,7 @@ public class EditorFrame extends AbstractFrame {
 
     @Override
     public void setup() {
-        // Setup is handled dynamically by the parent GuiScreen
+         
     }
 
 
@@ -46,7 +46,7 @@ public class EditorFrame extends AbstractFrame {
         Gui.drawRect(x + categoryPanelWidth, y + titleBarHeight, x + categoryPanelWidth + 1, y + height, Theme.DIVIDER.getRGB());
 
         GL11.glPushMatrix();
-        setupContentScissorBox(); // This also enables scissor test
+        setupContentScissorBox();  
         GL11.glTranslatef(0, scrollY, 0);
 
         int currentY = titleBarHeight + 4;
@@ -66,8 +66,8 @@ public class EditorFrame extends AbstractFrame {
     }
     @Override
     public boolean isAnyTextFieldFocused() {
-        // The PlayerUtils.isAnyTextFieldFocused() will handle the GuiTextFields
-        // inside SmartMovingPropertyComponent via reflection, so we can return false here.
+         
+         
         return false;
     }
 
@@ -120,7 +120,7 @@ public class EditorFrame extends AbstractFrame {
             isDragging = true;
             dragX = mouseX - x;
             dragY = mouseY - y;
-            // Если начали тащить окно, тоже сбрасываем фокусы
+             
             for (Component c : components) {
                 if (c instanceof SmartMovingPropertyComponent) {
                     ((SmartMovingPropertyComponent) c).clearFocus();
@@ -132,19 +132,19 @@ public class EditorFrame extends AbstractFrame {
         if (mouseX > x + categoryPanelWidth) {
             int adjustedMouseY = mouseY - scrollY;
 
-            // --- ФИКС: Сначала сбрасываем фокус у ВСЕХ полей ---
-            // Это гарантирует, что если мы кликнули в пустоту или по другому полю, старое погаснет.
+             
+             
             for (Component c : components) {
                 if (c instanceof SmartMovingPropertyComponent) {
                     ((SmartMovingPropertyComponent) c).clearFocus();
                 }
             }
 
-            // --- Теперь обрабатываем клик ---
+             
             for (Component c : components) {
                 if (c.isMouseOver(mouseX, adjustedMouseY)) {
-                    // Компонент сам включит фокус обратно внутри своего mouseClicked,
-                    // если клик пришелся по его текстовому полю (благодаря фиксу №1)
+                     
+                     
                     c.mouseClicked(mouseX, adjustedMouseY, mouseButton);
                     break;
                 }

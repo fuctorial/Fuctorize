@@ -23,10 +23,10 @@ public class Crosshair extends Module {
 
     private BooleanSetting outline;
     private BooleanSetting dot;
-    private BooleanSetting tShape; // Убирает верхнюю палочку (как в CS)
-    private SliderSetting size;   // Длина линий
-    private SliderSetting width;  // Толщина линий
-    private SliderSetting gap;    // Отступ от центра
+    private BooleanSetting tShape;  
+    private SliderSetting size;    
+    private SliderSetting width;   
+    private SliderSetting gap;     
 
     public Crosshair(FuctorizeClient client) {
         super(client);
@@ -36,7 +36,7 @@ public class Crosshair extends Module {
     public void init() {
         setMetadata("crosshair", Lang.get("module.crosshair.name"), Category.RENDER);
 
-        //color = new ColorSetting(Lang.get("module.crosshair.setting.color"), new Color(0, 255, 0));
+         
         outline = new BooleanSetting(Lang.get("module.crosshair.setting.outline"), true);
         dot = new BooleanSetting(Lang.get("module.crosshair.setting.dot"), false);
         tShape = new BooleanSetting(Lang.get("module.crosshair.setting.t_shape"), false);
@@ -45,7 +45,7 @@ public class Crosshair extends Module {
         width = new SliderSetting(Lang.get("module.crosshair.setting.width"), 1.0, 0.5, 10.0, 0.5);
         gap = new SliderSetting(Lang.get("module.crosshair.setting.gap"), 2.0, 0.0, 20.0, 0.5);
 
-        //addSetting(color);
+         
         addSetting(size);
         addSetting(width);
         addSetting(gap);
@@ -62,7 +62,7 @@ public class Crosshair extends Module {
 
     @Override
     public void onEnable() {
-        // Регистрируемся в шине событий, чтобы ловить RenderGameOverlayEvent.Pre
+         
         ModContainerHelper.runWithFuctorizeContainer(() -> MinecraftForge.EVENT_BUS.register(this));
     }
 
@@ -71,9 +71,7 @@ public class Crosshair extends Module {
         ModContainerHelper.runWithFuctorizeContainer(() -> MinecraftForge.EVENT_BUS.unregister(this));
     }
 
-    /**
-     * Отменяем рендер ванильного прицела.
-     */
+     
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Pre event) {
         if (event.type == RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
@@ -81,12 +79,10 @@ public class Crosshair extends Module {
         }
     }
 
-    /**
-     * Рисуем наш прицел.
-     */
+     
     @Override
     public void onRender2D(RenderGameOverlayEvent.Text event) {
-        if (mc.gameSettings.thirdPersonView != 0) return; // Не рисуем от 3-го лица
+        if (mc.gameSettings.thirdPersonView != 0) return;  
 
         ScaledResolution sr = event.resolution;
         float cx = sr.getScaledWidth() / 2.0f;
@@ -98,7 +94,7 @@ public class Crosshair extends Module {
         int mainColor = Colors.crosshairColor.getColor();
         int outlineColor = Color.BLACK.getRGB();
 
-        // 1. Рисуем точку (Dot)
+         
         if (dot.enabled) {
             if (outline.enabled) {
                 drawBorderedRect(cx - thick / 2, cy - thick / 2, thick, thick, 1.0f, outlineColor, mainColor);
@@ -107,50 +103,48 @@ public class Crosshair extends Module {
             }
         }
 
-        // 2. Рисуем линии
-        // Верхняя
+         
+         
         if (!tShape.enabled) {
             drawClippedLine(cx, cy, 0, -1, dist, len, thick, mainColor, outline.enabled);
         }
-        // Нижняя
+         
         drawClippedLine(cx, cy, 0, 1, dist, len, thick, mainColor, outline.enabled);
-        // Левая
+         
         drawClippedLine(cx, cy, -1, 0, dist, len, thick, mainColor, outline.enabled);
-        // Правая
+         
         drawClippedLine(cx, cy, 1, 0, dist, len, thick, mainColor, outline.enabled);
     }
 
-    /**
-     * Рисует одну линию прицела с учетом обводки.
-     */
+     
     private void drawClippedLine(float cx, float cy, int xDir, int yDir, float gap, float length, float thickness, int color, boolean outline) {
-        // Вычисляем координаты
+         
         float xStart = cx + (xDir * gap) - (yDir != 0 ? thickness / 2 : 0);
         float yStart = cy + (yDir * gap) - (xDir != 0 ? thickness / 2 : 0);
 
         float w, h;
 
-        if (xDir != 0) { // Горизонтальная линия
+        if (xDir != 0) {  
             w = length;
             h = thickness;
-            // Коррекция направления для отрисовки влево
+             
             if (xDir < 0) xStart -= length;
-        } else { // Вертикальная линия
+        } else {  
             w = thickness;
             h = length;
-            // Коррекция направления для отрисовки вверх
+             
             if (yDir < 0) yStart -= length;
         }
 
         if (outline) {
-            // Рисуем черную подложку (обводку) на 0.5-1 пиксель шире
+             
             RenderUtils.drawRect(xStart - 1f, yStart - 1f, xStart + w + 1f, yStart + h + 1f, Color.BLACK.getRGB());
         }
 
         RenderUtils.drawRect(xStart, yStart, xStart + w, yStart + h, color);
     }
 
-    // Хелпер для точки с обводкой
+     
     private void drawBorderedRect(float x, float y, float width, float height, float lineW, int borderColor, int insideColor) {
         RenderUtils.drawRect(x - lineW, y - lineW, x + width + lineW, y + height + lineW, borderColor);
         RenderUtils.drawRect(x, y, x + width, y + height, insideColor);

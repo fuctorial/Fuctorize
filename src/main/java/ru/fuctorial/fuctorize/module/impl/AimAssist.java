@@ -53,7 +53,7 @@ public class AimAssist extends Module {
     public void init() {
         setMetadata("aimassist", Lang.get("module.aimassist.name"), Category.COMBAT);
 
-        range = new SliderSetting(Lang.get("module.aimassist.setting.range"), 6.0, 1.0, 128.0, 0.5); // Уменьшил дефолт для легита
+        range = new SliderSetting(Lang.get("module.aimassist.setting.range"), 6.0, 1.0, 128.0, 0.5);  
         fov = new SliderSetting(Lang.get("module.aimassist.setting.fov"), 60.0, 5.0, 180.0, 5.0);
         speed = new SliderSetting(Lang.get("module.aimassist.setting.speed"), 6.0, 1.0, 40.0, 0.5);
         hitChance = new SliderSetting(Lang.get("module.aimassist.setting.hitchance"), 100.0, 1.0, 100.0, 1.0);
@@ -89,21 +89,21 @@ public class AimAssist extends Module {
         if (mc.thePlayer == null || mc.theWorld == null) return;
         if (mc.currentScreen != null) return;
 
-        // 1. Проверка клика
+         
         if (clickOnly.enabled && !Mouse.isButtonDown(0)) {
             return;
         }
 
 
-        // 3. Поиск цели
+         
         EntityLivingBase target = getBestTarget(range.value, fov.value);
         if (target == null) return;
 
-        // --- УДАЛЕНО: Проверка mc.objectMouseOver ---
-        // Раньше тут был код, который выключал аим, если прицел уже на сущности.
-        // Это мешало доводке до центра хитбокса. Теперь аим работает всегда, пока цель в FOV.
+         
+         
+         
 
-        // 4. Логика Шанса
+         
         if (System.currentTimeMillis() - lastChanceCheck > CHANCE_RESET_DELAY_MS) {
             isAssistAllowed = (random.nextInt(100) < hitChance.value);
             lastChanceCheck = System.currentTimeMillis();
@@ -113,7 +113,7 @@ public class AimAssist extends Module {
             return;
         }
 
-        // 5. Доводка
+         
         aimAt(target);
     }
 
@@ -125,7 +125,7 @@ public class AimAssist extends Module {
         float currentYaw = mc.thePlayer.rotationYaw;
         float currentPitch = mc.thePlayer.rotationPitch;
 
-        // Нормализуем разницу углов
+         
         float yawDiff = MathHelper.wrapAngleTo180_float(targetYaw - currentYaw);
         float pitchDiff = MathHelper.wrapAngleTo180_float(targetPitch - currentPitch);
 
@@ -133,14 +133,14 @@ public class AimAssist extends Module {
         float randomSpeedFactor = 0.9f + (random.nextFloat() * 0.2f);
         maxStep *= randomSpeedFactor;
 
-        // Ограничиваем скорость поворота
+         
         float yawChange = MathHelper.clamp_float(yawDiff, -maxStep, maxStep);
         float pitchChange = MathHelper.clamp_float(pitchDiff, -maxStep, maxStep);
 
         mc.thePlayer.rotationYaw += yawChange;
         mc.thePlayer.rotationPitch += pitchChange;
 
-        // Небольшое дрожание для реализма
+         
         float jitter = 0.05f;
         if (Math.abs(yawDiff) > maxStep || Math.abs(pitchDiff) > maxStep) {
             mc.thePlayer.rotationYaw += (random.nextFloat() - 0.5f) * jitter;
@@ -162,10 +162,10 @@ public class AimAssist extends Module {
             float yawDiff = MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationYaw - rotations[0]);
             float pitchDiff = MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationPitch - rotations[1]);
 
-            // Считаем общее расстояние от центра прицела до цели
+             
             double angleDist = Math.sqrt(yawDiff * yawDiff + pitchDiff * pitchDiff);
 
-            // fovVal/2, так как FOV считается от центра в обе стороны (60 FOV = 30 влево, 30 вправо)
+             
             if (angleDist <= (fovVal / 2.0) && angleDist < minAngle) {
                 minAngle = angleDist;
                 bestTarget = entity;
@@ -178,15 +178,15 @@ public class AimAssist extends Module {
         if (entity == mc.thePlayer) return false;
         if (entity.isDead || entity.getHealth() <= 0) return false;
 
-        // Проверка дистанции
+         
         if (mc.thePlayer.getDistanceToEntity(entity) > rangeVal) return false;
 
-        // Проверка видимости
+         
         if (rayTraceCheck.enabled && !mc.thePlayer.canEntityBeSeen(entity)) return false;
 
-        // Проверка типа сущности
+         
         if (entity instanceof EntityPlayer) {
-            // Игнорируем фейкового игрока из FreeCam
+             
             if (entity.getEntityId() == -100) return false;
             return players.enabled;
         }
@@ -201,7 +201,7 @@ public class AimAssist extends Module {
         double diffX = entity.posX - mc.thePlayer.posX;
         double diffZ = entity.posZ - mc.thePlayer.posZ;
 
-        // Целимся не в ноги, а чуть ниже глаз (грудь/шея) - это оптимально для PvP
+         
         double entityEyeY = entity.posY + entity.getEyeHeight();
         double myEyeY = mc.thePlayer.posY + mc.thePlayer.getEyeHeight();
         double diffY = (entity.posY + (entity.getEyeHeight() * 0.75)) - myEyeY;

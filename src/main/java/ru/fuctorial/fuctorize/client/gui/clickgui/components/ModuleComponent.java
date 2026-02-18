@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\clickgui\components\ModuleComponent.java
+ 
 package ru.fuctorial.fuctorize.client.gui.clickgui.components;
 
 import ru.fuctorial.fuctorize.client.gui.clickgui.AbstractFrame;
@@ -17,15 +17,15 @@ public class ModuleComponent extends Component {
         super(parent, x, y, width, height);
         this.module = module;
 
-        // --- ИЗМЕНЕНИЕ ЗДЕСЬ ---
-        // Было VERTICAL_PADDING * 3. Меняем на * 2, чтобы высота была
-        // такой же, как у категорий и настроек (Slider, Checkbox и т.д.)
+         
+         
+         
         if (getFont() != null) {
             this.height = getFont().getHeight() + VERTICAL_PADDING * 2;
         } else {
-            this.height = 18; // Чуть уменьшили запасное значение
+            this.height = 18;  
         }
-        // --- КОНЕЦ ИЗМЕНЕНИЯ ---
+         
     }
 
     @Override
@@ -41,21 +41,21 @@ public class ModuleComponent extends Component {
         int animatedTextColor = fadeColor(Theme.TEXT_WHITE.getRGB(), animFactor);
         float textX;
 
-        // --- THE FIX IS HERE ---
-        // We revert to conditional indentation.
-        // Config-only modules will have their text aligned to the left.
-        // Functional modules will have an indent to make space for the indicator.
+         
+         
+         
+         
 
         if (module.isConfigOnly()) {
-            textX = parent.x + x + 5; // No indent for config modules
+            textX = parent.x + x + 5;  
         } else {
-            textX = parent.x + x + 18; // Indent for functional modules
-            // Draw the indicator since this is a functional module
+            textX = parent.x + x + 18;  
+             
             Color indicatorColor = module.isEnabled() ? Theme.ENABLED_INDICATOR : Theme.DISABLED_INDICATOR;
             int animatedIndicatorColor = fadeColor(indicatorColor.getRGB(), animFactor);
             Gui.drawRect(parent.x + x + 4, parent.y + y + (height / 2) - 4, parent.x + x + 12, parent.y + y + (height / 2) + 4, animatedIndicatorColor);
         }
-        // --- END OF FIX ---
+         
 
         boolean hasVisibleSettings = false;
         for (ru.fuctorial.fuctorize.module.settings.Setting setting : module.getSettings()) {

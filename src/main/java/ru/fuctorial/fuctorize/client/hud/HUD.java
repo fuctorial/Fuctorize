@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
-// Файл: C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\hud\HUD.java
+ 
 
 
 
@@ -51,11 +51,11 @@ public class HUD implements IRenderable {
             int y0 = y - paddingV;
             int y1 = y + textHeight + paddingV;
 
-            // Background + outline for readability and consistent styling
+             
             RenderUtils.drawRect(x0 - 0.5f, y0 - 0.5f, x1 + 0.5f, y1 + 0.5f, outline);
             RenderUtils.drawRect(x0, y0, x1, y1, bg);
 
-            // Subtle shadow then main text
+             
             FuctorizeClient.INSTANCE.fontManager.regular_18.drawString(text, xText + 1, y + 1, new Color(0, 0, 0, 140).getRGB());
             FuctorizeClient.INSTANCE.fontManager.regular_18.drawString(text, xText, y, new Color(235, 235, 235).getRGB());
 

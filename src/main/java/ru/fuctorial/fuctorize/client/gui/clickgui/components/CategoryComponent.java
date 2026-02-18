@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\clickgui\components\CategoryComponent.java
+ 
 package ru.fuctorial.fuctorize.client.gui.clickgui.components;
 
 import ru.fuctorial.fuctorize.client.gui.clickgui.AbstractFrame;
@@ -14,14 +14,14 @@ public class CategoryComponent extends Component {
     public CategoryComponent(Category category, AbstractFrame parent, int x, int y, int width, int height) {
         super(parent, x, y, width, height);
         this.categoryObject = category;
-        // Используем локализованное имя из Lang через Category
+         
         this.categoryName = category.getDisplayName();
     }
 
     public CategoryComponent(String categoryName, AbstractFrame parent, int x, int y, int width, int height) {
         super(parent, x, y, width, height);
         this.categoryObject = categoryName;
-        // Оставляем эту логику для SmartMoving Editor, она не мешает
+         
         this.categoryName = categoryName.substring(0, 1).toUpperCase() + categoryName.substring(1).toLowerCase();
     }
 
@@ -35,7 +35,7 @@ public class CategoryComponent extends Component {
 
         Gui.drawRect(parent.x + x, parent.y + y, parent.x + x + this.width, parent.y + y + height, bgColor.getRGB());
 
-        // --- ИЗМЕНЕНИЕ 2: Центрируем текст ---
+         
         float textWidth = getFont().getStringWidth(this.categoryName);
         float textX = (parent.x + this.x) + (this.width / 2f) - (textWidth / 2f);
         float textY = (parent.y + this.y) + (this.height / 2f) - (getFont().getHeight() / 2f);

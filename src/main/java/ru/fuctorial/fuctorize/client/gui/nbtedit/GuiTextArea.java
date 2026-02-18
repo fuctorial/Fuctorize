@@ -1,4 +1,4 @@
-// 23. C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\client\gui\nbtedit\GuiTextArea.java
+ 
 package ru.fuctorial.fuctorize.client.gui.nbtedit;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -29,10 +29,10 @@ public class GuiTextArea extends Gui {
     private int scrollOffset = 0;
     private int maxScroll = 0;
 
-    private boolean isDraggingText = false; // Выделение текста
-    private boolean isDraggingScroll = false; // Перетаскивание ползунка
+    private boolean isDraggingText = false;  
+    private boolean isDraggingScroll = false;  
 
-    // Параметры скроллбара
+     
     private static final int SCROLLBAR_WIDTH = 6;
     private int scrollY = 0;
     private int scrollHeight = 0;
@@ -231,7 +231,7 @@ public class GuiTextArea extends Gui {
         this.setFocused(wasClicked);
 
         if (wasClicked && button == 0) {
-            // Проверка клика по скроллбару
+             
             if (maxScroll > 0 && mouseX >= xPos + width - SCROLLBAR_WIDTH) {
                 int barY = yPos + scrollY;
                 if (mouseY >= barY && mouseY <= barY + scrollHeight) {
@@ -239,13 +239,13 @@ public class GuiTextArea extends Gui {
                     initialClickY = mouseY;
                     initialScrollOffset = scrollOffset;
                 } else {
-                    // Клик мимо ползунка (телепорт скролла)
-                    // Можно добавить логику PageUp/PageDown, но пока просто игнорим
+                     
+                     
                 }
                 return;
             }
 
-            // Клик по тексту
+             
             int index = getIndexAt(mouseX, mouseY);
             if (index != -1) {
                 this.cursorPosition = index;
@@ -259,7 +259,7 @@ public class GuiTextArea extends Gui {
         if (clickedMouseButton != 0) return;
 
         if (isDraggingScroll) {
-            int totalTrackHeight = height - 2; // -2 на рамки
+            int totalTrackHeight = height - 2;  
             int trackHeight = totalTrackHeight - scrollHeight;
             if (trackHeight <= 0) return;
 
@@ -322,7 +322,7 @@ public class GuiTextArea extends Gui {
         if (FuctorizeClient.INSTANCE == null || FuctorizeClient.INSTANCE.fontManager == null) return;
 
         CustomFontRenderer font = getFont();
-        int wrapWidth = width - 12 - SCROLLBAR_WIDTH; // Учитываем место под скроллбар
+        int wrapWidth = width - 12 - SCROLLBAR_WIDTH;  
 
         String remaining = text;
         int currentGlobalIndex = 0;
@@ -342,7 +342,7 @@ public class GuiTextArea extends Gui {
         int maxDisplayLines = (height - 8) / lineHeight;
         this.maxScroll = Math.max(0, visibleLines.size() - maxDisplayLines);
 
-        // Сбрасываем скролл, если текст стал короче
+         
         if (scrollOffset > maxScroll) scrollOffset = maxScroll;
     }
 
@@ -383,11 +383,11 @@ public class GuiTextArea extends Gui {
         if (visibleLines.isEmpty() && !text.isEmpty()) recalcLines();
         if (visibleLines.isEmpty() && text.isEmpty()) visibleLines.add(new LineData("", 0));
 
-        // Фон
+         
         drawRect(xPos - 1, yPos - 1, xPos + width + 1, yPos + height + 1, Theme.COMPONENT_BG.getRGB());
         drawRect(xPos, yPos, xPos + width, yPos + height, 0xFF151515);
 
-        // Рамка
+         
         int borderColor = isFocused ? Theme.ORANGE.getRGB() : Theme.COMPONENT_BG.darker().getRGB();
         drawRect(xPos - 1, yPos - 1, xPos + width + 1, yPos, borderColor);
         drawRect(xPos - 1, yPos + height, xPos + width + 1, yPos + height + 1, borderColor);
@@ -400,7 +400,7 @@ public class GuiTextArea extends Gui {
         int lineHeight = font.getHeight() + 2;
         int maxLines = (height - 8) / lineHeight;
 
-        // --- ОТРИСОВКА ТЕКСТА ---
+         
         int minSel = Math.min(cursorPosition, selectionEnd);
         int maxSel = Math.max(cursorPosition, selectionEnd);
 
@@ -414,7 +414,7 @@ public class GuiTextArea extends Gui {
             float yRender = yPos + 4 + (i * lineHeight);
             float xRender = xPos + 4;
 
-            // Выделение
+             
             if (minSel != maxSel) {
                 int lineStartGlobal = ld.startIndex;
                 int lineEndGlobal = lineStartGlobal + line.length();
@@ -430,10 +430,10 @@ public class GuiTextArea extends Gui {
                 }
             }
 
-            // Текст
+             
             font.drawString(line, xRender, yRender, 0xFFFFFFFF);
 
-            // Курсор
+             
             if (isFocused && cursorCounter / 6 % 2 == 0) {
                 if (cursorPosition >= ld.startIndex && cursorPosition <= ld.startIndex + line.length()) {
                     int localCursorPos = cursorPosition - ld.startIndex;
@@ -444,17 +444,17 @@ public class GuiTextArea extends Gui {
             }
         }
 
-        // --- ОТРИСОВКА СКРОЛЛБАРА ---
+         
         if (maxScroll > 0) {
             int totalTrackHeight = height - 2;
             int contentHeightInLines = visibleLines.size();
             int viewableLines = maxLines;
 
-            // Пропорция высоты ползунка
+             
             float ratio = (float) viewableLines / (float) contentHeightInLines;
             scrollHeight = Math.max(10, (int) (totalTrackHeight * ratio));
 
-            // Позиция Y ползунка
+             
             float scrollProgress = (float) scrollOffset / (float) maxScroll;
             int trackEffectiveHeight = totalTrackHeight - scrollHeight;
             scrollY = 1 + (int) (trackEffectiveHeight * scrollProgress);
@@ -462,9 +462,9 @@ public class GuiTextArea extends Gui {
             int barX = xPos + width - SCROLLBAR_WIDTH;
             int barY = yPos + scrollY;
 
-            // Фон скроллбара
+             
             drawRect(barX, yPos + 1, barX + SCROLLBAR_WIDTH - 1, yPos + height - 1, 0xFF202020);
-            // Ползунок
+             
             int barColor = isDraggingScroll ? Theme.ORANGE.brighter().getRGB() : Theme.ORANGE.getRGB();
             drawRect(barX, barY, barX + SCROLLBAR_WIDTH - 1, barY + scrollHeight, barColor);
         }

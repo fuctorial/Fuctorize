@@ -1,7 +1,7 @@
 package ru.fuctorial.fuctorize.module.settings;
 
 
-// ru.fuctorial/fuctorize/module/settings/TextSetting.java
+ 
 
 
 

@@ -44,9 +44,9 @@ public class GuiPacketEditor extends GuiScreen {
     private final GuiScreen parentScreen;
     private final PacketInfo packetInfo;
 
-    // --- Raw View Components ---
+     
     private GuiTextArea rawViewArea;
-    // ---------------------------
+     
 
     private final List<EditableField> editableFields = new ArrayList<>();
     private final Map<EditableField, String> fieldErrors = new HashMap<>();
@@ -55,7 +55,7 @@ public class GuiPacketEditor extends GuiScreen {
     private int viewableAreaHeight;
     private StyledButton sendButton;
 
-    // --- Scrollbar Logic ---
+     
     private boolean isDraggingScrollbar = false;
     private int initialClickY = 0;
     private int initialScrollY = 0;
@@ -94,7 +94,7 @@ public class GuiPacketEditor extends GuiScreen {
 
         this.buttonList.clear();
 
-        // --- Buttons ---
+         
         int padding = 10;
         int availableWidth = panelWidth - 20;
         int buttonHeight = 20;
@@ -118,26 +118,26 @@ public class GuiPacketEditor extends GuiScreen {
             this.buttonList.add(new StyledButton(0, startX, buttonsY + buttonHeight + 5, btnW, buttonHeight, txtBack));
         }
 
-        // --- Initialize Raw View Area ---
+         
         int separatorY = panelY + 22 + 15;
         int topTextY = separatorY + 8;
         int textAreaHeight = viewableAreaHeight;
         int textAreaWidth = panelWidth - 20;
 
-        // Создаем Text Area для сырых данных
+         
         this.rawViewArea = new GuiTextArea(panelX + 10, topTextY, textAreaWidth, textAreaHeight);
 
-        // Заполняем HEX данными или дампом
+         
         String hexContent;
         if (packetInfo.rawPayloadBytes != null && packetInfo.rawPayloadBytes.length > 0) {
             hexContent = HexUtils.bytesToHex(packetInfo.rawPayloadBytes);
         } else {
-            // Если байтов нет (ванильный пакет), показываем текстовое представление,
-            // но редактировать его как HEX нельзя (поэтому Send будет работать хитро)
+             
+             
             hexContent = packetInfo.getSerializedData();
         }
         this.rawViewArea.setText(hexContent);
-        // -------------------------------
+         
 
         CustomFontRenderer textFont = FuctorizeClient.INSTANCE.fontManager.regular_18;
 
@@ -230,12 +230,12 @@ public class GuiPacketEditor extends GuiScreen {
         try {
             String hexData = rawViewArea.getText();
 
-            // 1. Проверяем, является ли пакет FMLProxyPacket (наиболее частый случай для raw hex)
+             
             if (packetInfo.rawPacket instanceof FMLProxyPacket) {
                 byte[] newPayload = HexUtils.hexToBytes(hexData);
                 FMLProxyPacket original = (FMLProxyPacket) packetInfo.rawPacket;
 
-                // Создаем новый пакет с тем же каналом, но новыми данными
+                 
                 FMLProxyPacket newPacket = new FMLProxyPacket(Unpooled.copiedBuffer(newPayload), original.channel());
                 newPacket.setDispatcher(original.getDispatcher());
                 newPacket.setTarget(original.getTarget());
@@ -244,8 +244,8 @@ public class GuiPacketEditor extends GuiScreen {
                 return;
             }
 
-            // Для других типов пакетов реконструкция из HEX сложнее без буфера
-            // Покажем предупреждение или попробуем, если есть поддержка (в будущем)
+             
+             
             FuctorizeClient.INSTANCE.notificationManager.show(new Notification(
                     "Not Supported",
                     "Raw HEX editing is currently only supported for CustomPayload/FML packets.",
@@ -329,7 +329,7 @@ public class GuiPacketEditor extends GuiScreen {
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
-        // Переключение вкладок
+         
         if (mouseY >= panelY + 22 && mouseY <= panelY + 37) {
             if (mouseX >= panelX + 5 && mouseX <= panelX + 5 + 80) {
                 currentMode = Mode.VIEW_RAW;
@@ -342,13 +342,13 @@ public class GuiPacketEditor extends GuiScreen {
             }
         }
 
-        // Handling clicks in View Raw
+         
         if (currentMode == Mode.VIEW_RAW) {
             rawViewArea.mouseClicked(mouseX, mouseY, mouseButton);
             return;
         }
 
-        // Scrollbar Logic for Edit Fields
+         
         int contentHeight = calculateEditFieldsHeight();
         if (contentHeight > viewableAreaHeight) {
             int scrollbarX = panelX + panelWidth - 8;
@@ -414,7 +414,7 @@ public class GuiPacketEditor extends GuiScreen {
         int dWheel = Mouse.getEventDWheel();
         if (dWheel != 0) {
             if (currentMode == Mode.VIEW_RAW) {
-                // rawViewArea handles its own scrolling inside standard mouse handling or we can delegate if implemented
+                 
             } else {
                 handleScroll(dWheel, viewableAreaHeight, calculateEditFieldsHeight(), editFieldsScrollOffset, (newOffset) -> editFieldsScrollOffset = newOffset);
             }
@@ -464,7 +464,7 @@ public class GuiPacketEditor extends GuiScreen {
         int topTextY = separatorY + 8;
 
         if (currentMode == Mode.VIEW_RAW) {
-            // Draw Raw Text Area
+             
             rawViewArea.drawTextBox();
         } else {
             drawEditView(topTextY, mouseX, mouseY);
@@ -566,7 +566,7 @@ public class GuiPacketEditor extends GuiScreen {
         return false;
     }
 
-    // Внутренний класс EditableField... (тот же, что и раньше, без изменений логики, просто должен быть внутри)
+     
     private class EditableField {
         final Field field;
         String currentValue;

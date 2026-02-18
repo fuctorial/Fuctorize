@@ -11,10 +11,10 @@ public class PacketInfo {
     public final int color;
     public final byte[] rawPayloadBytes;
 
-    // --- НОВЫЕ ПОЛЯ ---
+     
     private int count = 1;
     private boolean isResent = false;
-    // ------------------
+     
 
     private String cachedSerializedData;
     private String cachedPayloadHex;
@@ -59,7 +59,7 @@ public class PacketInfo {
         return cachedPayloadHex;
     }
 
-    // --- Методы для группировки ---
+     
 
     public void incrementCount() {
         this.count++;
@@ -77,17 +77,14 @@ public class PacketInfo {
         this.isResent = resent;
     }
 
-    /**
-     * Проверяет, идентичен ли этот пакет другому по содержимому.
-     * Используется для группировки.
-     */
+     
     public boolean isContentEqual(PacketInfo other) {
         if (other == null) return false;
         if (!this.direction.equals(other.direction)) return false;
         if (!this.cleanName.equals(other.cleanName)) return false;
 
-        // Сравниваем сериализованные данные (содержимое пакета)
-        // Это может быть тяжело, но PacketSerializer теперь оптимизирован.
+         
+         
         return this.getSerializedData().equals(other.getSerializedData());
     }
 }

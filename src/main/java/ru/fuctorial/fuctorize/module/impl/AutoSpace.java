@@ -27,20 +27,20 @@ public class AutoSpace extends Module {
 
     @Override
     public void onUpdate() {
-        // Принудительно зажимаем пробел каждый тик.
-        // Это работает даже если открыт GUI (инвентарь, торговец и т.д.)
+         
+         
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), true);
     }
 
     @Override
     public void onDisable() {
-        // Обязательно отпускаем кнопку при выключении, иначе игрок продолжит прыгать
+         
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindJump.getKeyCode(), false);
     }
 
     @Override
     public void onDisconnect() {
-        // Выключаем модуль при выходе из мира
+         
         if (this.isEnabled()) {
             this.toggle();
         }

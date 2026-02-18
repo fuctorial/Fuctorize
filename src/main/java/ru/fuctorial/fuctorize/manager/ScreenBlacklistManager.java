@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\manager\ScreenBlacklistManager.java
+ 
 package ru.fuctorial.fuctorize.manager;
 
 import com.google.gson.Gson;
@@ -21,7 +21,7 @@ public class ScreenBlacklistManager {
 
     public static void load() {
         if (!CONFIG_FILE.exists()) {
-            // Add some sensible defaults
+             
             blacklist.add("net.minecraft.client.gui.GuiChat");
             blacklist.add("ru.fuctorial.fuctorize.client.gui.sniffer.GuiScreenHistory");
             blacklist.add("ru.fuctorial.fuctorize.client.gui.clickgui.ClickGuiScreen");
@@ -74,7 +74,7 @@ public class ScreenBlacklistManager {
 
     public static boolean isBlacklisted(GuiScreen screen) {
         if (screen == null) {
-            return false; // null represents the in-game screen, which we don't want to blacklist.
+            return false;  
         }
         return blacklist.contains(screen.getClass().getName());
     }

@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\spammer\GuiSmartSpammer.java
+ 
 package ru.fuctorial.fuctorize.client.gui.spammer;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -34,7 +34,7 @@ public class GuiSmartSpammer extends GuiScreen {
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
         this.panelWidth = 380;
-        this.panelHeight = 200; // Reduced height as placeholder settings are moved
+        this.panelHeight = 200;  
         this.panelX = (this.width - this.panelWidth) / 2;
         this.panelY = (this.height - this.panelHeight) / 2;
 
@@ -42,16 +42,16 @@ public class GuiSmartSpammer extends GuiScreen {
 
         int fieldWidth = panelWidth - 20;
 
-        // Main message field
+         
         messageField = new GuiTextField(panelX + 10, panelY + 55, fieldWidth, 20, false);
         messageField.setText(module.message.text);
         messageField.setPlaceholder(Lang.get("smartspammer.placeholder.message"));
         messageField.setMaxStringLength(1000);
         messageField.setFocused(true);
-        // NEW: Enable syntax highlighting for placeholders.
+         
         messageField.setSyntaxHighlighting(true);
 
-        // Interval and Duration fields
+         
         int smallFieldWidth = (fieldWidth / 2) - 5;
         intervalField = new GuiTextField(panelX + 10, panelY + 95, smallFieldWidth, 20, false);
         intervalField.setText(String.valueOf((int)module.interval.value));
@@ -61,13 +61,13 @@ public class GuiSmartSpammer extends GuiScreen {
         durationField.setText(String.valueOf((int)module.duration.value));
         durationField.setMaxStringLength(5);
 
-        // Buttons for placeholder settings and info
+         
         int midButtonY = panelY + 125;
         int midButtonWidth = (fieldWidth / 2) - 5;
         this.buttonList.add(new StyledButton(2, panelX + 10, midButtonY, midButtonWidth, 20, Lang.get("smartspammer.button.placeholder_settings")));
         this.buttonList.add(new StyledButton(3, panelX + 10 + midButtonWidth + 10, midButtonY, midButtonWidth, 20, Lang.get("smartspammer.button.info")));
 
-        // Footer buttons
+         
         int footerY = panelY + panelHeight - 35;
         int footerButtonWidth = (fieldWidth / 2) - 5;
         startStopButton = new StyledButton(0, panelX + 10, footerY, footerButtonWidth, 20, module.isSpamming() ? Lang.get("smartspammer.button.stop") : Lang.get("smartspammer.button.start"));
@@ -89,7 +89,7 @@ public class GuiSmartSpammer extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        if (button.id == 0) { // Start/Stop
+        if (button.id == 0) {  
             saveSettingsToModule();
             if (module.isSpamming()) {
                 module.stopSpam();
@@ -97,12 +97,12 @@ public class GuiSmartSpammer extends GuiScreen {
                 module.startSpam();
             }
             updateButtonState();
-        } else if (button.id == 1) { // Close
+        } else if (button.id == 1) {  
             mc.displayGuiScreen(null);
-        } else if (button.id == 2) { // Open Placeholder Settings
+        } else if (button.id == 2) {  
             saveSettingsToModule();
             mc.displayGuiScreen(new GuiPlaceholderSettings(this, module));
-        } else if (button.id == 3) { // Open Info
+        } else if (button.id == 3) {  
             saveSettingsToModule();
             mc.displayGuiScreen(new GuiPlaceholderInfo(this));
         }

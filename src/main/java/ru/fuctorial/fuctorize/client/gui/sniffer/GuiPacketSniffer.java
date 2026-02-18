@@ -43,7 +43,7 @@ public class GuiPacketSniffer extends GuiScreen {
 
     private boolean selectionMode = false;
     private GuiScreen selectionModeParent = null;
-    // --- НОВОЕ ПОЛЕ: Callback для возврата пакета ---
+     
     private Consumer<PacketInfo> onSelectionCallback = null;
 
     private final GuiScreen previousScreen;
@@ -52,18 +52,18 @@ public class GuiPacketSniffer extends GuiScreen {
         this.previousScreen = previousScreen;
     }
 
-    // Старый метод для совместимости (если используется где-то еще без колбэка)
+     
     public void setSelectionMode(GuiScreen parent) {
         setSelectionMode(parent, null);
     }
 
-    // --- НОВЫЙ МЕТОД: Принимает callback ---
+     
     public void setSelectionMode(GuiScreen parent, Consumer<PacketInfo> callback) {
         this.selectionMode = true;
         this.selectionModeParent = parent;
         this.onSelectionCallback = callback;
 
-        // Отключаем кнопки управления в хедере, чтобы не мешали выбору
+         
         for (Button b : headerButtons) b.enabled = false;
         if (this.filterField != null) this.filterField.setFocused(false);
     }
@@ -100,13 +100,13 @@ public class GuiPacketSniffer extends GuiScreen {
         filterField.setText(filterText);
         setupHeaderButtons();
 
-        // Если мы уже в режиме выбора, отключаем кнопки сразу при инициализации
+         
         if (selectionMode) {
             for (Button b : headerButtons) b.enabled = false;
         }
     }
 
-    // --- ИЗМЕНЕНО: Обработка клика по пакету ---
+     
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -121,7 +121,7 @@ public class GuiPacketSniffer extends GuiScreen {
                 if (virtualMouseY >= currentVirtualY && virtualMouseY <= currentVirtualY + 11) {
                     if (mouseButton == 0) {
                         if (selectionMode) {
-                            // --- ВОТ ЗДЕСЬ ИСПОЛЬЗУЕМ CALLBACK ---
+                             
                             handleSelectionModeClick(info);
                         } else if (isCtrlKeyDown()) {
                             handleFilterClick(info);
@@ -144,7 +144,7 @@ public class GuiPacketSniffer extends GuiScreen {
             isResizing = true; return;
         }
 
-        // Кнопки хедера работают только если НЕ selectionMode
+         
         if (!selectionMode) {
             for (Button button : headerButtons) {
                 if (button.isVisible() && isMouseOver(mouseX, mouseY, button.x, button.y, button.width, button.height)) {
@@ -164,21 +164,21 @@ public class GuiPacketSniffer extends GuiScreen {
 
     private void handleSelectionModeClick(PacketInfo info) {
         if (onSelectionCallback != null) {
-            // Если есть колбэк (новый способ через PacketBlocker), используем его
+             
             onSelectionCallback.accept(info);
         } else {
-            // Fallback для старых вызовов (например, через BlacklistEditor), если они не передали callback
+             
             if (info.rawPacket instanceof FMLProxyPacket) {
                 PacketSniffer.addBlacklistedFmlChannel(((FMLProxyPacket) info.rawPacket).channel());
             } else {
                 PacketSniffer.addBlacklistedClassName(info.rawPacket.getClass().getName());
             }
         }
-        // Возвращаемся обратно
+         
         mc.displayGuiScreen(selectionModeParent);
     }
 
-    // ... Остальной код (setupHeaderButtons, drawScreen, и т.д.) оставляем без изменений ...
+     
 
     private void setupHeaderButtons() {
         headerButtons.clear();

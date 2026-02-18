@@ -1,4 +1,4 @@
-// 30. C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\client\gui\sniffer\GuiBlacklistEditor.java
+ 
 package ru.fuctorial.fuctorize.client.gui.sniffer;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -47,7 +47,7 @@ public class GuiBlacklistEditor extends GuiScreen {
 
         this.buttonList.clear();
 
-        // Back button (ID 0)
+         
         int btnWidth = Math.min(150, panelWidth - 20);
         this.buttonList.add(new StyledButton(0, x + (panelWidth - btnWidth) / 2, y + panelHeight - 30, btnWidth, 20, Lang.get("blacklist.button.back")));
 
@@ -70,7 +70,7 @@ public class GuiBlacklistEditor extends GuiScreen {
         totalContentHeight = 0;
         if (!classRows.isEmpty()) totalContentHeight += classRows.size() * rowHeight + headerHeight;
         if (!channelRows.isEmpty()) totalContentHeight += channelRows.size() * rowHeight + headerHeight;
-        totalContentHeight += rowHeight; // for add button
+        totalContentHeight += rowHeight;  
     }
 
     @Override
@@ -80,11 +80,11 @@ public class GuiBlacklistEditor extends GuiScreen {
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-        // FIX: Call super first to handle button clicks (Back button)
+         
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
-        // Check if we clicked a button in super.mouseClicked. If so, return immediately.
-        // (Since we cleared the button list and added only one, we check if any button was pressed)
+         
+         
         for(Object b : this.buttonList) {
             if (b instanceof GuiButton && ((GuiButton)b).mousePressed(mc, mouseX, mouseY)) {
                 return;
@@ -93,7 +93,7 @@ public class GuiBlacklistEditor extends GuiScreen {
 
         int topBounds = y + 28;
         int viewableHeight = panelHeight - 65;
-        // If click is outside the list content area, ignore
+         
         if (mouseX < x + 5 || mouseX > x + panelWidth - 5 || mouseY < topBounds || mouseY > topBounds + viewableHeight) return;
 
         int currentY = topBounds - scrollOffset;

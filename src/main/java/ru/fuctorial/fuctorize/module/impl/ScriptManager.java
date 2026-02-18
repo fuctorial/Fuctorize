@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\ScriptManager.java (ИЗМЕНЕННЫЙ)
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -9,7 +9,7 @@ import ru.fuctorial.fuctorize.event.PacketEvent;
 import ru.fuctorial.fuctorize.module.Category;
 import ru.fuctorial.fuctorize.module.Module;
 import ru.fuctorial.fuctorize.module.settings.BindSetting;
-import ru.fuctorial.fuctorize.utils.Lang; // <- Импорт
+import ru.fuctorial.fuctorize.utils.Lang;  
 import ru.fuctorial.fuctorize.utils.NetUtils;
 import ru.fuctorial.fuctorize.utils.PlayerUtils;
 import io.netty.buffer.ByteBuf;

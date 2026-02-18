@@ -4,7 +4,7 @@ import ru.fuctorial.fuctorize.utils.AnimationUtils;
 import java.awt.Color;
 
 
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\hud\Notification.java
+ 
 
 
 
@@ -41,7 +41,7 @@ public class Notification {
     }
 
     public boolean isExpired() {
-        long fadeTime = 500; // Время на исчезновение
+        long fadeTime = 500;  
         return System.currentTimeMillis() - creationTime > lifeTime + fadeTime;
     }
 
@@ -49,7 +49,7 @@ public class Notification {
         long timePassed = System.currentTimeMillis() - creationTime;
         long fadeStartTime = lifeTime;
 
-        // Начинаем анимацию затухания
+         
         if (timePassed > fadeStartTime) {
             animation.setDirection(false);
         }

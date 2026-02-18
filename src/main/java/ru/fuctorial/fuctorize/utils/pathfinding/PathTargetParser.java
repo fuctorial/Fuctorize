@@ -1,18 +1,11 @@
 package ru.fuctorial.fuctorize.utils.pathfinding;
 
-/**
- * Utility for parsing textual target coordinates into world-space doubles.
- * Keeps parsing rules out of UI/modules.
- */
+ 
 public final class PathTargetParser {
 
     private PathTargetParser() {}
 
-    /**
-     * Parses coordinates from a string. Supports absolute numbers and
-     * relative tokens with '~' (e.g., "~", "~3", "-10").
-     * Returns null on invalid input.
-     */
+     
     public static double[] parseTargetCoordinates(String raw,
                                                   double originX,
                                                   double originY,

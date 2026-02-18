@@ -1,4 +1,4 @@
-// 33. C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\client\gui\sniffer\GuiCustomEspSettings.java
+ 
 package ru.fuctorial.fuctorize.client.gui.sniffer;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -28,14 +28,14 @@ public class GuiCustomEspSettings extends GuiScreen {
     private int panelX, panelY, panelWidth, panelHeight;
     private int scrollOffset = 0;
 
-    // Поля для добавления нового правила
+     
     private GuiTextField addKeyField;
     private GuiTextField addValueField;
 
-    // Поле поиска
+     
     private GuiTextField searchField;
 
-    // Список текущих фильтров (копия для редактирования)
+     
     private final List<FilterEntry> filters = new ArrayList<>();
 
     public GuiCustomEspSettings(GuiScreen parent, CustomESP module) {
@@ -47,26 +47,26 @@ public class GuiCustomEspSettings extends GuiScreen {
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
         this.panelWidth = 450;
-        this.panelHeight = 340; // Немного увеличил высоту для поиска
+        this.panelHeight = 340;  
         this.panelX = (this.width - this.panelWidth) / 2;
         this.panelY = (this.height - this.panelHeight) / 2;
 
         this.buttonList.clear();
 
-        // Загружаем текущие фильтры из модуля
+         
         if (filters.isEmpty()) {
             for (Map.Entry<String, String> entry : module.getNbtFilterMap().entrySet()) {
                 filters.add(new FilterEntry(entry.getKey(), entry.getValue(), true));
             }
         }
 
-        // --- ПОЛЕ ПОИСКА ---
-        // Располагаем под заголовком
+         
+         
         searchField = new GuiTextField(panelX + 10, panelY + 25, panelWidth - 20, 16, false);
         searchField.setPlaceholder("Search filter (key or value)...");
 
-        // --- НИЖНЯЯ ПАНЕЛЬ (ADD) ---
-        // Поднимаем inputs чуть выше, чтобы не прилипали к кнопкам, и рассчитываем отступ
+         
+         
         int bottomControlsHeight = 85;
         int bottomY = panelY + panelHeight - bottomControlsHeight;
 
@@ -76,10 +76,10 @@ public class GuiCustomEspSettings extends GuiScreen {
         addValueField = new GuiTextField(panelX + 170, bottomY, 150, 18, false);
         addValueField.setPlaceholder("Value (e.g. Diamond)");
 
-        // Кнопка Add
+         
         this.buttonList.add(new StyledButton(1, panelX + 330, bottomY, 110, 18, "+ Add"));
 
-        // --- ФУТЕР (КНОПКИ) ---
+         
         int footerY = panelY + panelHeight - 30;
         int btnWidth = (panelWidth - 40) / 3;
 
@@ -88,9 +88,7 @@ public class GuiCustomEspSettings extends GuiScreen {
         this.buttonList.add(new StyledButton(0, panelX + 30 + btnWidth * 2, footerY - 25, btnWidth, 20, Lang.get("generic.button.save")));
     }
 
-    /**
-     * Получает список фильтров с учетом поискового запроса
-     */
+     
     private List<FilterEntry> getVisibleFilters() {
         String query = searchField.getText().trim().toLowerCase();
         if (query.isEmpty()) {
@@ -103,24 +101,24 @@ public class GuiCustomEspSettings extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        if (button.id == 0) { // Save & Exit
+        if (button.id == 0) {  
             applyChanges();
             mc.displayGuiScreen(parentScreen);
-        } else if (button.id == 1) { // Add Manual
+        } else if (button.id == 1) {  
             String k = addKeyField.getText().trim();
             String v = addValueField.getText().trim();
             if (!k.isEmpty()) {
                 filters.add(new FilterEntry(k, v, true));
                 addKeyField.setText("");
                 addValueField.setText("");
-                // Сбрасываем поиск, чтобы увидеть добавленный элемент
+                 
                 searchField.setText("");
             }
-        } else if (button.id == 2) { // Select All (только видимые)
+        } else if (button.id == 2) {  
             for (FilterEntry entry : getVisibleFilters()) {
                 entry.enabled = true;
             }
-        } else if (button.id == 3) { // Deselect All (только видимые)
+        } else if (button.id == 3) {  
             for (FilterEntry entry : getVisibleFilters()) {
                 entry.enabled = false;
             }
@@ -144,16 +142,16 @@ public class GuiCustomEspSettings extends GuiScreen {
         addValueField.mouseClicked(mouseX, mouseY, mouseButton);
         searchField.mouseClicked(mouseX, mouseY, mouseButton);
 
-        // --- РАСЧЕТ ОБЛАСТИ СПИСКА ---
-        // Начало: заголовок + поиск + отступ
+         
+         
         int listTop = panelY + 50;
-        // Конец: общая высота - высота нижней панели управления - отступ
+         
         int listBottom = panelY + panelHeight - 105;
 
         if (mouseX >= panelX && mouseX <= panelX + panelWidth && mouseY >= listTop && mouseY <= listBottom) {
             int currentY = listTop - scrollOffset;
 
-            // Работаем только с отфильтрованным списком
+             
             List<FilterEntry> visibleFilters = getVisibleFilters();
 
             for (FilterEntry entry : visibleFilters) {
@@ -175,7 +173,7 @@ public class GuiCustomEspSettings extends GuiScreen {
 
         if (searchField.isFocused()) {
             searchField.textboxKeyTyped(typedChar, keyCode);
-            // При изменении поиска сбрасываем скролл
+             
             scrollOffset = 0;
         }
 
@@ -184,7 +182,7 @@ public class GuiCustomEspSettings extends GuiScreen {
         }
         if (keyCode == Keyboard.KEY_RETURN) {
             if (addKeyField.isFocused() || addValueField.isFocused()) {
-                actionPerformed((GuiButton) this.buttonList.get(0)); // Триггер кнопки Add
+                actionPerformed((GuiButton) this.buttonList.get(0));  
             }
         }
     }
@@ -195,7 +193,7 @@ public class GuiCustomEspSettings extends GuiScreen {
         int dWheel = Mouse.getEventDWheel();
         if (dWheel != 0) {
             int listHeight = getVisibleFilters().size() * 20;
-            // 50 (top) + 105 (bottom gap)
+             
             int viewHeight = panelHeight - 155;
 
             if (listHeight > viewHeight) {
@@ -217,7 +215,7 @@ public class GuiCustomEspSettings extends GuiScreen {
         CustomFontRenderer titleFont = FuctorizeClient.INSTANCE.fontManager.bold_22;
 
         RenderUtils.drawRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight, Theme.CATEGORY_BG.getRGB());
-        // Бордюры
+         
         RenderUtils.drawRect(panelX - 1, panelY, panelX, panelY + panelHeight, Theme.BORDER.getRGB());
         RenderUtils.drawRect(panelX + panelWidth, panelY, panelX + panelWidth + 1, panelY + panelHeight, Theme.BORDER.getRGB());
         RenderUtils.drawRect(panelX, panelY - 1, panelX + panelWidth, panelY, Theme.BORDER.getRGB());
@@ -225,10 +223,10 @@ public class GuiCustomEspSettings extends GuiScreen {
 
         titleFont.drawString("Настройка фильтра CustomESP", panelX + 10, panelY + 8, Theme.ORANGE.getRGB());
 
-        // Отрисовка поля поиска
+         
         searchField.drawTextBox();
 
-        // --- ОБЛАСТЬ СПИСКА ---
+         
         int listTop = panelY + 50;
         int listBottom = panelY + panelHeight - 105;
 
@@ -246,7 +244,7 @@ public class GuiCustomEspSettings extends GuiScreen {
         }
 
         for (FilterEntry entry : visibleFilters) {
-            // Оптимизация рендера (только видимые строки)
+             
             if (currentY + 20 > listTop && currentY < listBottom) {
                 boolean isHovered = mouseX >= panelX + 10 && mouseX <= panelX + panelWidth - 10
                         && mouseY >= currentY && mouseY < currentY + 18;
@@ -257,13 +255,13 @@ public class GuiCustomEspSettings extends GuiScreen {
                 drawCheckbox(panelX + 15, currentY + 4, entry.enabled);
 
                 int textColor = entry.enabled ? -1 : Theme.TEXT_GRAY.getRGB();
-                // Сокращаем текст, если он слишком длинный
+                 
                 String fullText = entry.key + " = " + entry.value;
                 String displayKey = font.trimStringToWidth(entry.key, 130);
                 String displayVal = font.trimStringToWidth(entry.value, 200);
 
                 if (entry.enabled) {
-                    // Подсветка цветов, если включено
+                     
                     font.drawString("§b" + displayKey + " §7= §f" + displayVal, panelX + 30, currentY + 5, textColor);
                 } else {
                     font.drawString(displayKey + " = " + displayVal, panelX + 30, currentY + 5, textColor);
@@ -273,8 +271,8 @@ public class GuiCustomEspSettings extends GuiScreen {
         }
         RenderUtils.stopScissor();
 
-        // --- ОТРИСОВКА ПОЛЕЙ ВВОДА (ADD) ---
-        // Рисуем текст "Add new filter" выше полей, чтобы он не налезал
+         
+         
         font.drawString("Add new filter:", panelX + 10, panelY + panelHeight - 103, Theme.TEXT_GRAY.getRGB());
 
         addKeyField.drawTextBox();

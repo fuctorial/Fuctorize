@@ -74,12 +74,12 @@ public class PacketSniffer extends Module {
     }
 
     public static void onPacketSendStatic(PacketEvent.Send event) {
-        // Пауза проверяется внутри addPacket, чтобы покрыть все случаи
+         
         addPacket(event.getPacket(), "SENT", false);
     }
 
     public static void onPacketReceiveStatic(PacketEvent.Receive event) {
-        if (isPaused) return; // Оптимизация: не парсим чат, если пауза
+        if (isPaused) return;  
         if (event.getPacket() instanceof S02PacketChat && logManager != null) {
             S02PacketChat chatPacket = (S02PacketChat) event.getPacket();
             logManager.logChat(StringUtils.stripControlCodes(chatPacket.func_148915_c().getUnformattedText()));
@@ -88,12 +88,12 @@ public class PacketSniffer extends Module {
     }
 
     public static void logManuallySentPacket(Packet packet) {
-        // Вызывается при ресенде
+         
         addPacket(packet, "SENT", true);
     }
 
     private static void addPacket(Packet packet, String direction, boolean isResent) {
-        // --- ИСПРАВЛЕНИЕ 1: Глобальная проверка паузы ---
+         
         if (isPaused) return;
 
         if (useBlacklistStatic && isPacketBlacklisted(packet)) {
@@ -112,24 +112,24 @@ public class PacketSniffer extends Module {
 
         PacketInfo newInfo = new PacketInfo(packet, direction, getPacketColor(packet), cleanName, rawBytes, isResent);
 
-        // --- ИСПРАВЛЕНИЕ 2: Логика группировки (Collapsing) ---
-        synchronized (packetLog) { // Синхронизация для атомарности проверки и добавления
+         
+        synchronized (packetLog) {  
             if (!packetLog.isEmpty()) {
                 PacketInfo lastInfo = packetLog.get(0);
-                // Сравниваем с последним пакетом
-                // isResent не влияет на группировку ("resend or not resend - irrelevant"),
-                // но если они сгруппировались, мы помечаем группу как isResent, если последний был таким.
+                 
+                 
+                 
                 if (newInfo.isContentEqual(lastInfo)) {
                     lastInfo.incrementCount();
                     if (isResent) {
-                        lastInfo.setResent(true); // Обновляем статус, чтобы было видно, что мы это только что послали
+                        lastInfo.setResent(true);  
                     }
-                    // Обновляем время/данные для логгера?
-                    // В файл лога пишем КАЖДЫЙ пакет, даже если в GUI они сгруппированы.
+                     
+                     
                     if (logManager != null) {
                         logManager.logPacket(newInfo);
                     }
-                    return; // Выходим, не добавляя новый элемент в список GUI
+                    return;  
                 }
             }
 

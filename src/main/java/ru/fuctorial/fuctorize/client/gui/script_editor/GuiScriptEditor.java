@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\script_editor\GuiScriptEditor.java
+ 
 package ru.fuctorial.fuctorize.client.gui.script_editor;
 
 import cpw.mods.fml.common.network.internal.FMLProxyPacket;
@@ -132,7 +132,7 @@ public class GuiScriptEditor extends GuiScreen {
         dataScriptNBT.setString("ScriptLanguage", "ECMAScript");
         dataScriptNBT.setBoolean("ScriptEnabled", true);
 
-        sendPacket(41, dataScriptNBT); // ScriptDataSave
+        sendPacket(41, dataScriptNBT);  
 
         FuctorizeClient.INSTANCE.notificationManager.show(new Notification(
                 "ScriptManager", "Script has been sent to the server.", Notification.NotificationType.SUCCESS, 2500L
@@ -161,7 +161,7 @@ public class GuiScriptEditor extends GuiScreen {
         if (scriptTextArea.isFocused()) {
             scriptTextArea.textboxKeyTyped(typedChar, keyCode);
         }
-        if (keyCode == 1) { // Escape
+        if (keyCode == 1) {  
             this.mc.displayGuiScreen(null);
         }
     }
@@ -183,12 +183,12 @@ public class GuiScriptEditor extends GuiScreen {
         }
     }
 
-    // Correctly writes uncompressed NBT to a ByteBuf
+     
     private static void writeNBT(ByteBuf buf, NBTTagCompound compound) {
         try {
             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
             DataOutputStream dataStream = new DataOutputStream(byteStream);
-            // This is the UNCOMPRESSED write method
+             
             CompressedStreamTools.write(compound, dataStream);
             byte[] bytes = byteStream.toByteArray();
 

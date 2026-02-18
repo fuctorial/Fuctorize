@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\manager\FavoriteScreenManager.java
+ 
 package ru.fuctorial.fuctorize.manager;
 
 import com.google.gson.Gson;
@@ -63,11 +63,7 @@ public class FavoriteScreenManager {
         }
     }
 
-    /**
-     * Attempts to instantiate a screen by its class name, handling only safe and known cases.
-     * @param className The full class name of the GuiScreen.
-     * @return A new GuiScreen instance, or null if instantiation is not possible or unsafe.
-     */
+     
     public static GuiScreen instantiateScreen(String className) {
         if (className == null || className.isEmpty()) {
             return null;
@@ -89,8 +85,8 @@ public class FavoriteScreenManager {
             return new GuiSelectWorld(new GuiMainMenu());
         }
 
-        // --- REMOVED Unsafe logic ---
-        // Only attempt to create screens with a default (no-argument) constructor.
+         
+         
         try {
             Class<?> screenClass = Class.forName(className);
             Object instance = screenClass.newInstance();
@@ -98,7 +94,7 @@ public class FavoriteScreenManager {
                 return (GuiScreen) instance;
             }
         } catch (Throwable ignored) {
-            // Instantiation failed. This is now the expected outcome for context-dependent screens.
+             
         }
 
         return null;

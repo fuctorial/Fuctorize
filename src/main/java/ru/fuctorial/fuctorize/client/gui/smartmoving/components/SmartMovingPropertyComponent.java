@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\smartmoving\components\SmartMovingPropertyComponent.java
+ 
 package ru.fuctorial.fuctorize.client.gui.smartmoving.components;
 
 import ru.fuctorial.fuctorize.client.gui.clickgui.AbstractFrame;
@@ -77,13 +77,13 @@ public class SmartMovingPropertyComponent extends Component {
 
         if (isTextInput) {
             int textWidth = 150;
-            // The position will be updated in the draw method, here we just create the object
+             
             textField = new ru.fuctorial.fuctorize.client.gui.nbtedit.GuiTextField(0, 0, textWidth, 18, false);
             textField.setText(String.valueOf(getFieldValue(property, "value", "")));
         }
     }
 
-    // The rest of the class remains unchanged from the previous fix.
+     
     @Override
     public void drawComponent(int mouseX, int mouseY) {
         super.drawComponent(mouseX, mouseY);
@@ -168,7 +168,7 @@ public class SmartMovingPropertyComponent extends Component {
                 else if (valueType == Integer.class) parsedValue = Integer.parseInt(text);
                 else parsedValue = text;
                 setLiveValue(parsedValue);
-            } catch (NumberFormatException e) { /* ignore */ }
+            } catch (NumberFormatException e) {   }
         }
     }
 
@@ -183,7 +183,7 @@ public class SmartMovingPropertyComponent extends Component {
             } else if (isTextInput && textField != null) {
                 textField.mouseClicked(mouseX, mouseY, mouseButton);
             } else if (isComboBox) {
-                // TODO: Logic for expanding combobox
+                 
             }
         } else if (isTextInput && textField != null) {
             textField.setFocused(false);

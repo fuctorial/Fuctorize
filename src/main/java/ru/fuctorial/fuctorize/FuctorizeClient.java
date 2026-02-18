@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\FuctorizeClient.java
+ 
 package ru.fuctorial.fuctorize;
 
 import cpw.mods.fml.common.*;
@@ -62,9 +62,9 @@ public class FuctorizeClient {
         clickGui = new ClickGuiScreen(this);
         eventHandler = new EventHandler(this);
 
-        // ========== НОВОЕ: СОЗДАЕМ НАВИГАТОР ==========
+         
         botNavigator = new BotNavigator();
-        // ==============================================
+         
     }
 
     public void start() {
@@ -74,7 +74,7 @@ public class FuctorizeClient {
         ScreenBlacklistManager.load();
         FavoriteScreenManager.load();
 
-        // ========== НОВОЕ: ИНИЦИАЛИЗИРУЕМ PATHFINDING ==========
+         
         try {
             pathfindingManager.initialize();
             System.out.println(">>> FUCTORIZE: PathfindingManager initialized.");
@@ -82,7 +82,7 @@ public class FuctorizeClient {
             System.err.println("### FUCTORIZE: Failed to initialize PathfindingManager!");
             e.printStackTrace();
         }
-        // =======================================================
+         
 
         LoadController modController = null;
         Field activeContainerField = null;
@@ -130,25 +130,25 @@ public class FuctorizeClient {
         }));
     }
 
-    // --- МЕТОД ВОЗВРАЩЕН НА МЕСТО ---
+     
     private DummyModContainer createDummyModContainer() {
         ModMetadata meta = new ModMetadata();
         meta.modId = Fuctorize.modId;
-        meta.name = Fuctorize.modId; // Безопасная замена, как и было в вашей версии
+        meta.name = Fuctorize.modId;  
         meta.version = Fuctorize.modVersion;
         return new DummyModContainer(meta);
     }
-    // --- КОНЕЦ ---
+     
 
     @SuppressWarnings("unchecked")
     private void purgeClassLoaderCache() {
         try {
-            // Получаем доступ к кэшированным классам в LaunchClassLoader
+             
             Field cachedClassesField = Class.forName("net.minecraft.launchwrapper.LaunchClassLoader").getDeclaredField("cachedClasses");
             cachedClassesField.setAccessible(true);
             Map<String, Class<?>> cachedClasses = (Map<String, Class<?>>) cachedClassesField.get(Launch.classLoader);
 
-            // Удаляем все наши классы из кэша
+             
             int countBefore = cachedClasses.size();
             cachedClasses.keySet().removeIf(className -> className.startsWith("ru.fuctorial.fuctorize."));
             int countAfter = cachedClasses.size();
@@ -164,7 +164,7 @@ public class FuctorizeClient {
     public void stop() {
         System.out.println(">>> FUCTORIZE CLIENT: SHUTDOWN SEQUENCE INITIATED (SYNCHRONOUS)...");
 
-        // ========== НОВОЕ: ОСТАНАВЛИВАЕМ НАВИГАТОР ==========
+         
         if (botNavigator != null) {
             try {
                 botNavigator.stop();
@@ -175,7 +175,7 @@ public class FuctorizeClient {
             }
         }
 
-        // Останавливаем PathfindingManager
+         
         try {
             if (pathfindingManager != null) {
                 pathfindingManager.shutdown();
@@ -185,7 +185,7 @@ public class FuctorizeClient {
             System.err.println("### FUCTORIZE: Error shutting down PathfindingManager!");
             e.printStackTrace();
         }
-        // ====================================================
+         
 
         if (configManager != null) configManager.saveConfig();
         if (ModHiderConfig.saveOnExit) ModHiderConfig.save();

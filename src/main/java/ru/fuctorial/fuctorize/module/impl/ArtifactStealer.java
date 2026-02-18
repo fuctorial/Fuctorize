@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\module\impl\ArtifactStealer.java
+ 
 package ru.fuctorial.fuctorize.module.impl;
 
 import cpw.mods.fml.common.registry.GameData;
@@ -33,7 +33,7 @@ public class ArtifactStealer extends Module {
     private static Class<?> tileEntityArtifactClass;
     private static Method isEmptyMethod;
     private static Class<?> itemDetectorClass;
-    private static Class<?> artifactItemClass; // Used to confirm successful steals by inventory check
+    private static Class<?> artifactItemClass;  
     private static boolean reflectionSuccessful = false;
 
     private SliderSetting range;
@@ -132,7 +132,7 @@ public class ArtifactStealer extends Module {
 
         notifyInfo(Lang.get("notification.artifactstealer.message.starting_steal"));
 
-        // Capture baseline artifact count to confirm success AFTER flush
+         
         baselineArtifactCount = countArtifactsInInventory();
 
         new Thread(() -> {
@@ -156,7 +156,7 @@ public class ArtifactStealer extends Module {
 
                 sendTeleportPackets(targetX, targetY, targetZ, startX, startY, startZ);
 
-                // Flush first, then confirm after flush by checking inventory
+                 
                 client.scheduleTask(() -> {
                     finishStealProcess(false, null);
                     confirmAfterFlush();
@@ -170,12 +170,12 @@ public class ArtifactStealer extends Module {
     }
 
     private void sendTeleportPackets(double fromX, double fromY, double fromZ, double toX, double toY, double toZ) {
-        // Improved path simulation with obstacle-aware stepping
+         
         double dx = toX - fromX;
         double dy = toY - fromY;
         double dz = toZ - fromZ;
         double distance = Math.sqrt(dx*dx + dy*dy + dz*dz);
-        double stepLen = 0.6; // small steps to better mimic walking
+        double stepLen = 0.6;  
         int steps = Math.max((int) Math.ceil(distance / stepLen), 10);
 
         double curX = fromX;
@@ -199,27 +199,27 @@ public class ArtifactStealer extends Module {
     }
 
     private double adjustYForObstacles(double x, double currentY, double z) {
-        // Try currentY first
+         
         if (isSpaceFree(x, currentY, z)) return currentY;
 
-        // Try stepping up up to 1.5 blocks
+         
         for (int i = 1; i <= 3; i++) {
             double y = currentY + i * 0.5;
             if (isSpaceFree(x, y, z)) return y;
         }
 
-        // Try stepping down up to 2.0 blocks
+         
         for (int i = 1; i <= 4; i++) {
             double y = currentY - i * 0.5;
             if (isSpaceFree(x, y, z)) return y;
         }
-        // As a fallback, return currentY
+         
         return currentY;
     }
 
     private boolean isSpaceFree(double x, double y, double z) {
         if (mc == null || mc.theWorld == null) return true;
-        // Check 4 corners within player width, for feet and head space
+         
         double w = 0.3;
         return isAirColumn(x - w, y, z - w) &&
                isAirColumn(x - w, y, z + w) &&
@@ -231,7 +231,7 @@ public class ArtifactStealer extends Module {
         int bx = MathHelper.floor_double(x);
         int by = MathHelper.floor_double(y);
         int bz = MathHelper.floor_double(z);
-        // Require two blocks of headroom
+         
         return mc.theWorld.isAirBlock(bx, by, bz) && mc.theWorld.isAirBlock(bx, by + 1, bz);
     }
 
@@ -240,7 +240,7 @@ public class ArtifactStealer extends Module {
         int bx = MathHelper.floor_double(x);
         int by = MathHelper.floor_double(y - 0.01);
         int bz = MathHelper.floor_double(z);
-        // If block below is not air, consider on ground
+         
         return !mc.theWorld.isAirBlock(bx, by - 1, bz);
     }
 
@@ -340,7 +340,7 @@ public class ArtifactStealer extends Module {
 
     private void confirmAfterFlush() {
         if (artifactItemClass == null) {
-            // Cannot confirm without knowing artifact class
+             
             client.notificationManager.show(new Notification(
                     Lang.get("notification.artifactstealer.title.info"),
                     Lang.get("notification.artifactstealer.message.confirmation_unavailable"),
@@ -349,7 +349,7 @@ public class ArtifactStealer extends Module {
         }
         final int baseline = Math.max(0, baselineArtifactCount);
         new Thread(() -> {
-            for (int i = 0; i < 30; i++) { // up to ~4.5s
+            for (int i = 0; i < 30; i++) {  
                 try { Thread.sleep(150); } catch (InterruptedException ignored) {}
                 int now = countArtifactsInInventory();
                 if (now > baseline) {
@@ -360,7 +360,7 @@ public class ArtifactStealer extends Module {
                     return;
                 }
             }
-            // Not confirmed within timeout
+             
             client.scheduleTask(() -> client.notificationManager.show(new Notification(
                     Lang.get("notification.artifactstealer.title.info"),
                     Lang.get("notification.artifactstealer.message.not_confirmed"),

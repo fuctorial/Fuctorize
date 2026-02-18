@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\widgets\GuiTextInput.java
+ 
 package ru.fuctorial.fuctorize.client.gui.widgets;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -52,10 +52,10 @@ public class GuiTextInput extends GuiScreen {
 
     @Override
     protected void actionPerformed(net.minecraft.client.gui.GuiButton button) {
-        if (button.id == 0) { // Save
+        if (button.id == 0) {  
             this.callback.accept(this.inputField.getText());
             this.mc.displayGuiScreen(this.parentScreen);
-        } else if (button.id == 1) { // Cancel
+        } else if (button.id == 1) {  
             this.mc.displayGuiScreen(this.parentScreen);
         }
     }
@@ -73,8 +73,8 @@ public class GuiTextInput extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.parentScreen.drawScreen(0, 0, 0); // Draw the parent screen in the background
-        RenderUtils.drawRect(0, 0, this.width, this.height, 0x90000000); // Darken the background
+        this.parentScreen.drawScreen(0, 0, 0);  
+        RenderUtils.drawRect(0, 0, this.width, this.height, 0x90000000);  
 
         RenderUtils.drawRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight, Theme.CATEGORY_BG.getRGB());
         RenderUtils.drawRect(panelX - 1, panelY - 1, panelX + panelWidth + 1, panelY, Theme.BORDER.getRGB());

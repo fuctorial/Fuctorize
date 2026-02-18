@@ -32,39 +32,33 @@ public class NBTStringHelper {
         return null;
     }
 
-    /**
-     * Generates a clean, user-friendly string representation of an NBT tag's value,
-     * formatted exactly as it should appear in the GUI tree for display purposes.
-     * This is the single source of truth for value representation in the tree view.
-     * @param base The NBT tag.
-     * @return A string representing the value, with quotes for strings and suffixes for numbers.
-     */
+     
     public static String toString(NBTBase base) {
         if (base == null) return "null";
         byte id = base.getId();
         switch (id) {
-            case 10: // Compound
+            case 10:  
                 return "(TagCompound)";
-            case 1: // Byte
+            case 1:  
                 return ((NBTTagByte) base).func_150290_f() + "b";
-            case 2: // Short
+            case 2:  
                 return ((NBTTagShort) base).func_150289_e() + "s";
-            case 3: // Int
+            case 3:  
                 return "" + ((NBTTagInt) base).func_150287_d();
-            case 4: // Long
+            case 4:  
                 return ((NBTTagLong) base).func_150291_c() + "L";
-            case 5: // Float
+            case 5:  
                 return ((NBTTagFloat) base).func_150288_h() + "f";
-            case 6: // Double
+            case 6:  
                 return ((NBTTagDouble) base).func_150286_g() + "d";
-            case 8: // String
-                // Add quotes here, and ONLY here, for display in the tree.
+            case 8:  
+                 
                 return "\"" + ((NBTTagString) base).func_150285_a_() + "\"";
-            case 9: // List
+            case 9:  
                 return "(TagList)";
-            case 7: // Byte Array
+            case 7:  
                 return "[B;" + ((NBTTagByteArray) base).func_150292_c().length + " bytes]";
-            case 11: // Int Array
+            case 11:  
                 return "[I;" + ((NBTTagIntArray) base).func_150302_c().length + " ints]";
         }
         return "?";

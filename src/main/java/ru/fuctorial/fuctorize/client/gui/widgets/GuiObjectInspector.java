@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\widgets\GuiObjectInspector.java
+ 
 package ru.fuctorial.fuctorize.client.gui.widgets;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -8,7 +8,7 @@ import ru.fuctorial.fuctorize.client.gui.nbtedit.GuiTextField;
 import ru.fuctorial.fuctorize.client.hud.Notification;
 import ru.fuctorial.fuctorize.utils.JsonNbtParser;
 import ru.fuctorial.fuctorize.utils.Lang;
-import ru.fuctorial.fuctorize.utils.ObfuscationMapper; // Updated import
+import ru.fuctorial.fuctorize.utils.ObfuscationMapper;  
 import ru.fuctorial.fuctorize.utils.RenderUtils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -174,16 +174,16 @@ public class GuiObjectInspector extends GuiScreen {
             int expanderX = leftX + clickedNode.depth * 10;
             int expanderWidth = font.getStringWidth("[+] ");
 
-            // Клик по иконке [+] / [-]
+             
             if (clickedNode.isExpandable() && mouseX >= expanderX && mouseX <= expanderX + expanderWidth) {
                 if (mouseButton == 0) toggleNode(clickedNode);
                 return;
             }
 
-            // Клик по самому элементу
-            if (mouseButton == 0) { // Левый клик
+             
+            if (mouseButton == 0) {  
                 if (clickedNode.isEditableEnum()) {
-                    clickedNode.cycleEnumValue(true); // Вперед
+                    clickedNode.cycleEnumValue(true);  
                 } else {
                     String lineToCopy = clickedNode.getCopyableText();
                     setClipboardString(StringUtils.stripControlCodes(lineToCopy));
@@ -192,9 +192,9 @@ public class GuiObjectInspector extends GuiScreen {
                             Lang.get("inspector.message.line_copied"),
                             Notification.NotificationType.SUCCESS, 1500L));
                 }
-            } else if (mouseButton == 1) { // Правый клик
+            } else if (mouseButton == 1) {  
                 if (clickedNode.isEditableEnum()) {
-                    clickedNode.cycleEnumValue(false); // Назад
+                    clickedNode.cycleEnumValue(false);  
                 } else if (clickedNode.isEditableByText()) {
                     mc.displayGuiScreen(new GuiTextInput(this, Lang.format("inspector.input.title", clickedNode.path), clickedNode.getCurrentValueAsString(), clickedNode::trySetValue));
                 }
@@ -294,9 +294,9 @@ public class GuiObjectInspector extends GuiScreen {
     @Override
     public boolean doesGuiPauseGame() { return false; }
 
-    // ===================================================================
-    // INNER CLASS FOR TREE NODE & INSPECTION LOGIC
-    // ===================================================================
+     
+     
+     
     private static class Node {
         private static final int MAX_DEPTH = 8;
         private static final int MAX_STRING_LEN = 100;
@@ -549,7 +549,7 @@ public class GuiObjectInspector extends GuiScreen {
                         try {
                             method.setAccessible(true);
                             Object result = method.invoke(object);
-                            String mcpName = ObfuscationMapper.getMcpName(name) + "()"; // Updated usage
+                            String mcpName = ObfuscationMapper.getMcpName(name) + "()";  
                             children.add(new Node(result, mcpName, depth + 1, object, null, method));
                         } catch (Exception ignored) {}
                     }
@@ -561,7 +561,7 @@ public class GuiObjectInspector extends GuiScreen {
                 for(Field field : currentClass.getDeclaredFields()){
                     if(Modifier.isStatic(field.getModifiers()) || field.isSynthetic()) continue;
                     String fieldName = field.getName();
-                    String mcpFieldName = ObfuscationMapper.getMcpName(fieldName); // Updated usage
+                    String mcpFieldName = ObfuscationMapper.getMcpName(fieldName);  
                     children.add(new Node(safeGetField(object, field), mcpFieldName, depth + 1, object, field, null));
                 }
                 currentClass = currentClass.getSuperclass();

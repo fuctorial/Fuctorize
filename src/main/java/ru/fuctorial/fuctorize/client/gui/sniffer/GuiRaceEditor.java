@@ -1,11 +1,11 @@
-// C:\Fuctorize\src\main\java\ru\fuctorial\fuctorize\client\gui\sniffer\GuiRaceEditor.java
+ 
 package ru.fuctorial.fuctorize.client.gui.sniffer;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse; // Важно!
+import org.lwjgl.input.Mouse;  
 import ru.fuctorial.fuctorize.FuctorizeClient;
 import ru.fuctorial.fuctorize.client.font.CustomFontRenderer;
 import ru.fuctorial.fuctorize.client.gui.clickgui.Theme;
@@ -23,11 +23,11 @@ public class GuiRaceEditor extends GuiScreen {
     private final RaceTest module;
     private int panelX, panelY, panelWidth, panelHeight;
 
-    // Размеры списков
+     
     private int listWidth;
     private int listHeight;
 
-    // Скроллы
+     
     private int leftScroll = 0;
     private int rightScroll = 0;
     private int maxLeftScroll = 0;
@@ -39,22 +39,22 @@ public class GuiRaceEditor extends GuiScreen {
 
     @Override
     public void initGui() {
-        // Делаем окно пошире
+         
         this.panelWidth = 600;
         this.panelHeight = 350;
         this.panelX = (this.width - this.panelWidth) / 2;
         this.panelY = (this.height - this.panelHeight) / 2;
 
-        // Вычисляем размеры колонок (по 45% ширины каждая)
+         
         this.listWidth = (int) ((panelWidth - 40) * 0.5);
-        this.listHeight = panelHeight - 80; // Место под заголовки и кнопки
+        this.listHeight = panelHeight - 80;  
 
         this.buttonList.clear();
 
         int btnY = panelY + panelHeight - 30;
         int btnW = 120;
 
-        // Кнопки управления
+         
         this.buttonList.add(new StyledButton(0, panelX + 20, btnY, btnW, 20, getStartBtnText()));
         this.buttonList.add(new StyledButton(1, panelX + panelWidth / 2 - btnW / 2, btnY, btnW, 20, "Clear Sequence"));
         this.buttonList.add(new StyledButton(2, panelX + panelWidth - 20 - btnW, btnY, btnW, 20, "Close"));
@@ -87,11 +87,11 @@ public class GuiRaceEditor extends GuiScreen {
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
-        int listTop = panelY + 40; // Чуть ниже заголовка
+        int listTop = panelY + 40;  
         int leftListX = panelX + 15;
         int rightListX = panelX + panelWidth - 15 - listWidth;
 
-        // Клик по левой панели (Добавить)
+         
         if (mouseX >= leftListX && mouseX <= leftListX + listWidth && mouseY >= listTop && mouseY <= listTop + listHeight) {
             int idx = (mouseY - listTop + leftScroll) / 18;
             List<PacketPersistence.SavedPacketData> favs = FavoritePacketManager.getFavorites();
@@ -100,7 +100,7 @@ public class GuiRaceEditor extends GuiScreen {
             }
         }
 
-        // Клик по правой панели (Удалить)
+         
         if (mouseX >= rightListX && mouseX <= rightListX + listWidth && mouseY >= listTop && mouseY <= listTop + listHeight) {
             int idx = (mouseY - listTop + rightScroll) / 18;
             if (idx >= 0 && idx < module.getSequence().size()) {
@@ -115,7 +115,7 @@ public class GuiRaceEditor extends GuiScreen {
         int dWheel = Mouse.getEventDWheel();
         if (dWheel != 0) {
             int mouseX = Mouse.getEventX() * this.width / mc.displayWidth;
-            // Определяем, над какой половиной мышь
+             
             if (mouseX < panelX + panelWidth / 2) {
                 leftScroll -= (dWheel > 0 ? 1 : -1) * 18;
                 leftScroll = Math.max(0, Math.min(leftScroll, maxLeftScroll));
@@ -134,28 +134,28 @@ public class GuiRaceEditor extends GuiScreen {
         CustomFontRenderer font = FuctorizeClient.INSTANCE.fontManager.regular_18;
         CustomFontRenderer boldFont = FuctorizeClient.INSTANCE.fontManager.bold_22;
 
-        // 1. Основной фон и рамка
+         
         RenderUtils.drawRect(panelX, panelY, panelX + panelWidth, panelY + panelHeight, Theme.CATEGORY_BG.getRGB());
         drawBorder(panelX, panelY, panelWidth, panelHeight, Theme.BORDER.getRGB());
 
-        // Заголовок окна
+         
         String title = "Race Condition Tester";
         boldFont.drawString(title, panelX + (panelWidth - boldFont.getStringWidth(title)) / 2f, panelY + 8, Theme.ORANGE.getRGB());
 
-        // Координаты списков
+         
         int listTop = panelY + 40;
         int leftListX = panelX + 15;
         int rightListX = panelX + panelWidth - 15 - listWidth;
 
-        // --- ЛЕВАЯ ПАНЕЛЬ (ИЗБРАННОЕ) ---
+         
         font.drawString("Saved Packets (Click to Add)", leftListX, listTop - 12, Theme.TEXT_GRAY.getRGB());
 
-        // Фон списка
+         
         RenderUtils.drawRect(leftListX, listTop, leftListX + listWidth, listTop + listHeight, 0xFF151515);
         drawBorder(leftListX - 1, listTop - 1, listWidth + 2, listHeight + 2, 0xFF404040);
 
         List<PacketPersistence.SavedPacketData> favs = FavoritePacketManager.getFavorites();
-        // Расчет макс скролла
+         
         maxLeftScroll = Math.max(0, (favs.size() * 18) - listHeight);
 
         RenderUtils.startScissor(leftListX, listTop, listWidth, listHeight);
@@ -166,11 +166,11 @@ public class GuiRaceEditor extends GuiScreen {
                 boolean hover = mouseX >= leftListX && mouseX <= leftListX + listWidth && mouseY >= yL && mouseY < yL + 18;
                 if (hover) RenderUtils.drawRect(leftListX, yL, leftListX + listWidth, yL + 18, Theme.COMPONENT_BG_HOVER.getRGB());
 
-                // Имя пакета
-                String name = font.trimStringToWidth(data.name, listWidth - 60); // Оставляем место под тип
+                 
+                String name = font.trimStringToWidth(data.name, listWidth - 60);  
                 font.drawString(name, leftListX + 4, yL + 5, -1);
 
-                // Тип пакета (справа)
+                 
                 String typeRaw = data.className.substring(data.className.lastIndexOf('.') + 1);
                 String type = font.trimStringToWidth(typeRaw, 55);
                 font.drawString(type, leftListX + listWidth - font.getStringWidth(type) - 4, yL + 5, Theme.TEXT_GRAY.getRGB());
@@ -179,10 +179,10 @@ public class GuiRaceEditor extends GuiScreen {
         }
         RenderUtils.stopScissor();
 
-        // --- ПРАВАЯ ПАНЕЛЬ (ОЧЕРЕДЬ) ---
+         
         font.drawString("Sequence (Click to Remove)", rightListX, listTop - 12, Theme.TEXT_GRAY.getRGB());
 
-        // Фон списка
+         
         RenderUtils.drawRect(rightListX, listTop, rightListX + listWidth, listTop + listHeight, 0xFF151515);
         drawBorder(rightListX - 1, listTop - 1, listWidth + 2, listHeight + 2, 0xFF404040);
 
@@ -196,11 +196,11 @@ public class GuiRaceEditor extends GuiScreen {
         for (PacketPersistence.SavedPacketData data : sequence) {
             if (yR + 18 > listTop && yR < listTop + listHeight) {
                 boolean hover = mouseX >= rightListX && mouseX <= rightListX + listWidth && mouseY >= yR && mouseY < yR + 18;
-                // Красная подсветка при наведении (удаление)
+                 
                 if (hover) RenderUtils.drawRect(rightListX, yR, rightListX + listWidth, yR + 18, 0x40FF0000);
 
                 String line = index + ". " + data.name;
-                // Обрезаем текст, чтобы не вылезал
+                 
                 line = font.trimStringToWidth(line, listWidth - 10);
 
                 font.drawString(line, rightListX + 4, yR + 5, -1);
@@ -214,10 +214,10 @@ public class GuiRaceEditor extends GuiScreen {
     }
 
     private void drawBorder(int x, int y, int w, int h, int color) {
-        RenderUtils.drawRect(x, y, x + w, y + 1, color); // Top
-        RenderUtils.drawRect(x, y + h - 1, x + w, y + h, color); // Bottom
-        RenderUtils.drawRect(x, y, x + 1, y + h, color); // Left
-        RenderUtils.drawRect(x + w - 1, y, x + w, y + h, color); // Right
+        RenderUtils.drawRect(x, y, x + w, y + 1, color);  
+        RenderUtils.drawRect(x, y + h - 1, x + w, y + h, color);  
+        RenderUtils.drawRect(x, y, x + 1, y + h, color);  
+        RenderUtils.drawRect(x + w - 1, y, x + w, y + h, color);  
     }
 
     @Override

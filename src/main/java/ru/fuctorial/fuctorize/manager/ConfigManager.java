@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\manager\ConfigManager.java
+ 
 package ru.fuctorial.fuctorize.manager;
 
 import com.google.gson.Gson;
@@ -37,11 +37,11 @@ public class ConfigManager {
             JsonObject modulesJson = new JsonObject();
             JsonObject guiJson = new JsonObject();
 
-            // --- Save Modules ---
+             
             for (Module module : client.moduleManager.getModules()) {
                 JsonObject moduleJson = new JsonObject();
                 moduleJson.addProperty("enabled", module.isEnabled());
-                moduleJson.addProperty("extended", module.extended); // Save GUI extended state
+                moduleJson.addProperty("extended", module.extended);  
 
                 for (Setting setting : module.getSettings()) {
                     if (setting instanceof BooleanSetting) {
@@ -49,7 +49,7 @@ public class ConfigManager {
                     } else if (setting instanceof SliderSetting) {
                         moduleJson.addProperty(setting.name, ((SliderSetting) setting).value);
                     } else if (setting instanceof ModeSetting) {
-                        // Save both the human-readable mode and the stable index for reliability
+                         
                         ModeSetting ms = (ModeSetting) setting;
                         moduleJson.addProperty(setting.name, ms.getMode());
                         moduleJson.addProperty(setting.name + "_index", ms.index);
@@ -58,7 +58,7 @@ public class ConfigManager {
                     } else if (setting instanceof ColorSetting) {
                         ColorSetting cs = (ColorSetting) setting;
                         moduleJson.addProperty(setting.name, cs.getColor());
-                        moduleJson.addProperty(setting.name + "_expanded", cs.expanded); // Save color picker expanded state
+                        moduleJson.addProperty(setting.name + "_expanded", cs.expanded);  
                     }
                 }
 
@@ -67,13 +67,13 @@ public class ConfigManager {
                     moduleJson.addProperty("bind", bind.keyCode);
                 }
 
-                // Use stable module key for config, not localized/dynamic name
+                 
                 modulesJson.add(module.getKey(), moduleJson);
             }
 
-            // --- Save GUI State (SmartMoving Editor) ---
+             
             saveSmartMovingGuiState(guiJson);
-            // --- Save ClickGUI State (last category + scroll) ---
+             
             saveClickGuiState(guiJson);
 
 
@@ -109,18 +109,18 @@ public class ConfigManager {
                 return;
             }
 
-            // --- Load Modules ---
+             
             if (fuctorizeJson.has("modules")) {
                 JsonObject modulesJson = fuctorizeJson.getAsJsonObject("modules");
                 for (Module module : client.moduleManager.getModules()) {
-                    // Primary: fetch by stable key
+                     
                     JsonObject moduleJson = modulesJson.getAsJsonObject(module.getKey());
-                    // Migration fallback: try by localized/dynamic name if not found
+                     
                     if (moduleJson == null) {
                         moduleJson = modulesJson.getAsJsonObject(module.getName());
                     }
                     if (moduleJson != null) {
-                        // CRITICAL FIX: This method correctly prepares the module's state for activation upon world join.
+                         
                         if (moduleJson.has("enabled")) {
                             module.setEnabledFromConfig(moduleJson.get("enabled").getAsBoolean());
                         }
@@ -137,7 +137,7 @@ public class ConfigManager {
                                     ((SliderSetting) setting).value = moduleJson.get(setting.name).getAsDouble();
                                 } else if (setting instanceof ModeSetting) {
                                     ModeSetting modeSetting = (ModeSetting) setting;
-                                    // Prefer loading by stored index for stability; fallback to name string for old configs
+                                     
                                     int idx = -1;
                                     String indexKey = setting.name + "_index";
                                     if (moduleJson.has(indexKey)) {
@@ -161,7 +161,7 @@ public class ConfigManager {
                                 } else if (setting instanceof ColorSetting) {
                                     ColorSetting cs = (ColorSetting) setting;
                                     cs.setColor(moduleJson.get(setting.name).getAsInt());
-                                    // Load expanded state for color picker
+                                     
                                     if (moduleJson.has(setting.name + "_expanded")) {
                                         cs.expanded = moduleJson.get(setting.name + "_expanded").getAsBoolean();
                                     }
@@ -177,7 +177,7 @@ public class ConfigManager {
                 }
             }
 
-            // --- Load GUI State ---
+             
             if (fuctorizeJson.has("gui")) {
                 JsonObject guiJson = fuctorizeJson.getAsJsonObject("gui");
                 loadSmartMovingGuiState(guiJson);
@@ -240,10 +240,10 @@ public class ConfigManager {
         }
     }
 
-    // --- ClickGUI (categories list + modules) state persistence ---
+     
     private void saveClickGuiState(JsonObject guiJson) {
         try {
-            // Access ClickGuiScreen.mainFrame via reflection
+             
             Class<?> screenClass = ru.fuctorial.fuctorize.client.gui.clickgui.ClickGuiScreen.class;
             Field mainFrameField = screenClass.getDeclaredField("mainFrame");
             mainFrameField.setAccessible(true);
@@ -251,7 +251,7 @@ public class ConfigManager {
             if (frameObj == null) return;
 
             Class<?> frameClass = ru.fuctorial.fuctorize.client.gui.clickgui.Frame.class;
-            Field scrollField = frameClass.getSuperclass().getDeclaredField("scrollY"); // AbstractFrame.scrollY
+            Field scrollField = frameClass.getSuperclass().getDeclaredField("scrollY");  
             Field currentCategoryField = frameClass.getSuperclass().getDeclaredField("currentCategory");
             scrollField.setAccessible(true);
             currentCategoryField.setAccessible(true);
@@ -281,7 +281,7 @@ public class ConfigManager {
             if (frameObj == null) return;
 
             Class<?> frameClass = ru.fuctorial.fuctorize.client.gui.clickgui.Frame.class;
-            Field scrollField = frameClass.getSuperclass().getDeclaredField("scrollY"); // AbstractFrame.scrollY
+            Field scrollField = frameClass.getSuperclass().getDeclaredField("scrollY");  
             Field currentCategoryField = frameClass.getSuperclass().getDeclaredField("currentCategory");
             scrollField.setAccessible(true);
             currentCategoryField.setAccessible(true);
@@ -297,7 +297,7 @@ public class ConfigManager {
                     Category category = Category.valueOf(catName);
                     currentCategoryField.set(frameObj, category);
                 } catch (IllegalArgumentException ignored) {
-                    // Unknown category name, ignore
+                     
                 }
             }
         } catch (Throwable t) {

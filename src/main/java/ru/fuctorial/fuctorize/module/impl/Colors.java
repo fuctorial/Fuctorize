@@ -23,7 +23,7 @@ public class Colors extends Module {
     public static ColorSetting barrierColor;
     public static ColorSetting randomBoxColor;
 
-    // --- НОВЫЕ ПОЛЯ ---
+     
     public static ColorSetting customEspColor;
     public static ColorSetting crosshairColor;
 
@@ -48,7 +48,7 @@ public class Colors extends Module {
         addSetting(itemsColor);
         addSetting(new SeparatorSetting());
 
-        // --- Custom ESP & Crosshair ---
+         
         customEspColor = new ColorSetting(Lang.get("module.colors.setting.custom_esp"), new Color(0, 255, 255));
         crosshairColor = new ColorSetting(Lang.get("module.colors.setting.crosshair"), new Color(0, 255, 0));
         addSetting(customEspColor);

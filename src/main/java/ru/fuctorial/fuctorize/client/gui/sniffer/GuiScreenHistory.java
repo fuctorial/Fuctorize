@@ -1,4 +1,4 @@
-// C:\Fuctorize\src\main\java\ru.fuctorial\fuctorize\client\gui\sniffer\GuiScreenHistory.java
+ 
 package ru.fuctorial.fuctorize.client.gui.sniffer;
 
 import ru.fuctorial.fuctorize.FuctorizeClient;
@@ -28,7 +28,7 @@ public class GuiScreenHistory extends GuiScreen {
     private final List<GuiScreen> displayedHistory = new ArrayList<>();
     private final List<String> historyLabels = new ArrayList<>();
 
-    // --- FIX: Add scrolling fields ---
+     
     private int scrollOffset = 0;
     private int totalContentHeight = 0;
     private int viewableContentHeight = 0;
@@ -46,7 +46,7 @@ public class GuiScreenHistory extends GuiScreen {
     @Override
     public void initGui() {
         this.panelWidth = 320;
-        // --- FIX: Cap panel height ---
+         
         this.panelHeight = Math.min(400, this.height - 40);
 
         this.displayedHistory.clear();
@@ -59,14 +59,14 @@ public class GuiScreenHistory extends GuiScreen {
         }
 
         this.totalContentHeight = displayedHistory.size() * 22;
-        this.viewableContentHeight = panelHeight - 40 - 30; // panel height - header - footer
+        this.viewableContentHeight = panelHeight - 40 - 30;  
 
         this.panelX = (this.width - this.panelWidth) / 2;
         this.panelY = (this.height - this.panelHeight) / 2;
 
         this.buttonList.clear();
 
-        // Footer buttons are not part of the scrollable list, so they are added directly.
+         
         if (!selectionMode) {
             this.buttonList.add(new StyledButton(997, panelX + 10, panelY + panelHeight - 25, 60, 20, "Очистить"));
             this.buttonList.add(new StyledButton(998, panelX + 75, panelY + panelHeight - 25, 110, 20, "Ред. Blacklist"));
@@ -87,11 +87,11 @@ public class GuiScreenHistory extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        // Footer buttons are handled here
+         
         if (button.id >= 997) {
             handleFooterAction(button.id);
         }
-        // Scrollable buttons are handled in mouseClicked
+         
     }
 
     private void handleFooterAction(int id) {
@@ -114,7 +114,7 @@ public class GuiScreenHistory extends GuiScreen {
         int dWheel = Mouse.getEventDWheel();
         if (dWheel != 0) {
             if (totalContentHeight > viewableContentHeight) {
-                scrollOffset += (dWheel > 0) ? -15 : 15; // Invert scroll direction
+                scrollOffset += (dWheel > 0) ? -15 : 15;  
                 if (scrollOffset > 0) scrollOffset = 0;
 
                 int maxScroll = totalContentHeight - viewableContentHeight;
@@ -127,29 +127,29 @@ public class GuiScreenHistory extends GuiScreen {
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int buttonId) {
-        // --- FIX: Manually handle clicks for scrollable content ---
-        super.mouseClicked(mouseX, mouseY, buttonId); // Handles footer buttons
+         
+        super.mouseClicked(mouseX, mouseY, buttonId);  
 
         int adjustedMouseY = mouseY - (panelY + 30) - scrollOffset;
 
         int topBound = panelY + 30;
         int bottomBound = panelY + panelHeight - 30;
 
-        // Check if click is inside the scrollable area
+         
         if (mouseX >= panelX && mouseX <= panelX + panelWidth && mouseY >= topBound && mouseY <= bottomBound) {
             int buttonIndex = adjustedMouseY / 22;
 
             if (buttonIndex >= 0 && buttonIndex < displayedHistory.size()) {
-                // Star icon click logic
+                 
                 if (buttonId == 0 && !selectionMode) {
                     int starX = panelX + 10;
                     if (mouseX >= starX && mouseX <= starX + 18) {
                         handleStarClick(buttonIndex);
-                        return; // Consume click
+                        return;  
                     }
                 }
 
-                // Button click logic
+                 
                 handleHistoryButtonClick(buttonIndex);
             }
         }
@@ -165,7 +165,7 @@ public class GuiScreenHistory extends GuiScreen {
                 FavoriteScreenManager.addFavorite(newName, screen);
             }));
         }
-        // initGui() will be called when returning from GuiTextInput
+         
     }
 
     private void handleHistoryButtonClick(int index) {
@@ -217,7 +217,7 @@ public class GuiScreenHistory extends GuiScreen {
         }
         titleFont.drawString(title, panelX + (panelWidth - titleFont.getStringWidth(title)) / 2f, panelY + 8, -1);
 
-        // --- FIX: Draw scrollable content ---
+         
         int topBound = panelY + 30;
         RenderUtils.startScissor(panelX, topBound, panelWidth, viewableContentHeight);
 
@@ -257,7 +257,7 @@ public class GuiScreenHistory extends GuiScreen {
 
         drawScrollBar(topBound);
 
-        // Draw non-scrollable footer buttons
+         
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
@@ -268,7 +268,7 @@ public class GuiScreenHistory extends GuiScreen {
 
             float scrollPercent = (float)-scrollOffset / (totalContentHeight - viewableContentHeight);
             int handleHeight = (int) ((float) viewableContentHeight / totalContentHeight * viewableContentHeight);
-            handleHeight = Math.max(handleHeight, 20); // Minimum handle height
+            handleHeight = Math.max(handleHeight, 20);  
 
             int handleY = topY + (int) (scrollPercent * (viewableContentHeight - handleHeight));
             RenderUtils.drawRect(scrollbarX, handleY, scrollbarX + 4, handleY + handleHeight, Theme.ORANGE.getRGB());

@@ -26,11 +26,11 @@ public class PacketPersistence {
     }
 
     public static class SavedPacketData {
-        public String name;       // Имя для отображения
-        public String className;  // Класс пакета
-        public String channel;    // Канал (для FML)
-        public String rawData;    // Данные
-        public String direction;  // "SENT" или "RCVD" (НОВОЕ ПОЛЕ)
+        public String name;        
+        public String className;   
+        public String channel;     
+        public String rawData;     
+        public String direction;   
 
         public SavedPacketData(String name, String className, String channel, String rawData, String direction) {
             this.name = name;
@@ -41,10 +41,7 @@ public class PacketPersistence {
         }
     }
 
-    /**
-     * ДЕЛАЕТ СНИМОК ПАКЕТА.
-     * Теперь принимает направление (direction).
-     */
+     
     public static SavedPacketData capture(Packet packet, String saveName, String direction) {
         if (packet == null) return null;
 
@@ -53,20 +50,20 @@ public class PacketPersistence {
             String channel = null;
             ByteBuf buffer = Unpooled.buffer();
 
-            // 1. FML Packet
+             
             if (packet instanceof FMLProxyPacket) {
                 FMLProxyPacket fml = (FMLProxyPacket) packet;
                 channel = fml.channel();
                 ByteBuf payload = fml.payload();
                 if (payload != null) {
-                    // Копируем данные правильно, с 0 индекса, игнорируя текущий readerIndex
+                     
                     ByteBuf dup = payload.duplicate();
                     byte[] allBytes = new byte[dup.capacity()];
                     dup.getBytes(0, allBytes);
                     buffer.writeBytes(allBytes);
                 }
             }
-            // 2. Vanilla Packet
+             
             else {
                 PacketBuffer packetBuffer = new PacketBuffer(buffer);
                 packet.writePacketData(packetBuffer);
@@ -76,7 +73,7 @@ public class PacketPersistence {
             buffer.readBytes(bytes);
             String base64 = Base64.getEncoder().encodeToString(bytes);
 
-            // Сохраняем направление
+             
             return new SavedPacketData(saveName, className, channel, base64, direction);
 
         } catch (Exception e) {

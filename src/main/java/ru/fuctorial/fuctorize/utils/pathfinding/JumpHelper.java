@@ -4,9 +4,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 
-/**
- * Small helper to keep jump decision logic out of BotNavigator.
- */
+ 
 public final class JumpHelper {
 
     private JumpHelper() {}

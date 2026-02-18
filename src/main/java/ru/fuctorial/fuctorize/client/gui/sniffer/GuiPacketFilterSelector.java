@@ -28,7 +28,7 @@ public class GuiPacketFilterSelector extends GuiScreen {
     private int totalContentHeight = 0;
     private int viewableHeight = 0;
 
-    // Список всех уникальных имен, найденных в истории
+     
     private List<String> uniquePacketNames = new ArrayList<>();
 
     public GuiPacketFilterSelector(GuiScreen parent) {
@@ -42,12 +42,12 @@ public class GuiPacketFilterSelector extends GuiScreen {
         this.panelX = (this.width - this.panelWidth) / 2;
         this.panelY = (this.height - this.panelHeight) / 2;
 
-        // Сканируем историю на уникальные имена
+         
         Set<String> names = PacketSniffer.packetLog.stream()
                 .map(info -> info.cleanName)
                 .collect(Collectors.toSet());
 
-        // Также добавляем те, которые уже скрыты (даже если их сейчас нет в логе, чтобы можно было включить обратно)
+         
         names.addAll(PacketSniffer.hiddenPackets);
 
         this.uniquePacketNames = new ArrayList<>(names);
@@ -58,7 +58,7 @@ public class GuiPacketFilterSelector extends GuiScreen {
 
         this.buttonList.clear();
 
-        // Кнопки управления
+         
         int btnY = panelY + panelHeight - 30;
         int btnW = (panelWidth - 30) / 3;
 
@@ -70,9 +70,9 @@ public class GuiPacketFilterSelector extends GuiScreen {
     @Override
     protected void actionPerformed(GuiButton button) {
         if (button.id == 0) {
-            PacketSniffer.clearExcelFilter(); // Очистить скрытые = показать все
+            PacketSniffer.clearExcelFilter();  
         } else if (button.id == 1) {
-            PacketSniffer.hiddenPackets.addAll(uniquePacketNames); // Скрыть все известные
+            PacketSniffer.hiddenPackets.addAll(uniquePacketNames);  
         } else if (button.id == 2) {
             mc.displayGuiScreen(parentScreen);
         }
@@ -91,7 +91,7 @@ public class GuiPacketFilterSelector extends GuiScreen {
 
             if (index >= 0 && index < uniquePacketNames.size()) {
                 String name = uniquePacketNames.get(index);
-                // Переключаем состояние: если скрыт -> показать, если показан -> скрыть
+                 
                 boolean isHidden = PacketSniffer.isPacketHidden(name);
                 PacketSniffer.setPacketHidden(name, !isHidden);
             }
@@ -135,7 +135,7 @@ public class GuiPacketFilterSelector extends GuiScreen {
         int currentY = top - scrollOffset;
 
         for (String name : uniquePacketNames) {
-            // Оптимизация рендера
+             
             if (currentY + 18 > top && currentY < top + viewableHeight) {
                 boolean isHidden = PacketSniffer.isPacketHidden(name);
                 boolean isVisible = !isHidden;
@@ -143,25 +143,25 @@ public class GuiPacketFilterSelector extends GuiScreen {
                 boolean isHovered = mouseX >= panelX + 10 && mouseX <= panelX + panelWidth - 20
                         && mouseY >= currentY && mouseY < currentY + 18;
 
-                // Фон строки
+                 
                 if (isHovered) {
                     RenderUtils.drawRect(panelX + 10, currentY, panelX + panelWidth - 10, currentY + 18, Theme.COMPONENT_BG_HOVER.getRGB());
                 }
 
-                // Checkbox box
+                 
                 int boxSize = 10;
                 int boxX = panelX + 15;
                 int boxY = currentY + 4;
 
-                RenderUtils.drawRect(boxX, boxY, boxX + boxSize, boxY + boxSize, 0xFF000000); // outline
-                RenderUtils.drawRect(boxX + 1, boxY + 1, boxX + boxSize - 1, boxY + boxSize - 1, 0xFF303030); // bg
+                RenderUtils.drawRect(boxX, boxY, boxX + boxSize, boxY + boxSize, 0xFF000000);  
+                RenderUtils.drawRect(boxX + 1, boxY + 1, boxX + boxSize - 1, boxY + boxSize - 1, 0xFF303030);  
 
                 if (isVisible) {
-                    // Галочка (зеленый квадрат внутри)
+                     
                     RenderUtils.drawRect(boxX + 2, boxY + 2, boxX + boxSize - 2, boxY + boxSize - 2, Theme.ORANGE.getRGB());
                 }
 
-                // Текст
+                 
                 int textColor = isVisible ? -1 : Theme.TEXT_GRAY.getRGB();
                 font.drawString(name, boxX + 15, currentY + 5, textColor);
             }
@@ -170,7 +170,7 @@ public class GuiPacketFilterSelector extends GuiScreen {
 
         RenderUtils.stopScissor();
 
-        // Скроллбар
+         
         if (totalContentHeight > viewableHeight) {
             int scrollbarX = panelX + panelWidth - 6;
             RenderUtils.drawRect(scrollbarX, top, scrollbarX + 4, top + viewableHeight, 0x55000000);
